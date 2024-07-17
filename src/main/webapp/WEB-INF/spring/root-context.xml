@@ -21,7 +21,7 @@
 	<!-- 공통 DB -->
 	<bean id="hikariConfig2" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl" value="jdbc:mysql://192.168.30.181:3306/public_scheme?serverTimezone=Asia/Seoul"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.30.181:3306/public_schema?serverTimezone=Asia/Seoul"></property>
 		<property name="username" value="root"></property>
 		<property name="password" value="1234"></property>
 	</bean>	

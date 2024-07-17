@@ -10,6 +10,7 @@
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- DBCP(DB Connection Pool) -->
 	
+	<!-- 공급사 DB -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/exam?serverTimezone=Asia/Seoul"></property>
@@ -17,8 +18,13 @@
 		<property name="password" value="1234"></property>
 	</bean>
 	
-	
-	
+	<!-- 공통 DB -->
+	<bean id="hikariConfig2" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://192.168.30.181:3306/rasberry_tem?serverTimezone=Asia/Seoul"></property>
+		<property name="username" value="root"></property>
+		<property name="password" value="1234"></property>
+	</bean>	
 	
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig" />

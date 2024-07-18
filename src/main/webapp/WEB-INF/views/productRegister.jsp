@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>제품 등록</title>
+	<!-- 부트스트랩 아이콘 링크 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 나눔고딕체 CDN 링크 -->
@@ -99,6 +101,19 @@
         .warehouse-message {
             font-size: 14px;
         }
+        
+        #search {
+        	border: 1px solid lightgray;
+        	border-radius: 3px;
+        }
+        
+        #search:focus {
+        	outline: none;
+        }
+        
+        #icon {
+        	border: none;
+        }
     </style>
 </head>
 <body>
@@ -162,8 +177,15 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <header class="bg-light py-2 m-0">
-                            <div class="container text-center">
-                                <h6 class="m-0">제품 목록</h6>
+                            <div class="container text-left pl-4" style="display: flex; justify-content: space-between;">
+                                <h6 class="m-0" style="display: inline;">제품 목록</h6>
+                                <div>
+                                	<input type="text" id="search" placeholder="제품명 검색"
+                                	style="padding-left: 5px; font-size: 14px; margin-right: 5px;">
+                                	<button id="icon">
+	                                	<i class="bi bi-search" style="display: inline;"></i>
+	                                </button>
+                                </div>
                             </div>
                         </header>
                         <table class="table product-table m-0">

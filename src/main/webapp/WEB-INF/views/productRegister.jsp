@@ -187,57 +187,7 @@
                                             data-target="#stockModal">재고관리</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>DEF456</td>
-                                    <td>제품B</td>
-                                    <td>15,000원</td>
-                                    <td>30개</td>
-                                    <td>
-                                        <button class="btn btn-info btn-stock btn-sm" data-toggle="modal"
-                                            data-target="#stockModal">재고관리</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>GHI789</td>
-                                    <td>제품C</td>
-                                    <td>20,000원</td>
-                                    <td>20개</td>
-                                    <td>
-                                        <button class="btn btn-info btn-stock btn-sm" data-toggle="modal"
-                                            data-target="#stockModal">재고관리</button>
-                                    </td>
-                                </tr>
-                                <!-- 추가 TR -->
-                                <tr>
-                                    <td>JKL012</td>
-                                    <td>제품D</td>
-                                    <td>25,000원</td>
-                                    <td>15개</td>
-                                    <td>
-                                        <button class="btn btn-info btn-stock btn-sm" data-toggle="modal"
-                                            data-target="#stockModal">재고관리</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>MNO345</td>
-                                    <td>제품E</td>
-                                    <td>30,000원</td>
-                                    <td>10개</td>
-                                    <td>
-                                        <button class="btn btn-info btn-stock btn-sm" data-toggle="modal"
-                                            data-target="#stockModal">재고관리</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>MNO678</td>
-                                    <td>제품F</td>
-                                    <td>35,000원</td>
-                                    <td>25개</td>
-                                    <td>
-                                        <button class="btn btn-info btn-stock btn-sm" data-toggle="modal"
-                                            data-target="#stockModal">재고관리</button>
-                                    </td>
-                                </tr>
+                                
                             </tbody>
                         </table>
                     </div>

@@ -13,4 +13,10 @@ public class c {
 			return "home";
 		}
 
+	//테스트 페이지
+	@GetMapping("/test1")
+	public String test() {
+		System.out.println("테스트");
+		return "test1";
+	}
 }

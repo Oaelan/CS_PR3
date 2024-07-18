@@ -14,9 +14,9 @@ public class c {
 		}
 
 	//테스트 페이지
-	@GetMapping("/test1")
-	public String test() {
+	@GetMapping("/test")
+	public String productRegister() {
 		System.out.println("테스트");
-		return "test1";
+		return "productRegister";
 	}
 }

@@ -128,7 +128,7 @@ p {
 </style>
 </head>
 <body>
-	<form id="registerForm" method="post" action="">
+	<form id="registerForm" method="post" action="join">
     <div class="container">
         <div class="insert">
             <table>
@@ -196,7 +196,7 @@ p {
         </div>
         <div class="create">
             <input class="but3" type="button" value="가입취소" onclick=""> 
-            <input class="but4" type="submit" value="회원가입" onclick="formCheck()">
+            <input class="but4" type="submit" value="회원가입">
         </div>
     </div>
 </form>

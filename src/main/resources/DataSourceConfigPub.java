@@ -5,7 +5,6 @@ public class DataSourceConfigPub {
 	
 	@Bean(name = "pubDataSource")
     @ConfigurationProperties(prefix = "pub.datasource")
-	@MapperScan("org.hj.mapper") // 매퍼 인터페이스가 위치한 패키지 지정
     public DataSource subDataSource() {
         return DataSourceBuilder.create().type(HikariDataSource.class).build();
     }

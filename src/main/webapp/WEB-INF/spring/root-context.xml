@@ -34,14 +34,18 @@
 		<constructor-arg ref="hikariConfig2" />
 	</bean>
 
-	<!-- Mybatis 관련 설정 SessionFactory -->
-	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource1" />
+	
+	<!-- MyBatis 관련 설정 SessionFactory -->
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean" primary="true">
+    <property name="dataSource" ref="dataSource1" />
 	</bean>
 
-	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="dataSource2" />
+	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean" >
+    <property name="dataSource" ref="dataSource2" />
 	</bean>
+
+
+	
 	
 	<mybatis-spring:scan base-package="org.hj.mapper"/>	
 	

@@ -1,5 +1,6 @@
-package org.hj.service;
+package org.hj.service.Sub;
 
+import org.hj.model.MasterDto;
 import org.hj.model.UserDto;
 import org.springframework.stereotype.Service;
 
@@ -7,6 +8,6 @@ import org.springframework.stereotype.Service;
 public interface LoginM_Service {
 
 
-public UserDto loginM(UserDto ud);
+	public MasterDto loginM(UserDto ud);
 
 }

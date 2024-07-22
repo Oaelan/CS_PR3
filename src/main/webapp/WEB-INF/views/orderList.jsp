@@ -224,8 +224,8 @@
                         	//제품명 조인으로 가져오기 
                             document.getElementById('p_no').innerText = order.p_no;
                             document.getElementById('p_name').innerText = "제품명 가져오기";
-                            document.getElementById('o_num').innerText = order.o_num;
-                            document.getElementById('o_total').innerText = order.o_total;
+                            document.getElementById('o_num').innerText = "재품당 개수";
+                            document.getElementById('o_total').innerText = "재품당 합계 가격";
 
                             $('#orderDetailModal').modal('show');  // Show the modal
                         });

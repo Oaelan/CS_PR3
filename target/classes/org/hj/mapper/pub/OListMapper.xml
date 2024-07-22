@@ -6,6 +6,11 @@
 
 <mapper namespace="org.hj.mapper.pub.OListMapper">
     <select id="getOList" resultType="org.hj.model.OListDto">
-        SELECT * FROM public_schema.OrderList
+        SELECT o_no, o_id, o_address,
+    	SUM(o_num) o_num, 
+    	FORMAT(SUM(CAST(REPLACE(o_total, ',', '') AS UNSIGNED)), 0) AS o_total, 
+    	o_date, o_permit
+        FROM public_schema.OrderList
+		GROUP BY o_no;
     </select>
 </mapper>

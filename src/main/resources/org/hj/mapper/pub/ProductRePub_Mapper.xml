@@ -12,4 +12,9 @@
   values(#{m_date}, #{p_no}, #{p_name}, #{p_price}, #{m_num}, #{p_limitD})
   </insert>
   
+  
+  <!-- 등록된 상품 들고오는 sql -->
+  <select id="productList" resultType="org.hj.model.Product_manufacturingDto">
+  select * from public_schema.Product_manufacturing;
+  </select>
   </mapper>

@@ -17,5 +17,11 @@ public class ProductRePub_ServiceImpl implements ProductRePub_Service {
 	public  ArrayList <Product_manufacturingDto> productList(){
 		return prpm.productList();
 	}
+	
+	public  ArrayList <Product_manufacturingDto> groupByDate(Product_manufacturingDto pmd){
+		return prpm.groupByDate(pmd);
+	}
+
+	
 
 }

@@ -15,6 +15,15 @@
   
   <!-- 등록된 상품 들고오는 sql -->
   <select id="productList" resultType="org.hj.model.Product_manufacturingDto">
-  select * from public_schema.Product_manufacturing;
+  select * from public_schema.productNum;
   </select>
+
+  <!-- 선택한 상품의 코드로 유통기한별 재고 수 들고오는 sql -->
+  <select id="groupByDate" resultType="org.hj.model.Product_manufacturingDto"
+  parameterType="org.hj.model.Product_manufacturingDto">
+  select * from public_schema.Product_manufacturing
+  where p_no = #{p_no};
+  </select>
+  
   </mapper>
+  

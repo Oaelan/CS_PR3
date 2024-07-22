@@ -5,12 +5,41 @@
 <meta charset="UTF-8">
 <title>제품 등록</title>
 <style>
-#stockTitle{
-display: flex;
-justify-content: space-between;
-padding-left: 10px;
-padding-right: 10px;
-font-weight: bold;
+.stockList, .stockT {
+	width: 100px;
+	text-align: center;
+}
+
+.nonB {
+	border: none;
+}
+
+#stockTitle {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	padding: 10px;
+	font-weight: bold;
+	background-color: #f1f1f1; /* 배경색 추가 (선택 사항) */
+	border-bottom: 1px solid #ddd;
+	padding: 10px; /* 하단 경계선 추가 (선택 사항) */
+}
+
+#stockProduct {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+
+.stockCont {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	padding: 10px;
+	border-bottom: 1px solid #ddd; /* 하단 경계선 추가 (선택 사항) */
+	padding: 5px 0; /* 위 아래 패딩 추가 */ .
+	stockCont: last-child{
+    border-bottom: none; /* 마지막 항목의 하단 경계선 제거 */
 }
 </style>
 <!-- 부트스트랩 아이콘 링크 -->
@@ -113,35 +142,35 @@ font-weight: bold;
 	</div>
 	<!-- 재고관리 모달 -->
 	<div id="stockModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="stockModalLabel" aria-hidden="true">
-	    <div class="modal-dialog modal-lg" role="document">
-	        <div class="modal-content">
-	            <div class="modal-header">
-	                <h5 class="modal-title" id="stockModalLabel">재고 관리</h5>
-	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                    <span aria-hidden="true">&times;</span>
-	                </button>
-	            </div>
-	            <div class="modal-body">
-	            	<div id ="stockTitle">
-		                <p id="modalPName">제품명</p>
-		                <p id="modalPNo">제품 번호</p>
-		                <p id="modalPPrice">가격</p>
-		                <p id="modalMDate">입고 날짜</p>
-		                <p id="modalMNum">재고 수량</p>
-		                <p id="modalPLimitD">유통 기한</p>
-		            </div>
-		            <div id="stockProduct">
-		            
-		            </div>
-	            </div>
-	            <div class="modal-footer">
-	                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	            </div>
-	        </div>
-	    </div>
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="stockModalLabel">재고 관리</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+					<form method="post">
+						<div class="modal-body">
+							<div id="stockTitle">
+								<p id="modalPName" class="m-0 stockT">제품명</p>
+								<p id="modalPNo" class="m-0 stockT">제품 번호</p>
+								<p id="modalPPrice" class="m-0 stockT">가격</p>
+								<p id="modalMDate" class="m-0 stockT">입고 날짜</p>
+								<p id="modalMNum" class="m-0 stockT">재고 수량</p>
+								<p id="modalPLimitD" class="m-0 stockT">유통 기한</p>
+							</div>
+							<div id="stockProduct"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+							<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger" id="discardButton">폐기</button>
+							<button type="submit" formaction="재고 수정" class="btn btn-primary" id="editButton">수정</button>
+						</div>
+				</form>	
+			</div>
+		</div>
 	</div>
-
-
 	<!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
@@ -152,8 +181,8 @@ font-weight: bold;
 
 	
 	
-	//등록 상품 리스트를 불러오는 함수
-	function getProductList(){
+	// 등록 상품 리스트를 불러오는 함수
+	function getProductList() {
 	    fetch('/product/list', {
 	        headers: {
 	            'Accept': 'application/json' // JSON 응답 요청
@@ -167,64 +196,142 @@ font-weight: bold;
 	    })
 	    .then(productLists => {
 	        // 전체 상품 리스트
-	        console.log(productLists); // 데이터를 처리       
-
-	        // 상품 정보를 그룹화하고 재고 수량 합산
-	        let groupedProducts = productLists.reduce((acc, product) => {
-	            // 그룹화된 상품 정보가 없으면 초기화
-	            if (!acc[product.p_no]) {
-	                acc[product.p_no] = { ...product }; // 새로운 상품 번호가 발견되면 객체를 초기화
-	                acc[product.p_no].m_num = 0; // 초기 재고 수량
-	            }
-	            acc[product.p_no].m_num += product.m_num; // 기존 재고 수량에 추가
-	            return acc;
-	        }, {});
-
-	        // 그룹화된 상품 정보를 배열로 변환
-	        let result = Object.values(groupedProducts);
-
+	        //console.log(productLists); // 데이터를 처리       
 	        // 상품 리스트들이 들어갈 tbody
 	        let tbody = document.getElementById("pList");
-
+	        // tbody 초기화
+	        tbody.innerHTML = "";       
 	        // 상품 리스트 forEach 돌려서 출력
-	        result.forEach(product => {
+	        productLists.forEach(product => {         
 	            // 상품 정보를 담는 변수 
 	            let listCont = 
 	                '<tr class="products">' +
-	                '<td class="p_no"">' + product.p_no + '</td>' +
+	                '<td>' + product.p_no + '</td>' +
 	                '<td>' + product.p_name + '</td>' +
 	                '<td>' + product.p_price + '원</td>' +
 	                '<td>' + product.m_num + '개</td>' +
 	                '<td>' +
-	                    '<button class="btn btn-info btn-stock btn-sm" data-toggle="modal" data-target="#stockModal">' +
-	                        '재고관리' +
+	                    '<button class="btn btn-info btn-stock btn-sm" ' +
+	                    'id="' + product.p_no + '" ' + // id 설정
+	                    'data-toggle="modal" ' +
+	                    'data-target="#stockModal">' +
+	                    '재고관리' +
 	                    '</button>' +
 	                '</td>' +
-	                '</tr>';
-
+	                '</tr>';             
 	            // 등록되어 있는 상품을 tbody에 담아서 출력
 	            tbody.innerHTML += listCont;
-	            
-	            // 해당 상품의 모든 상품 정보를 들고오는 함수 호출 
-	        	inventoryM();
 	        });
+	        
+	       
+	        // 재고관리 버튼
+	        let buttons = document.querySelectorAll(".btn-stock");
+	        // 재고관리 버튼 눌렀을 때 해당 상품의 코드 번호를 넘겨주고 유통기한별 상품 정보 가져오는 함수 호출
+	        groupByDate(buttons);	      
+	        
 	    })
 	    .catch(error => {
 	        console.error('상품 리스트 출력 불가:', error);
 	    });
 	}
+
 	
 
-	// 해당 상품의 모든 상품정보 들고오는 함수 
-	function inventoryM(){
-	    // getProductList() 함수를 통해 출력된 products 배열을 담는 변수 
-	    let products = document.querySelectorAll(".products");
-	 // for 루프를 사용하여 HTMLCollection의 각 요소를 출력
-	    for (let i = 0; i < products.length; i++) {
-	        console.log(products[i]);
-	    }   
-	}
+
+	   
 	
+	
+	// 재고관리 버튼에 이벤트 추가 함수
+	// 재고관리 버튼 이벤트 추가 해당 상품의 p_no 넘겨주고 유통기한별 상품 정보 가져오기
+	function groupByDate(buttons) {
+	    // 선택한 상품의 코드를 담을 변수
+	    let p_no;
+
+	    buttons.forEach(button => {
+	        button.addEventListener("click", () => {
+	            // 선택할 상품의 코드 초기화
+	            p_no = button.id;
+
+	            // 선택한 상품의 코드로 유통기한별 재고 수 들고오기
+	            fetch('/product/groupByDate?p_no=' + p_no, {
+	                headers: {
+	                    'Accept': 'application/json' // JSON 응답 요청
+	                }
+	            })
+	            .then(response => {
+	                if (!response.ok) {
+	                    throw new Error('리스폰 타입 확인');
+	                }
+	                return response.json(); // 응답을 JSON 형식으로 변환
+	            })
+	            .then(products => {
+	                // 유통기한 별 상품 정보를 담을 변수 초기화
+	                let groupByDateHtml = "";
+	                // groupByDate 정보를 담을 모달 창
+	                let stockProduct = document.getElementById("stockProduct");
+
+	                // 모달 창의 내용을 초기화
+	                stockProduct.innerHTML = "";
+
+	                products.forEach(product => {
+	                    // 유통기한을 id로 사용하기 전에 적절한 포맷으로 변환
+	                    let limitDateId = product.p_limitD.replace(/[^a-zA-Z0-9]/g, '_'); 
+
+	                    groupByDateHtml +=
+	                        '<div class="stockCont">' +
+	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_name + '" readonly>' +
+	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_no + '" readonly>' +
+	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_price + '" readonly>' +
+	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.m_date + '" readonly>' +
+	                        '<input type="text" id="' + limitDateId + 
+	                        '" class="mb-0 stockList updateBtn" readonly value="' + product.m_num + '">' +
+	                        '<p class="mb-0 stockList">'+ product.p_limitD + '</p>' +                    
+	                        '</div>'; // input id값이 유통기한
+	                });
+
+	                // 모달 창에 가져온 데이터 넣기
+	                stockProduct.innerHTML = groupByDateHtml;
+	                // input 태그 선택
+	        	    let updateBtns = document.querySelectorAll(".updateBtn");
+	                isReadonly(updateBtns)
+	            })
+	            .catch(error => {
+	                console.error('컨트롤러 확인 또는 패치 헤더 확인', error); // 오류를 처리
+	            });
+	        });
+	    });
+	}
+
+	
+	
+	// 재고관리 모달에 있는 input에 이벤트 추가
+	function isReadonly(updateBtns) {
+	   
+	    
+	    updateBtns.forEach(updateBtn => {	     
+			//선택한 인풋 태그의 값을 담는 변수 
+			let preNum = updateBtn.value;
+			
+	        // 인풋 태그를 더블 클릭 시 수정 가능
+	        updateBtn.addEventListener("dblclick", () => {
+	            // readonly 속성이 있을 시 속성 제거 
+	            if (updateBtn.hasAttribute("readonly")) {
+	                updateBtn.removeAttribute("readonly"); // readonly 속성 제거                 	                
+	            }           
+	        });
+	        
+	        // blur시 수정 가능 - > 불가능으로 바뀜
+	        updateBtn.addEventListener("blur", () => {
+	                updateBtn.setAttribute("readonly",true); // 수량 변경 시 다시 변경 불가 	               
+	        });    
+	    });
+	}
+
+	// 재고 폐기 및 수정 기능
+	function updateInventNum(){
+	    
+	}
+
 	</script>
 </body>
 </html>

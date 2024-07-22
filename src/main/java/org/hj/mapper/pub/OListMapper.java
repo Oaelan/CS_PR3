@@ -8,4 +8,6 @@ public interface OListMapper {
 
 	public List<OListDto> getOList();
 	
+	public OListDto getOListDetail(String o_no);
+	
 }

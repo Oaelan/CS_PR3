@@ -2,14 +2,22 @@ package org.hj.model;
 
 public class OListDto {
 
+	//Orderlist자료
 	private String o_no;
 	private String o_id;
 	private String o_address;
-	private int p_no;
-	private int o_num;
-	private String o_total;
+	private int sum_o_num;
+	private String sum_o_total;
 	private String o_date;
 	private boolean o_permit;
+	
+	//조인 위한 상품등록 자료 
+	private int p_no;
+	private int o_num;
+	private String p_name;
+	private String o_total;
+	
+	
 	
 	
 	public String getO_no() {
@@ -60,12 +68,35 @@ public class OListDto {
 	public void setO_permit(boolean o_permit) {
 		this.o_permit = o_permit;
 	}
+	public int getSum_o_num() {
+		return sum_o_num;
+	}
+	public void setSum_o_num(int sum_o_num) {
+		this.sum_o_num = sum_o_num;
+	}
+	public String getSum_o_total() {
+		return sum_o_total;
+	}
+	public void setSum_o_total(String sum_o_total) {
+		this.sum_o_total = sum_o_total;
+	}
+	public String getP_name() {
+		return p_name;
+	}
+	public void setP_name(String p_name) {
+		this.p_name = p_name;
+	}
+	
 	
 	@Override
 	public String toString() {
-		return "OListDto [o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address + ", p_no=" + p_no + ", o_num="
-				+ o_num + ", o_total=" + o_total + ", o_date=" + o_date + ", o_permit=" + o_permit + "]";
+		return "OListDto [o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address + ", sum_o_num=" + sum_o_num
+				+ ", sum_o_total=" + sum_o_total + ", o_date=" + o_date + ", o_permit=" + o_permit + ", p_no=" + p_no
+				+ ", o_num=" + o_num + ", p_name=" + p_name + ", o_total=" + o_total + "]";
 	}
+	
+	
+	
 	
 	
 }

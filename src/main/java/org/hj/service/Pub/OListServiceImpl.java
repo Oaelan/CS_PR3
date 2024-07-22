@@ -16,5 +16,9 @@ public class OListServiceImpl implements OListService{
 	public List<OListDto> getOList(){
 		return olm.getOList();
 	}
+	
+	public OListDto getOListDetail(String o_no){
+		return olm.getOListDetail(o_no);
+	}
 
 }

@@ -170,16 +170,17 @@ p {
                 <tr>
                     <td class="col1">이메일</td>
                     <td class="col2">
-                        <input type="text" name="mailid" required>
+                        <input type="text" id = "mailId" name="mailId" required>
                         <span class="a">@</span> 
-                        <input type="text" name="email" required>
-                        <select name="mailslc">
-                            <option value="self" selected>직접입력</option>
-                            <option value="naver">naver.com</option>
-                            <option value="gm">gmail.com</option>
-                            <option value="da">daum.com</option>
-                            <option value="yah">yahoo.com</option>
+                        <input type="text" id = "domain" name="domain" required>
+                        <input type = "hidden" id = "u_email" name = "u_email" value = "">
+                        <select id = "mailslc" name="mailslc" onclick = "updateDomain()">
+                            <option value="" selected>직접입력</option>
+                            <option value="naver.com">naver.com</option>
+                            <option value="gmail.com">gmail.com</option>
+                            <option value="daum.com">daum.com</option>
                         </select> 
+
                         <input class='but2' type="button" value="이메일 중복확인" onclick="">
                         <span id="emailError" class="error-message"></span>
                     </td>
@@ -201,9 +202,30 @@ p {
     </div>
 </form>
 
+	
+	
+	
+	
 	<script>
 	// 페이지의 모든 요소가 로드된 후에 실행될 함수
-	window.onload = function() {
+
+		
+		function updateDomain() {
+		    // select 요소와 domain 입력 필드 요소 가져오기
+		    const selectElement = document.getElementById('mailslc');
+		    const domainInput = document.getElementById('domain');
+		    
+		    // 선택된 옵션의 값 가져오기
+		    const selectedValue = selectElement.value;
+		    
+		    // domain 입력 필드에 선택된 값을 설정
+		    domainInput.value = selectedValue;
+		    updateEmail();
+		}
+		
+		
+		
+		
 	    // 사용자 ID 검증
 	    var userId = document.getElementById("u_id");
 	    var idLabel = document.getElementById("idError"); 
@@ -286,7 +308,37 @@ p {
 	            return false;
 	        }
 	    }
-	
+	    
+	    
+	    
+	    
+	    
+	    const mailId = document.getElementById('mailId');
+	    const domainInput = document.getElementById('domain');
+	    const email = document.getElementById('u_email');
+	        
+	    // 입력 필드의 값이 변경될 때마다 이메일 주소를 업데이트
+	    function updateEmail() {
+	        const mailIdValue = mailId.value;
+	        const domainValue = domainInput.value;
+	        
+	        if (mailIdValue && domainValue) {
+	            email.value = mailIdValue+"@"+domainValue;
+	            console.log(email.value);
+	        } else {
+	            email.value = ''; // 둘 중 하나라도 비어 있으면 이메일 필드를 비움
+	        }
+	    }
+
+	        
+	 	// mailId와 domain 입력 필드의 input 이벤트에 리스너 추가
+        mailId.addEventListener('input', updateEmail);
+        domainInput.addEventListener('input', updateEmail);
+	    
+      	//이메일 도메인 선택 입력
+    	
+      
+      
 	    // 폼 제출 검증
 	    let form = document.getElementById("registerForm"); 
 	    form.addEventListener("submit", (event) => {
@@ -295,12 +347,11 @@ p {
 	        let isPasswordConfirmationValid = validatePasswordConfirmation();
 	        let isNameValid = validateName();
 	
-	        if (!isUserIdValid || !isPasswordValid || !isPasswordConfirmationValid || !isNameValid) {
+	        if (!isUserIdValid || !isPasswordValid || !isPasswordConfirmationValid || !isNameValid || !mailid || !domain) {
 	            event.preventDefault();
 	            alert("필드를 올바르게 입력해주세요.");
 	        }
 	    });
-	};
 	</script>
 </body>
 </html>

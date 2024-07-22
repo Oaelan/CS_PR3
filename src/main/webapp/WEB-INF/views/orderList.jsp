@@ -9,14 +9,31 @@
     <title>주문 내역</title>
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        .table td,
-        th {
+    	body {
+    		font-family: 나눔고딕;
+    	}
+    	
+    	th {
+    		font-weight: normal;
+    	}
+    	
+    	.table th {
+    		text-align: center;
+    	}
+        .table td	{
             padding-left: 0;
             padding-right: 0;
             cursor: pointer;
-            /* 마우스 커서를 포인터로 변경하여 클릭 가능함을 표시 */
             text-align: center;
+            vertical-align: middle;
+        }
+        
+        .table thead th {
+        	border-bottom: none;
+        	vertical-align: middle;
+        	font-size: 17px;
         }
 
         .modal-footer .btn-confirm {
@@ -37,6 +54,36 @@
         #totalSum {
             display: flex;
             justify-content: flex-start;
+        }
+
+        .dropdown-toggle {
+            background-color: #ffffff; /* 배경색을 흰색으로 설정 */
+            color: #000000; /* 글자색을 검은색으로 설정 */
+            /* border: 1px solid lightgray; /* 테두리를 lightgray로 설정 */
+            border: none;
+		}
+        .dropdown-toggle::after {
+            border-top-color: #000000; /* 화살표 색상을 검은색으로 설정 */
+        }
+
+        .dropdown-menu {
+            border: 1px solid lightgray; /* 드롭다운 메뉴의 테두리를 lightgray로 설정 */
+        }
+
+        .dropdown-menu a.dropdown-item {
+            color: #000000; /* 드롭다운 메뉴 항목 텍스트 색상을 검은색으로 설정 */
+        }
+
+        .dropdown-menu a.dropdown-item:hover {
+            background-color: lightgray; /* 드롭다운 메뉴 항목 호버 배경색 설정 */
+        }
+        
+        #btn1, #btn2 {
+        	font-size: 17px;
+        }
+        
+        modal-content table td {
+        	text-align: left;
         }
 
     </style>
@@ -63,38 +110,32 @@
                                         <th scope="col">배달 주소지</th>
                                         <th scope="col">주문 개수</th>
                                         <th scope="col">총 단가</th>
-                                        <th scope="col">주문 일자</th>
-                                        <th scope="col">상태</th>
+										<th scope="col">
+											<div class="dropdown">
+												<button class="btn btn-primary dropdown-toggle"
+													type="button" data-bs-toggle="dropdown"
+													aria-expanded="false" id="btn1">주문 일자</button>
+												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" href="#">등록순</a></li>
+													<li><a class="dropdown-item" href="#">최신순</a></li>
+												</ul>
+											</div>
+										</th>
+										<th scope="col">
+											<div class="dropdown">
+												<button class="btn btn-primary dropdown-toggle"
+													type="button" data-bs-toggle="dropdown"
+													aria-expanded="false" id="btn2">상태</button>
+												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" href="#">수주 확인</a></li>
+													<li><a class="dropdown-item" href="#">수주 거절</a></li>
+													<li><a class="dropdown-item" href="#">수주 대기</a></li>
+												</ul>
+											</div>
+										</th>
                                     </tr>
                                 </thead>
                                 <tbody id = "orderTable">
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="1">
-                                        <td>1</td>
-                                        <td>user123</td>
-                                        <td>서울시 강남구</td>
-                                        <td>3</td>
-                                        <td>30,000원</td>
-                                        <td>2024-07-18</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="2">
-                                        <td>2</td>
-                                        <td>user456</td>
-                                        <td>서울시 종로구</td>
-                                        <td>2</td>
-                                        <td>20,000원</td>
-                                        <td>2024-07-17</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="3">
-                                        <td>3</td>
-                                        <td>user789</td>
-                                        <td>부산시 해운대구</td>
-                                        <td>1</td>
-                                        <td>10,000원</td>
-                                        <td>2024-07-16</td>
-                                        <td></td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -111,10 +152,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="orderDetailModalLabel">주문 상세 정보</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+					<button type="button" class="close" data-bs-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
                 <div class="modal-body pb-0">
                     <table class="table m-0">
                         <tbody>
@@ -134,7 +176,7 @@
                     </table>
                 </div>
                 <div id="totalSum" class="mt-3 d-flex align-items-center pl-4 pb-3">
-                    <strong class="mr-2">총 합계:</strong> <span id="totalAmount"></span>
+                    <p class="mr-2">총 합계 : </p> <span id="totalAmount"></span>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">거래 명세서</button>

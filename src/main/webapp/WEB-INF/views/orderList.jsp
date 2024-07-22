@@ -193,46 +193,79 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="orderList.js">
-    </script>
     
-    <!-- 주문 내역 리스트 -->
+    <!-- 주문 내역 스크립트 -->
 	<script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch('/api/getOList', {
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-                .then(response => response.json())
-                .then(data => {
-                    let table = document.getElementById("orderTable");
-                    data.forEach(order => {
-                    	//수주번호 같은 것 끼리 묶어서 주문 개수, 총 단가 합치기
-                        let row = table.insertRow();
-                        row.insertCell(0).innerText = order.o_no;
-                        row.insertCell(1).innerText = order.o_id;
-                        row.insertCell(2).innerText = order.o_address;
-                        row.insertCell(3).innerText = order.o_num;
-                        row.insertCell(4).innerText = order.o_total;
-                        row.insertCell(5).innerText = order.o_date;
-                        row.insertCell(6).innerText = order.o_permit;
-                        
-                        // 클릭 모달창
-                        row.addEventListener('click', function() {
-                        	//반복문으로 같은 수주번호 가진거 다 가져와서 총 가격 계산
-                        	//제품명 조인으로 가져오기 
-                            document.getElementById('p_no').innerText = order.p_no;
-                            document.getElementById('p_name').innerText = "제품명 가져오기";
-                            document.getElementById('o_num').innerText = "재품당 개수";
-                            document.getElementById('o_total').innerText = "재품당 합계 가격";
+	
+	//데이터 가져오는 fetch함수
+	function fetchOrderList() {
+	    return fetch('/api/getOList', {
+	        headers: {
+	            'Accept': 'application/json'
+	        }
+	    })
+	    .then(response => response.json())
+	    .catch(error => {
+	        console.error('Error fetching data:', error);
+	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외.
+	    });
+	}
+	
+	//테이블에 데이터 추가하는 함수
+	function populateOrderTable(data) {
+	    let table = document.getElementById("orderTable");
+	    table.innerHTML = ""; // 기존 데이터를 삭제하여 테이블을 초기화
 
-                            $('#orderDetailModal').modal('show');  // Show the modal
-                        });
-                    });
-                })
-                .catch(error => console.error('Error fetching data:', error));
-        });
+	    data.forEach(order => {
+	        let row = table.insertRow();
+	        row.insertCell(0).innerText = order.o_no;
+	        row.insertCell(1).innerText = order.o_id;
+	        row.insertCell(2).innerText = order.o_address;
+	        row.insertCell(3).innerText = order.sum_o_num;
+	        row.insertCell(4).innerText = order.sum_o_total;
+	        row.insertCell(5).innerText = order.o_date;
+	        row.insertCell(6).innerText = order.o_permit;
+
+	        // 클릭 모달창
+	        row.addEventListener('click', function() {
+	            showOrderDetailModal(order.o_no);
+	        });
+	    });
+	}
+	
+	
+	//수주번호에 따라 값을 가져와 모달창에 입력하는 함수
+	function showOrderDetailModal(o_no) {
+	    fetch(`/api/getOListDetail?o_no=${o_no}`, {
+	        method: 'GET',
+	        headers: {
+	            'Accept': 'application/json'
+	        }
+	    })
+	    .then(response => response.json())
+	    .then(data => {
+	        document.getElementById('p_no').innerText = data.p_no;
+	        document.getElementById('p_name').innerText = data.p_name;
+	        document.getElementById('o_num').innerText = data.o_num;
+	        document.getElementById('o_total').innerText = data.o_total;
+	
+	        $('#orderDetailModal').modal('show');  // Show the modal
+	    })
+	    .catch(error => {
+	        console.error('Error fetching data:', error);
+	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
+	    });
+	}
+	
+	
+	//실행 이벤트 리스너
+	document.addEventListener("DOMContentLoaded", function() {
+	    fetchOrderList()
+	        .then(data => populateOrderTable(data))
+	        .catch(error => console.error('Error handling data:', error));
+	});
+	
+	
     </script>
 </body>
 

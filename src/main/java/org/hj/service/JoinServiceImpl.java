@@ -1,6 +1,6 @@
 package org.hj.service;
 
-import org.hj.mapper.JoinMapper;
+import org.hj.mapper.pub.JoinMapper;
 import org.hj.model.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

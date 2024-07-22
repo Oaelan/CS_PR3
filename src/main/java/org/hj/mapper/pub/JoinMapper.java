@@ -1,4 +1,4 @@
-package org.hj.mapper;
+package org.hj.mapper.pub;
 
 import org.hj.model.UserDto;
 

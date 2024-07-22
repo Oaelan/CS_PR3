@@ -43,7 +43,8 @@
 </head>
 
 <body>
-    <div class="container mt-5">
+
+	<div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
                 <div class="card">
@@ -66,7 +67,7 @@
                                         <th scope="col">상태</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id = "orderTable">
                                     <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="1">
                                         <td>1</td>
                                         <td>user123</td>
@@ -124,10 +125,10 @@
                                 <th scope="row">가격</th>
                             </tr>
                             <tr>
-                                <td id="orderId"></td>
-                                <td id="userId"></td>
-                                <td id="deliveryAddress"></td>
-                                <td id="quantity"></td>
+                                <td id="p_no"></td>
+                                <td id="p_name"></td>
+                                <td id="o_num"></td>
+                                <td id="o_total"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -151,6 +152,45 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="orderList.js">
+    </script>
+    
+    <!-- 주문 내역 리스트 -->
+	<script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('/api/getOList', {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(data => {
+                    let table = document.getElementById("orderTable");
+                    data.forEach(order => {
+                    	//수주번호 같은 것 끼리 묶어서 주문 개수, 총 단가 합치기
+                        let row = table.insertRow();
+                        row.insertCell(0).innerText = order.o_no;
+                        row.insertCell(1).innerText = order.o_id;
+                        row.insertCell(2).innerText = order.o_address;
+                        row.insertCell(3).innerText = order.o_num;
+                        row.insertCell(4).innerText = order.o_total;
+                        row.insertCell(5).innerText = order.o_date;
+                        row.insertCell(6).innerText = order.o_permit;
+                        
+                        // 클릭 모달창
+                        row.addEventListener('click', function() {
+                        	//반복문으로 같은 수주번호 가진거 다 가져와서 총 가격 계산
+                        	//제품명 조인으로 가져오기 
+                            document.getElementById('p_no').innerText = order.p_no;
+                            document.getElementById('p_name').innerText = "제품명 가져오기";
+                            document.getElementById('o_num').innerText = order.o_num;
+                            document.getElementById('o_total').innerText = order.o_total;
+
+                            $('#orderDetailModal').modal('show');  // Show the modal
+                        });
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        });
     </script>
 </body>
 

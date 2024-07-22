@@ -9,6 +9,6 @@
   
 	<insert id="JoinPut">
   		insert into public_schema.User (u_id, u_name, u_email, u_pw, u_address, u_no)
-  		values (#{u_id}, #{u_name},"sadadad" , #{u_pw}, #{u_address}, #{u_no});
+  		values (#{u_id}, #{u_name},#{u_email} , #{u_pw}, #{u_address}, #{u_no});
   	</insert>
   	</mapper>

@@ -1,0 +1,102 @@
+@charset "UTF-8";
+/* 기본 글꼴을 나눔고딕체로 설정 */
+body {
+	font-family: 'Nanum Gothic', sans-serif;
+}
+
+.form-control {
+	width: calc(100% - 50px);
+	margin-right: 25px;
+	margin-left: 25px;
+}
+
+.btn-block {
+	width: calc(100% - 50px);
+	padding: 0.375rem 1.25rem;
+	margin-left: 25px;
+}
+
+.form-row {
+	justify-content: center;
+}
+
+.product-list {
+	margin-top: 50px;
+	float: left;
+	width: calc(70% - 50px);
+	/* 제품목록 박스의 너비 조정 */
+	margin-right: 30px;
+	/* 오른쪽 여백 설정 */
+}
+
+#product-list {
+	overflow-y: auto;
+	max-height: 330px; /* 최대 높이 설정 */
+}
+
+.warehouse-section {
+	margin-top: 50px;
+	float: left;
+	width: 30%;
+	/* 창고온도 박스의 너비 조정 */
+}
+
+.product-table {
+	margin-top: 20px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+.product-table th, .product-table td {
+	padding: 10px;
+	text-align: center;
+	vertical-align: middle;
+	border-bottom: none;
+}
+
+.table thead th {
+	border-bottom: none;
+}
+
+.btn-stock {
+	padding: 5px 10px;
+	font-size: 12px;
+}
+
+.product-list .card-header h6 {
+	margin-left: 25px;
+}
+
+/* 추가한 스타일 */
+.warehouse-section {
+	margin-top: 50px;
+	padding: 10px;
+	background-color: #f0f0f0;
+	border: 1px solid #ccc;
+	height: 100px;
+	/* 높이를 조정하여 박스 크기를 줄임 */
+}
+
+.warehouse-header {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.warehouse-message {
+	font-size: 14px;
+}
+
+#search {
+	border: 1px solid lightgray;
+	border-radius: 3px;
+}
+
+#search:focus {
+	outline: none;
+}
+
+#icon {
+	border: none;
+}

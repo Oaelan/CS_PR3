@@ -16,9 +16,10 @@
     
     
     <select id="getOListDetail" parameterType="string" resultType="org.hj.model.OListDto">
-        SELECT po.o_no, pp.p_no, pp.p_name, po.o_num, po.o_total
-        FROM public_schema.OrderList po
-        INNER JOIN public_schema.Product_manufacturing pp
-        where #{o_no} = o_no;
+        SELECT po.o_no, po.p_no, sp.p_name, po.o_num, po.o_total
+        FROM public_schema.OrderList AS po
+        INNER JOIN Supplier.productCode sp 
+        ON po.p_no = sp.p_no
+        where po.o_no = #{o_no};
     </select>
 </mapper>

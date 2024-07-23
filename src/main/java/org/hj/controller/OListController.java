@@ -27,10 +27,9 @@ public class OListController {
 	
 	//상세 주문 내역(모달창)
 	@GetMapping("/getOListDetail")
-	public ResponseEntity<OListDto> getOListDetail(@RequestParam String o_no) {
-        OListDto orderDetail = ols.getOListDetail(o_no);
-		System.out.println(orderDetail);
-        return ResponseEntity.ok(orderDetail);
+	public List<OListDto> getOListDetail(@RequestParam("o_no") String o_no) {
+        List<OListDto> orderDetail = (List<OListDto>)ols.getOListDetail(o_no);
+        return orderDetail;
     }
 	
 }

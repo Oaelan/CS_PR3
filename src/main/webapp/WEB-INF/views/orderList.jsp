@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
+
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -157,28 +159,29 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-                <div class="modal-body pb-0">
-                    <table class="table m-0">
-                        <tbody>
+                <div class="modal-body p-0">
+                	<table class="table m-0 ">
+                    	<thead>
                             <tr>
                                 <th scope="row">제품번호</th>
                                 <th scope="row">제품명</th>
                                 <th scope="row">개수</th>
                                 <th scope="row">가격</th>
                             </tr>
-                            <tr>
-                                <td id="p_no"></td>
-                                <td id="p_name"></td>
-                                <td id="o_num"></td>
-                                <td id="o_total"></td>
-                            </tr>
+                     	<thead>
+                     	
+                        <tbody id = "orderDetailsTableBody">
+                        
                         </tbody>
+                        
                     </table>
                 </div>
-                <div id="totalSum" class="mt-3 d-flex align-items-center pl-4 pb-3">
-                    <p class="mr-2">총 합계 : </p> <span id="totalAmount"></span>
-                </div>
-                <div class="modal-footer">
+				<div id="totalSum" class="mt-3 d-flex align-items-center pl-4 pb-3"
+					style="text-align: center; width: 100%;">
+					<p class="mr-2" style="margin: 0; display: inline;">총 합계 :</p>
+					<span id="totalAmount" style="display: inline;"></span>
+				</div>
+				<div class="modal-footer">
                     <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">거래 명세서</button>
                     <button type="button" class="btn btn-confirm" data-dismiss="modal">수주 확인</button>
                     <button type="button" class="btn btn-reject" data-dismiss="modal">수주 거절</button>
@@ -190,7 +193,7 @@
 
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     
@@ -235,20 +238,35 @@
 	
 	
 	//수주번호에 따라 값을 가져와 모달창에 입력하는 함수
-	function showOrderDetailModal(o_no) {
-	    fetch(`/api/getOListDetail?o_no=${o_no}`, {
-	        method: 'GET',
-	        headers: {
-	            'Accept': 'application/json'
-	        }
-	    })
+	 function showOrderDetailModal(o_no) {
+
+        fetch("/api/getOListDetail?o_no="+ o_no, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
 	    .then(response => response.json())
-	    .then(data => {
-	        document.getElementById('p_no').innerText = data.p_no;
-	        document.getElementById('p_name').innerText = data.p_name;
-	        document.getElementById('o_num').innerText = data.o_num;
-	        document.getElementById('o_total').innerText = data.o_total;
-	
+	    .then(data =>{
+	    	const tableBody = document.getElementById('orderDetailsTableBody');
+	    	tableBody.innerHTML = '';
+	    	let totalSum = 0; // 총합을 저장할 변수
+	        
+	        if (Array.isArray(data)) {
+	            data.forEach(function(orderDetail) {
+	                var row = document.createElement('tr');
+	                row.innerHTML = '<td>' + orderDetail.p_no + '</td>' +
+	                                '<td>' + orderDetail.p_name + '</td>' +
+	                                '<td>' + orderDetail.o_num + '</td>' +
+	                                '<td>' + orderDetail.o_total + '</td>';
+	                tableBody.appendChild(row);
+	                
+	                totalSum += parseFloat(orderDetail.o_total) || 0;
+	            });
+	            
+	            document.getElementById('totalAmount').innerText = totalSum.toFixed(2);    
+	        } 
 	        $('#orderDetailModal').modal('show');  // Show the modal
 	    })
 	    .catch(error => {

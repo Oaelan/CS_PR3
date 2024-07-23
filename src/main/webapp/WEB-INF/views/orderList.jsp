@@ -247,7 +247,7 @@
 	        	row.insertCell(6).innerText = "수주 거절";
 	        } 
 	        else if(order.o_permit === true){
-	        	row.insertCell(6).innerText = "수주 수락";
+	        	row.insertCell(6).innerText = "수주 확인";
 	        }
 	        else{
 	        	row.insertCell(6).innerText = "xxxx";

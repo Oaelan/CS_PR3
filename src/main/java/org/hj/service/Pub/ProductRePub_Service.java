@@ -8,5 +8,5 @@ public interface ProductRePub_Service {
 	public void uploadP(Product_manufacturingDto pmd);
 	public  ArrayList <Product_manufacturingDto> productList();
 	public  ArrayList <Product_manufacturingDto> groupByDate(Product_manufacturingDto pmd);
-
+	public void updateStock(Product_manufacturingDto pmd);
 }

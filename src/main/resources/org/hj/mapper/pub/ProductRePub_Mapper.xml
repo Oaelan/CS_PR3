@@ -2,28 +2,39 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="org.hj.mapper.pub.ProductRePub_Mapper">
-  
-  <!-- 상품등록 SQL -->
-  <insert id="uploadP" parameterType="org.hj.model.Product_manufacturingDto">
-  insert into public_schema.Product_manufacturing
-  (m_date, p_no, p_name, p_price, m_num, p_limitD)
-  values(#{m_date}, #{p_no}, #{p_name}, #{p_price}, #{m_num}, #{p_limitD})
-  </insert>
-  
-  
-  <!-- 등록된 상품 들고오는 sql -->
-  <select id="productList" resultType="org.hj.model.Product_manufacturingDto">
-  select * from public_schema.productNum;
-  </select>
 
-  <!-- 선택한 상품의 코드로 유통기한별 재고 수 들고오는 sql -->
-  <select id="groupByDate" resultType="org.hj.model.Product_manufacturingDto"
-  parameterType="org.hj.model.Product_manufacturingDto">
-  select * from public_schema.Product_manufacturing
-  where p_no = #{p_no};
-  </select>
-  
-  </mapper>
+<mapper namespace="org.hj.mapper.pub.ProductRePub_Mapper">
+
+	<!-- 상품등록 SQL -->
+	<insert id="uploadP"
+		parameterType="org.hj.model.Product_manufacturingDto">
+		insert into public_schema.Product_manufacturing
+		(m_date, p_no, p_name, p_price, m_num, p_limitD)
+		values(#{m_date}, #{p_no}, #{p_name}, #{p_price}, #{m_num}, #{p_limitD})
+	</insert>
+
+
+	<!-- 등록된 상품 들고오는 sql -->
+	<select id="productList"
+		resultType="org.hj.model.Product_manufacturingDto">
+		select * from public_schema.productNum;
+	</select>
+
+	<!-- 선택한 상품의 코드로 유통기한별 재고 수 들고오는 sql -->
+	<select id="groupByDate"
+		resultType="org.hj.model.Product_manufacturingDto"
+		parameterType="org.hj.model.Product_manufacturingDto">
+		select * from public_schema.Product_manufacturing
+		where p_no = #{p_no};
+	</select>
+
+	<!-- 재고 수정하는 sql -->
+	<update id="updateStock"
+		parameterType="org.hj.model.Product_manufacturingDto">
+		UPDATE public_schema.Product_manufacturing
+		SET m_num = #{m_num}
+		WHERE p_no = #{p_no} AND m_date = #{m_date} AND p_limitD = #{p_limitD}
+	</update>
+
+</mapper>
   

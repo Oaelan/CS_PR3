@@ -22,6 +22,8 @@ public class ProductRePub_ServiceImpl implements ProductRePub_Service {
 		return prpm.groupByDate(pmd);
 	}
 
-	
+	public void updateStock(Product_manufacturingDto pmd){
+		prpm.updateStock(pmd);
+	}	
 
 }

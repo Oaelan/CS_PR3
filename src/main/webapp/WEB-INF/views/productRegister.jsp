@@ -5,13 +5,23 @@
 <meta charset="UTF-8">
 <title>제품 등록</title>
 <style>
+#invenNotice {
+	font-weight: bold;
+}
+
 .stockList, .stockT {
 	width: 100px;
 	text-align: center;
 }
 
+.checkB {
+	width: 100px;
+}
+
 .nonB {
 	border: none;
+	cursor: default;
+	pointer-events: none;
 }
 
 #stockTitle {
@@ -150,24 +160,25 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-					<form method="post">
+					
 						<div class="modal-body">
-							<div id="stockTitle">
-								<p id="modalPName" class="m-0 stockT">제품명</p>
-								<p id="modalPNo" class="m-0 stockT">제품 번호</p>
-								<p id="modalPPrice" class="m-0 stockT">가격</p>
+							<div id="stockTitle">							
+								<p id="modalPNo" class="m-0 stockT">선택</p>							
 								<p id="modalMDate" class="m-0 stockT">입고 날짜</p>
-								<p id="modalMNum" class="m-0 stockT">재고 수량</p>
-								<p id="modalPLimitD" class="m-0 stockT">유통 기한</p>
+								<p id="modalPLimitD" class="m-0 stockT">유통 기한</p>	
+								<p id="modalMNum" class="m-0 stockT">재고 수량</p>												
 							</div>
 							<div id="stockProduct"></div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-							<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger" id="discardButton">폐기</button>
-							<button type="submit" formaction="재고 수정" class="btn btn-primary" id="editButton">수정</button>
+						<div class="modal-footer" style="display: flex; justify-content: space-between;">
+							<p id="invenNotice">* 수량 더블 클릭 시 수정 가능 / 폐기는 체크 후 가능</p>
+								<div id="btnC">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+									<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger" id="discardButton">폐기</button>
+									<button type="submit" class="btn btn-primary" id="editButton">수정</button>							
+								</div>
 						</div>
-				</form>	
+				
 			</div>
 		</div>
 	</div>
@@ -179,8 +190,6 @@
 	<script>
 	getProductList();
 
-	
-	
 	// 등록 상품 리스트를 불러오는 함수
 	function getProductList() {
 	    fetch('/product/list', {
@@ -221,14 +230,12 @@
 	                '</tr>';             
 	            // 등록되어 있는 상품을 tbody에 담아서 출력
 	            tbody.innerHTML += listCont;
-	        });
-	        
-	       
+	        });  
 	        // 재고관리 버튼
 	        let buttons = document.querySelectorAll(".btn-stock");
+	        //console.log(buttons)
 	        // 재고관리 버튼 눌렀을 때 해당 상품의 코드 번호를 넘겨주고 유통기한별 상품 정보 가져오는 함수 호출
-	        groupByDate(buttons);	      
-	        
+	        groupByDate(buttons);	         
 	    })
 	    .catch(error => {
 	        console.error('상품 리스트 출력 불가:', error);
@@ -269,31 +276,41 @@
 	                let groupByDateHtml = "";
 	                // groupByDate 정보를 담을 모달 창
 	                let stockProduct = document.getElementById("stockProduct");
-
 	                // 모달 창의 내용을 초기화
-	                stockProduct.innerHTML = "";
-
+	                stockProduct.innerHTML = "";	               
+	                // 유통기한별 상품 출력문
 	                products.forEach(product => {
 	                    // 유통기한을 id로 사용하기 전에 적절한 포맷으로 변환
-	                    let limitDateId = product.p_limitD.replace(/[^a-zA-Z0-9]/g, '_'); 
-
+	                    let limitDateId = product.p_limitD.replace(/[^a-zA-Z0-9]/g, '_');
+	                    //재고 관리 모달창 타이틀에 해당 상품명 넣을거임
+						let stockModalLabel = document.getElementById("stockModalLabel");
+						stockModalLabel.innerHTML = product.p_name;
 	                    groupByDateHtml +=
 	                        '<div class="stockCont">' +
-	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_name + '" readonly>' +
-	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_no + '" readonly>' +
-	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.p_price + '" readonly>' +
-	                        '<input type="text" class="mb-0 nonB stockList " value="' + product.m_date + '" readonly>' +
-	                        '<input type="text" id="' + limitDateId + 
-	                        '" class="mb-0 stockList updateBtn" readonly value="' + product.m_num + '">' +
-	                        '<p class="mb-0 stockList">'+ product.p_limitD + '</p>' +                    
-	                        '</div>'; // input id값이 유통기한
-	                });
-
+	                        '<input type="checkbox" class="mb-0 checkB stockList name="disposeStock" id="'+product.m_date+'">'+
+	                        '<input type="text" hidden class="mb-0 nonB stockList" name="p_no" value="' + product.p_no + '" readonly>' +
+	                        '<input type="text" class="mb-0 nonB stockList" name="m_date" value="' + product.m_date + '" readonly>' +
+	                        '<input type="text" class="mb-0 nonB stockList" name="p_limitD" value="' + product.p_limitD + '" readonly>' +
+	                        '<input type="text" class="mb-0 stockList updateBtn m_num" id="' + limitDateId + '" name="m_num" value="' + product.m_num + '" readonly>' +
+	                        '</div>'; // input id값이 유통기한                 
+	                });  
+	            	//재고 수정 기능 호출
+                   	
+	            	
 	                // 모달 창에 가져온 데이터 넣기
 	                stockProduct.innerHTML = groupByDateHtml;
+	                
+	                // 수정 기능을 위한 변수(재고관리 모달창에 존재하는 데이터들을 객체로 담을거임)
+	                let stockConts = document.querySelectorAll(".stockCont"); 
+	                // 수정 기능 함수 호출
+	              	updateInventNum(stockConts);
+	              	
 	                // input 태그 선택
 	        	    let updateBtns = document.querySelectorAll(".updateBtn");
 	                isReadonly(updateBtns)
+	                
+	                // 폐기 기능 호출 함수	                
+	                disposeStock(stockConts);
 	            })
 	            .catch(error => {
 	                console.error('컨트롤러 확인 또는 패치 헤더 확인', error); // 오류를 처리
@@ -306,8 +323,6 @@
 	
 	// 재고관리 모달에 있는 input에 이벤트 추가
 	function isReadonly(updateBtns) {
-	   
-	    
 	    updateBtns.forEach(updateBtn => {	     
 			//선택한 인풋 태그의 값을 담는 변수 
 			let preNum = updateBtn.value;
@@ -327,10 +342,78 @@
 	    });
 	}
 
-	// 재고 폐기 및 수정 기능
-	function updateInventNum(){
-	    
+	//폐기 기능 
+	function disposeStock(stockConts){	  
+		//선택된 상품들을 담을 객체
+		let disposeList=[];
+		// 위의 변수에 객체를 담기 위한 반복문 
+		for(i=0; i<stockConts.length;i++){
+		    
+			}
+	    }
+	
+	
+	
+	// 재고 수정 기능
+	function updateInventNum(stockConts){
+		//수정할 재고들을 담을 변수
+	    let products = [];
+		// 담을 변수 정보 
+        stockConts.forEach(cont => {
+            let product = {
+                p_no: cont.querySelector('input[name="p_no"]').value,
+                m_date: cont.querySelector('input[name="m_date"]').value,
+                p_limitD: cont.querySelector('input[name="p_limitD"]').value,
+                m_num: cont.querySelector('input[name="m_num"]').value
+            };
+            products.push(product);          
+        }); //console.log(products)
+	    //재고 수정 버튼
+	    let editButton = document.getElementById("editButton");
+	    // 수정 기능 추가
+	    editButton.addEventListener("click",()=>{
+	   	//재고관리 모달을 띄운 후 수정버튼을 클릭했을 때 인풋값 한번더 들고옴
+	   	// 위의 객체에서 담은 이전 갯수와 비교하기 위함
+	    let proudctsNum = document.querySelectorAll(".m_num");
+	   	//조건식에 만족하여 수정할 쿼리문만 선택하여 담는 객체
+	   	let updatePro = [];
+	   	for(i=0; i<proudctsNum.length; i++){
+	   	    if(proudctsNum[i].value != products[i].m_num){	   	        
+	   	    	//재고 수를 변경 했다면 원래 재고 객체에 바뀐 재고 수로 초기화
+	   	     	products[i].m_num = proudctsNum[i].value;
+	   	   		//수정할 쿼리문만 담기
+	   	       	updatePro.push(products[i]);
+	   	        } 
+	   		};
+	   		// 수정 패치 호출 해서 updatePro 던져주기
+	   		updateInventFetch(updatePro);
+	   	 	// jQuery를 사용하여 모달 닫기
+	   	    $('#stockModal').modal('hide'); // 모달 숨기기
+	   		// 페이지 새로 고침
+	   	    location.reload(); // 페이지 즉시 새로 고침(변경된 재고수 웹 브라우저에 실시간 반영을 위함)
+	    });
 	}
+	
+	// 재고 수정 fetch 함수
+	function updateInventFetch(updatePro){
+	 // POST 요청 보내기
+	    fetch('/product/updateStock', {
+	      method: 'POST',
+	      headers: {
+	        'Accept': 'application/json', // 전송할 데이터의 타입
+	        'Content-Type': 'application/json' // 전송할 데이터의 타입
+	      },
+	      body: JSON.stringify(updatePro) // 데이터 객체를 JSON 문자열로 변환
+	    })
+	    .then(response => response.json()) // 응답을 JSON으로 변환
+	    .then(result => {
+	      console.log('Success:', result); // 성공적으로 처리된 결과를 출력
+	    })
+	    .catch(error => {
+	      console.error('Error:', error); // 오류가 발생한 경우
+	    });
+	}
+
 
 	</script>
 </body>

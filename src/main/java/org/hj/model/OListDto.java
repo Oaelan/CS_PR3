@@ -9,7 +9,7 @@ public class OListDto {
 	private int sum_o_num;
 	private String sum_o_total;
 	private String o_date;
-	private boolean o_permit;
+	private Boolean o_permit;
 	
 	//조인 위한 상품등록 자료 
 	private int p_no;
@@ -62,10 +62,10 @@ public class OListDto {
 	public void setO_date(String o_date) {
 		this.o_date = o_date;
 	}
-	public boolean isO_permit() {
+	public Boolean isO_permit() {
 		return o_permit;
 	}
-	public void setO_permit(boolean o_permit) {
+	public void setO_permit(Boolean o_permit) {
 		this.o_permit = o_permit;
 	}
 	public int getSum_o_num() {

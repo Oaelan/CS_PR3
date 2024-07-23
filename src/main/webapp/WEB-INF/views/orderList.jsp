@@ -30,12 +30,19 @@
             cursor: pointer;
             text-align: center;
             vertical-align: middle;
-        }
+		}
         
         .table thead th {
         	border-bottom: none;
         	vertical-align: middle;
-        	font-size: 17px;
+        	font-size: 18px;
+        	font-weight: bold;
+        	
+        }
+        
+        header {
+        	background-color: #007bff;
+        	color: white;
         }
 
         .modal-footer .btn-confirm {
@@ -81,7 +88,8 @@
         }
         
         #btn1, #btn2 {
-        	font-size: 17px;
+        	font-size: 18px;
+        	font-weight: bold;
         }
         
         modal-content table td {
@@ -98,7 +106,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body p-0">
-                        <header class="bg-light py-2 mb-0">
+                        <header class="py-2 mb-0">
                             <div class="container text-center">
                                 <h5 class="m-0">주문 내역</h5>
                             </div>

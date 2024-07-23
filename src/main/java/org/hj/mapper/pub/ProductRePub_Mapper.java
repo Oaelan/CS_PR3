@@ -16,4 +16,7 @@ public interface ProductRePub_Mapper {
 
 	// 재고 수정하기
 	public void updateStock(Product_manufacturingDto pmd);
+
+	// 재고 패기하기
+	public void disposeStock(Product_manufacturingDto pmd);
 }

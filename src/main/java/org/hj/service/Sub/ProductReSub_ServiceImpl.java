@@ -1,5 +1,7 @@
 package org.hj.service.Sub;
 
+import java.util.List;
+
 import org.hj.mapper.sub.ProductReSub_Mapper;
 import org.hj.model.Product_manufacturingDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,5 +18,8 @@ public class ProductReSub_ServiceImpl implements ProductReSub_Service {
 	public int addPno(Product_manufacturingDto pmd) {
 		return prsm.addPno(pmd);
 	}
-
+	
+	public List <Product_manufacturingDto> productsInfo(){
+		return prsm.productsInfo();
+	}
 }

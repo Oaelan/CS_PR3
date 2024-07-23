@@ -24,6 +24,11 @@ public class ProductRePub_ServiceImpl implements ProductRePub_Service {
 
 	public void updateStock(Product_manufacturingDto pmd){
 		prpm.updateStock(pmd);
-	}	
+	}
+	
+	public void disposeStock(Product_manufacturingDto pmd){
+		prpm.disposeStock(pmd);
+	}
+	
 
 }

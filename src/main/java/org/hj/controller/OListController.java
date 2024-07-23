@@ -5,7 +5,6 @@ import java.util.List;
 import org.hj.model.OListDto;
 import org.hj.service.Pub.OListService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,4 +31,15 @@ public class OListController {
         return orderDetail;
     }
 	
+	//수주 거절
+	@GetMapping("/rejectOrder")
+	public void rejectOrder(@RequestParam("o_no") String o_no) {
+		ols.rejectOrder(o_no);
+	   }
+	
+	//수주 수락
+	@GetMapping("/acceptOrder")
+	public void acceptOrder(@RequestParam("o_no") String o_no) {
+		ols.acceptOrder(o_no);
+	}
 }

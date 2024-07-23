@@ -20,5 +20,14 @@ public class OListServiceImpl implements OListService{
 	public List<OListDto> getOListDetail(String o_no){
 		return olm.getOListDetail(o_no);
 	}
+	
+	public void rejectOrder(String o_no) {
+		olm.rejectOrder(o_no);
+	}
+	
+	public void acceptOrder(String o_no) {
+		olm.acceptOrder(o_no);
+	}
+	
 
 }

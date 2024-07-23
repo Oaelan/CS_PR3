@@ -182,9 +182,9 @@
 					<span id="totalAmount" style="display: inline;"></span>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-primary mr-auto" data-dismiss="modal">거래 명세서</button>
-                    <button type="button" class="btn btn-confirm" data-dismiss="modal">수주 확인</button>
-                    <button type="button" class="btn btn-reject" data-dismiss="modal">수주 거절</button>
+                    <button type="button" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
+                    <button type="button" id = "acceptOrder" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
+                    <button type="button" id = "rejectOrder" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
                 </div>
             </div>
         </div>
@@ -214,11 +214,13 @@
 	    });
 	}
 	
+	
+	
 	//테이블에 데이터 추가하는 함수
 	function populateOrderTable(data) {
 	    let table = document.getElementById("orderTable");
 	    table.innerHTML = ""; // 기존 데이터를 삭제하여 테이블을 초기화
-
+	    
 	    data.forEach(order => {
 	        let row = table.insertRow();
 	        row.insertCell(0).innerText = order.o_no;
@@ -227,7 +229,21 @@
 	        row.insertCell(3).innerText = order.sum_o_num;
 	        row.insertCell(4).innerText = order.sum_o_total;
 	        row.insertCell(5).innerText = order.o_date;
-	        row.insertCell(6).innerText = order.o_permit;
+	
+	        
+	        
+	        if (order.o_permit === null) {
+	        	row.insertCell(6).innerText = "수주 대기";
+        	}
+	        else if(order.o_permit === false){
+	        	row.insertCell(6).innerText = "수주 거절";
+	        } 
+	        else if(order.o_permit === true){
+	        	row.insertCell(6).innerText = "수주 수락";
+	        }
+	        else{
+	        	row.insertCell(6).innerText = "xxxx";
+	        }
 
 	        // 클릭 모달창
 	        row.addEventListener('click', function() {
@@ -249,32 +265,80 @@
         })
 	    .then(response => response.json())
 	    .then(data =>{
+	    	const DetailName = document.getElementById('orderDetailModalLabel');
 	    	const tableBody = document.getElementById('orderDetailsTableBody');
+	    	
+	    	const reject = document.getElementById('rejectOrder');
+        	const accept = document.getElementById('acceptOrder');
+	    	
+        	DetailName.innerHTML = "수주번호: "+o_no;
 	    	tableBody.innerHTML = '';
 	    	let totalSum = 0; // 총합을 저장할 변수
 	        
-	        if (Array.isArray(data)) {
-	            data.forEach(function(orderDetail) {
-	                var row = document.createElement('tr');
-	                row.innerHTML = '<td>' + orderDetail.p_no + '</td>' +
-	                                '<td>' + orderDetail.p_name + '</td>' +
+	        
+	        data.forEach(function(orderDetail) {
+	            var row = document.createElement('tr');
+	            row.innerHTML = '<td>' + orderDetail.p_no + '</td>' +
+	                            '<td>' + orderDetail.p_name + '</td>' +
 	                                '<td>' + orderDetail.o_num + '</td>' +
 	                                '<td>' + orderDetail.o_total + '</td>';
-	                tableBody.appendChild(row);
+	            tableBody.appendChild(row);
 	                
-	                totalSum += parseFloat(orderDetail.o_total) || 0;
-	            });
+	            totalSum += parseFloat(orderDetail.o_total.replace(/,/g, '')) || 0;
+	        
+	            if(orderDetail.o_permit != null){
+		        	
+		        	reject.style.display = 'none';
+		        	accept.style.display = 'none';
+		        }
+	        });
 	            
-	            document.getElementById('totalAmount').innerText = totalSum.toFixed(2);    
-	        } 
+	        document.getElementById('totalAmount').innerText = totalSum.toLocaleString();    
+	        
 	        $('#orderDetailModal').modal('show');  // Show the modal
+	        
+	        reject.addEventListener('click', function() {
+	        	rejectOrder(o_no);
+	        });
+	        
+	        accept.addEventListener('click', function() {
+	        	acceptOrder(o_no);
+	        });
+	        
 	    })
 	    .catch(error => {
 	        console.error('Error fetching data:', error);
 	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
 	    });
+        
+        
+        
 	}
 	
+	
+	//수주 거절 함수
+	function rejectOrder(o_no){
+		fetch("/api/rejectOrder?o_no="+ o_no, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(location.reload())
+	}
+	
+	//수주 수락 함수
+	function acceptOrder(o_no){
+		fetch("/api/acceptOrder?o_no="+ o_no, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(location.reload())
+	}
 	
 	//실행 이벤트 리스너
 	document.addEventListener("DOMContentLoaded", function() {

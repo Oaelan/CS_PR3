@@ -10,4 +10,8 @@ public interface OListMapper {
 	
 	public List<OListDto> getOListDetail(String o_no);
 	
+	public void rejectOrder(String o_no);
+	
+	public void acceptOrder(String o_no);
+	
 }

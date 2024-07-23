@@ -126,6 +126,16 @@
             });
         });
     </script>
+    
+    <script>
+    	async function fetchShip(){
+    		try {
+    	        
+    	    } catch (error) {
+    	        console.error('Error fetching data:', error);
+    	    }
+    	}
+    </script>
 </body>
 
 </html>

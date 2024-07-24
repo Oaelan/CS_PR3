@@ -174,7 +174,7 @@
 							<p id="invenNotice">* 수량 더블 클릭 시 수정 가능 / 폐기는 체크 후 가능</p>
 								<div id="btnC">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-									<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger discardButton" id="discardButton">폐기</button>
+									<button type="submit" class="btn btn-danger discardButton" id="discardButton">폐기</button>
 									<button type="submit" class="btn btn-primary editButton" id="editButton">수정</button>							
 								</div>
 						</div>

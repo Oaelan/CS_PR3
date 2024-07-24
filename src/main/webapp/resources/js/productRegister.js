@@ -92,11 +92,13 @@ async function groupByDate(buttons) {
                 // 재고관리 버튼 이벤트 추가 해당 상품의 p_no 넘겨주고 유통기한별 상품 정보 가져오기
                 const { stockConts } = await groupByDateFetch(p_no);
              // console.log(stockConts); // 비동기 작업 후 결과를 출력    
-             // 폐기 기능 호출 함수                  
-                disposeStock(stockConts);
+         
+                let products  =   updateInventNum(stockConts); 
                 // 수정 기능 함수 호출
-                let products  =   updateInventNum(stockConts);              
                 updateInventB(products);
+                // 폐기 기능 호출 함수                  
+                disposeB(products);
+                
             } catch (error) {
                 console.error('데이터를 가져오는 중 오류 발생:', error);
             }            
@@ -186,43 +188,41 @@ function isReadonly(updateBtns) {
     });
 }
 
-//폐기 기능 
-function disposeStock(stockConts){
-    //모달창에 있는 상품정보를 담는 변수
-    let beforeDisProducts = [];
-    // 반복문을 통해 위의 객체를 채워넣어줌
-    stockConts.forEach(cont => {
-        let disproduct = {
-                p_no: cont.querySelector('input[name="p_no"]').value,
-                m_date: cont.querySelector('input[name="m_date"]').value,
-                p_limitD: cont.querySelector('input[name="p_limitD"]').value,
-                m_num: cont.querySelector('input[name="m_num"]').value
-        };
-        beforeDisProducts.push(disproduct);          
-    });
-    //재고 폐기 버튼
+//버튼 교체 함수
+function replaceButton(button) {
+    let newButton = button.cloneNode(true);
+    button.parentNode.replaceChild(newButton, button);
+    return newButton;
+}
+
+//폐기 기능
+function disposeB(products) {
     let discardButton = document.getElementById("discardButton");
-    // 수정 기능 추가
-    discardButton.addEventListener("click",()=>{        
-        // checkbox 
-        let checkboxes = document.querySelectorAll(".checkB");
-        // 폐기 처리할 데이터 정보 담는 변수
-        let disposeProducts =[];
-        for(i=0; i<checkboxes.length;i++){
-            if(checkboxes[i].checked){
-                disposeProducts.push(beforeDisProducts[i])
+
+    // 기존 이벤트 리스너 제거 및 교체
+    let newDiscardButton = replaceButton(discardButton);
+    
+    // 폐기 버튼 클릭 시 이벤트 리스너 정의
+    newDiscardButton.addEventListener('click', function() {
+        console.log("Inside event listener:", products);
+        let updatePro = [];
+        let disCheckB = document.querySelectorAll(".checkB");
+
+        // 체크 박스가 선택되어 있다면 updatePro에 배열 저장
+        for (let i = 0; i < products.length; i++) {
+            if (disCheckB[i] && disCheckB[i].checked) {
+                updatePro.push(products[i]);
             }
-            // 폐기 패치문 호출 하기                 
-        }disposeStockFetch(disposeProducts); 
-        // jQuery를 사용하여 모달 닫기
-        $('#stockModal').modal('hide'); // 모달 숨기기
-        // 페이지 새로 고침
+        }  
+        disposeStockFetch(updatePro)
         location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
+        $('#stockModal').modal('hide'); // 모달 숨기기
     });
 }
 
 function updateInventB(products){
    // console.log(products);
+    
   //재고 수정 버튼
     let editButton = document.getElementById("editButton");
     
@@ -232,7 +232,7 @@ function updateInventB(products){
     
     // 수정 버튼 클릭 시 이벤트 리스너를 정의
     newEditButton.addEventListener('click', function() {
-        console.log("Inside event listener:", products);
+       // console.log("Inside event listener:", products);
 
         // 수정할 재고들을 담을 변수
         let updatePro = [];
@@ -243,20 +243,18 @@ function updateInventB(products){
             let currentNum = productNums[i].value;
             if (currentNum != products[i].m_num) {
                 products[i].m_num = currentNum;
-                updatePro.push(products[i]);
-                // 페이지 새로 고침
-                location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
+                updatePro.push(products[i]);              
             }
         }
-        console.log(updatePro);
         updateInventFetch(updatePro);
+        location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
         // jQuery를 사용하여 모달 닫기
         $('#stockModal').modal('hide'); // 모달 숨기기
     });
 }
 
 
-//재고 수정 기능
+//재고 수정/ 폐기를 위해 사용되는 모달창에 있는 데이터 정보 담는 배열을 리턴 하는 함수
 function updateInventNum(stockConts) {
     // 모달 창에 있는 재고를 담는 변수
     let products = [];

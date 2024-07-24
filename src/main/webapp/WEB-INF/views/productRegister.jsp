@@ -174,11 +174,10 @@
 							<p id="invenNotice">* 수량 더블 클릭 시 수정 가능 / 폐기는 체크 후 가능</p>
 								<div id="btnC">
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-									<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger" id="discardButton">폐기</button>
-									<button type="submit" class="btn btn-primary" id="editButton">수정</button>							
+									<button type="submit" formaction="유통기한이 지나서 아예 삭제" class="btn btn-danger discardButton" id="discardButton">폐기</button>
+									<button type="submit" class="btn btn-primary editButton" id="editButton">수정</button>							
 								</div>
 						</div>
-				
 			</div>
 		</div>
 	</div>
@@ -187,6 +186,6 @@
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- productRegister페이지 관련 js -->
-	<script type="text/javascript" src="../resources/js/productRegister.js"></script>
+	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=134></script>
 </body>
 </html>

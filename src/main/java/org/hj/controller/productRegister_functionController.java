@@ -67,9 +67,11 @@ public class productRegister_functionController {
 			return "{\"message\": \"재고 수정 완료\"}";
 	}
 	
-	//재고 수정 기능
+	//재고 폐기 기능
 		@PostMapping(value = "/disposeStock", produces = "application/json;charset=UTF-8")
 			public String disposeStock(Product_manufacturingDto pmd, @RequestBody List<Product_manufacturingDto> disposeProducts){
+				System.out.println("재고 폐기용");
+				System.out.println(disposeProducts);
 				// 리스트는 length가 아니라 size로 길이 구함
 				for(int i=0;i<disposeProducts.size();i++){
 					//쿼리문에 보낼 객체 초기화하기
@@ -77,7 +79,7 @@ public class productRegister_functionController {
 					pmd.setM_date(disposeProducts.get(i).getM_date());
 					pmd.setP_limitD(disposeProducts.get(i).getP_limitD());
 					pmd.setM_num(disposeProducts.get(i).getM_num());
-					System.out.println(pmd);
+					System.out.println("폐기되는 객체" + pmd);
 				// 실행시킬 쿼리 메서드에 초기화시킨 객체 넣기 
 					prps.disposeStock(pmd);
 				}

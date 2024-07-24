@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hj.mapper.sub.ProductReSub_Mapper">
+	<!-- 상품 번호 가져오기 -->
+	<select id="addPno"
+		parameterType="org.hj.model.Product_manufacturingDto" resultType="int">
+		select p_no from Supplier.productCode
+		where p_name = #{p_name};
+	</select>
+	
+	<!-- 등록된 상품 정보 들고오는 sql -->
+	<select id="productsInfo"
+		resultType="org.hj.model.Product_manufacturingDto">
+		select * from Supplier.productCode;
+	</select>
+
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  	<mapper namespace="org.hj.mapper.pub.ShipMapper">
+  	
+  	<select id = "getshipInfo" resultType="org.hj.model.OListDto">
+  		SELECT 
+		    po.o_no, po.o_id, po.o_address, po.o_permit, 
+		    FORMAT(SUM(CAST(REPLACE(o_total, ',', '') AS UNSIGNED)), 0) AS sum_o_total, 
+		    sp.p_name, 
+		    count(*) AS p_count
+		FROM 
+		    public_schema.OrderList AS po
+		    INNER JOIN Supplier.productCode AS sp ON po.p_no = sp.p_no 
+		WHERE 
+		    po.o_permit = 1
+		GROUP BY 
+		    po.o_no;
+  	</select>
+	
+	<insert id="putDlvInfo" parameterType="org.hj.model.DeliveryDto">
+	
+		insert into public_schema.Delivery_GPS 
+		values(#{d_no}, #{o_no}, #{o_id}, #{o_address}, 35.5421097,129.3382266 , false);
+		 
+	</insert>
+  	
+  	</mapper>

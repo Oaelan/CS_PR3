@@ -191,8 +191,8 @@
 				</div>
 				<div class="modal-footer">
                     <button type="button" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
-                    <button type="button" id = "acceptOrder" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
-                    <button type="button" id = "rejectOrder" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
+                    <button type="button" id = "acceptOrder" style = "display:none" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
+                    <button type="button" id = "rejectOrder" style = "display:none" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
                 </div>
             </div>
         </div>
@@ -209,18 +209,25 @@
 	<script>
 	
 	//데이터 가져오는 fetch함수
-	function fetchOrderList() {
-	    return fetch('/api/getOList', {
-	        headers: {
-	            'Accept': 'application/json'
-	        }
-	    })
-	    .then(response => response.json())
-	    .catch(error => {
+	async function fetchOrderList() {
+	    try {
+	        const response = await fetch('/api/getOList', {
+	            headers: {
+	                'Accept': 'application/json'
+	            }
+	        });
+	
+	        // 응답을 JSON으로 파싱
+	        const data = await response.json();
+	        return data;
+	    } catch (error) {
 	        console.error('Error fetching data:', error);
-	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외.
-	    });
+	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
+	    }
 	}
+
+	
+	
 	
 	
 	
@@ -261,67 +268,80 @@
 	}
 	
 	
+	
+	
+	
+	
 	//수주번호에 따라 값을 가져와 모달창에 입력하는 함수
-	 function showOrderDetailModal(o_no) {
-
-        fetch("/api/getOListDetail?o_no="+ o_no, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-	    .then(response => response.json())
-	    .then(data =>{
-	    	const DetailName = document.getElementById('orderDetailModalLabel');
-	    	const tableBody = document.getElementById('orderDetailsTableBody');
-	    	
-	    	const reject = document.getElementById('rejectOrder');
-        	const accept = document.getElementById('acceptOrder');
-	    	
-        	DetailName.innerHTML = "수주번호: "+o_no;
-	    	tableBody.innerHTML = '';
-	    	let totalSum = 0; // 총합을 저장할 변수
+	async function showOrderDetailModal(o_no) {
+	    try {
+	        const response = await fetch("/api/getOListDetail?o_no=" + o_no, {
+	            method: 'GET',
+	            headers: {
+	                'Accept': 'application/json',
+	                'Content-Type': 'application/json'
+	            }
+	        });
 	        
+	        const data = await response.json();
+	        
+	        const DetailName = document.getElementById('orderDetailModalLabel');
+	        const tableBody = document.getElementById('orderDetailsTableBody');
+	        
+	        const reject = document.getElementById('rejectOrder');
+	        const accept = document.getElementById('acceptOrder');
+	        
+	        DetailName.innerHTML = "수주번호: " + o_no;
+	        tableBody.innerHTML = '';
+	        let totalSum = 0; // 총합을 저장할 변수
 	        
 	        data.forEach(function(orderDetail) {
 	            var row = document.createElement('tr');
 	            row.innerHTML = '<td>' + orderDetail.p_no + '</td>' +
 	                            '<td>' + orderDetail.p_name + '</td>' +
-	                                '<td>' + orderDetail.o_num + '</td>' +
-	                                '<td>' + orderDetail.o_total + '</td>';
+	                            '<td>' + orderDetail.o_num + '</td>' +
+	                            '<td>' + orderDetail.o_total + '</td>';
 	            tableBody.appendChild(row);
 	                
 	            totalSum += parseFloat(orderDetail.o_total.replace(/,/g, '')) || 0;
-	        
-	            if(orderDetail.o_permit != null){
-		        	
-		        	reject.style.display = 'none';
-		        	accept.style.display = 'none';
-		        }
-	        });
 	            
-	        document.getElementById('totalAmount').innerText = totalSum.toLocaleString();    
+	            
+	            if (orderDetail.o_permit === null) {
+	                reject.style.display = 'block';
+	                accept.style.display = 'block';
+	            }
+	            else{
+	            	reject.style.display = 'none';
+	                accept.style.display = 'none';
+	            }
+	        	
+	        });
+
+            
+	        
+	        
+	        document.getElementById('totalAmount').innerText = totalSum.toLocaleString();
 	        
 	        $('#orderDetailModal').modal('show');  // Show the modal
 	        
 	        reject.addEventListener('click', function() {
-	        	rejectOrder(o_no);
+	            rejectOrder(o_no);
+	            location.reload(); // 페이지 새로고침
 	        });
 	        
 	        accept.addEventListener('click', function() {
-	        	acceptOrder(o_no);
+	            acceptOrder(o_no);
+	            location.reload(); // 페이지 새로고침
 	        });
 	        
-	    })
-	    .catch(error => {
+	    } catch (error) {
 	        console.error('Error fetching data:', error);
 	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
-	    });
-        
-        
-        
+	    }
 	}
+
+	
+	
 	
 	
 	//수주 거절 함수
@@ -336,6 +356,9 @@
         .then(location.reload())
 	}
 	
+	
+	
+	
 	//수주 수락 함수
 	function acceptOrder(o_no){
 		fetch("/api/acceptOrder?o_no="+ o_no, {
@@ -347,6 +370,10 @@
         })
         .then(location.reload())
 	}
+	
+	
+	
+	
 	
 	//실행 이벤트 리스너
 	document.addEventListener("DOMContentLoaded", function() {

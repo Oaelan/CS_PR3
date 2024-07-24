@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hj.mapper.pub.OListMapper">
+
+	<!-- 주문 내역 가져옴 -->
+    <select id="getOList" resultType="org.hj.model.OListDto">
+        SELECT o_no, o_id, o_address,
+    	SUM(o_num) sum_o_num, 
+    	FORMAT(SUM(CAST(REPLACE(o_total, ',', '') AS UNSIGNED)), 0) AS sum_o_total, 
+    	o_date, o_permit
+        FROM public_schema.OrderList
+		GROUP BY o_no;
+    </select>
+    
+    <!-- 주문 내역 상세 가져옴 -->
+    <select id="getOListDetail" parameterType="string" resultType="org.hj.model.OListDto">
+        SELECT po.o_no, po.p_no, sp.p_name, po.o_num, po.o_total, po.o_permit
+        FROM public_schema.OrderList AS po
+        INNER JOIN Supplier.productCode sp 
+        ON po.p_no = sp.p_no
+        where po.o_no = #{o_no};
+    </select>
+    
+    <!-- 수주 거절 -->
+    <update id="rejectOrder" parameterType="string">
+    	update public_schema.OrderList 
+    	set o_permit = false
+    	where o_no = #{o_no};
+    </update>
+    
+    
+    <!-- 수주 수락 -->
+    <update id="acceptOrder" parameterType="string">
+    	update public_schema.OrderList 
+    	set o_permit = true
+    	where o_no = #{o_no};
+    </update>
+</mapper>

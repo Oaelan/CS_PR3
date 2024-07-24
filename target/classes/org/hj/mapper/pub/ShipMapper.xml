@@ -24,8 +24,8 @@
 	
 	<insert id="putDlvInfo" parameterType="org.hj.model.DeliveryDto">
 	
-		insert into public_schema.Delivery_GPS 
-		values(#{d_no}, #{o_no}, #{o_id}, #{o_address}, 35.5421097,129.3382266 , false);
+		insert into public_schema.Delivery_GPS(o_no, o_id, o_address, x, y, d_complete)
+		values(#{o_no}, #{o_id}, #{o_address}, null, null, false);
 		 
 	</insert>
   	

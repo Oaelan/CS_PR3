@@ -27,11 +27,10 @@ public class ShipController {
 	
 	//출하 시작 데이터 입력
 	@PostMapping("/putDlvInfo")
-	public void putDlvInfo(@RequestBody List<DeliveryDto> delivery) {
-		System.out.println(delivery);
-		for (DeliveryDto ddt : delivery) {
-			ss.putDlvInfo(ddt);
-		}
+	public void putDlvInfo(@RequestBody DeliveryDto ddt) {
+		System.out.println(ddt);
+		ss.putDlvInfo(ddt);
+		
     }
 	
 	

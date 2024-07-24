@@ -51,34 +51,8 @@
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>user123</td>
-                                        <td>제품A</td>
-                                        <td>3</td>
-                                        <td>서울시 강남구</td>
-                                        <td></td>
-                                        <td><button class="btn btn-primary start-shipment-btn" data-toggle="modal" data-target="#orderDetailModal" data-orderid="1">출하 시작</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>user456</td>
-                                        <td>제품B</td>
-                                        <td>2</td>
-                                        <td>서울시 종로구</td>
-                                        <td></td>
-                                        <td><button class="btn btn-primary start-shipment-btn" data-toggle="modal" data-target="#orderDetailModal" data-orderid="2">출하 시작</button></td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>user789</td>
-                                        <td>제품C</td>
-                                        <td>1</td>
-                                        <td>부산시 해운대구</td>
-                                        <td></td>
-                                        <td><button class="btn btn-primary start-shipment-btn" data-toggle="modal" data-target="#orderDetailModal" data-orderid="3">출하 시작</button></td>
-                                    </tr>
+                                <tbody id = "InfoTbody">
+                                    
                                 </tbody>
                             </table>
                         </div>
@@ -128,13 +102,96 @@
     </script>
     
     <script>
+    	// 데이터 가져오는 함수
     	async function fetchShip(){
     		try {
-    	        
+    			const response = await fetch("/api/getshipInfo", {
+    	            method: 'GET',
+    	            headers: {
+    	                'Accept': 'application/json',
+    	                'Content-Type': 'application/json'
+    	            }
+    	        });
+    			
+    			// 응답을 JSON으로 파싱
+    	        const data = await response.json();
+    	        return data;
+    			
     	    } catch (error) {
     	        console.error('Error fetching data:', error);
     	    }
     	}
+    	
+    	
+    	
+    	// 가져온 데이터 페이지에 추가하는 함수
+    	function addShipInfo(data){
+    		try {
+    			let InfoTbody = document.getElementById("InfoTbody");
+    			InfoTbody.innerHTML = "";
+    			//각각의 데이터를 출력
+    			data.forEach(order => {
+    				let row = InfoTbody.insertRow();
+    				row.insertCell(0).innerText = order.o_no;
+    				row.insertCell(1).innerText = order.o_id;
+    				row.insertCell(2).innerText = order.p_name+" 외 "+order.p_count+"개";
+    				row.insertCell(3).innerText = order.sum_o_total;
+    				row.insertCell(4).innerText = order.o_address;
+    				row.insertCell(5).innerText = "출하 대기";
+    				//버튼 추가
+    				addB(row, 6);
+    			});
+    			
+    	    } catch (error) {
+    	        console.error('Error fetching data:', error);
+    	    }
+    	}
+    	
+    	
+    	//배달 목록 데이터에 정보 추가 하는 함수
+    	async function addShipInfo(data){
+    		
+    		try{
+    			let response = await fetch("/api/putDlvInfo", {
+    	            method: 'POST',
+    	            headers: {
+    	                'Accept': 'application/json',
+    	                'Content-Type': 'application/json'
+    	            },
+    	            body: JSON.stringify(data) // data를 JSON 문자열로 변환하여 전송
+    	        });
+    		
+    			
+    		}
+    		catch(error){
+    			console.error('Error fetching data:', error);
+    		}
+    	}
+    	
+    	
+    	//n번째 자리에 버튼 추가 함수
+    	function addB(row, n){
+            let cell = row.insertCell(n);
+            let button = document.createElement('button');
+            button.className = 'btn btn-primary start-shipment-btn';
+            button.setAttribute('data-toggle', 'modal');
+            button.setAttribute('data-target', '#orderDetailModal');
+            button.innerText = '출하 시작';
+            cell.appendChild(button);
+    	}
+    	
+    	
+    	
+    	
+    	//실행 이벤트 리스너
+    	document.addEventListener("DOMContentLoaded", function() {
+    		fetchShip()
+    	        .then(data => {
+    	        	addShipInfo(data);
+                    })
+    	        .catch(error => console.error('Error handling data:', error));
+    	});
+    	
     </script>
 </body>
 

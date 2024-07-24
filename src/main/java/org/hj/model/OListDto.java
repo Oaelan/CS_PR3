@@ -17,6 +17,9 @@ public class OListDto {
 	private String p_name;
 	private String o_total;
 	
+	//출하 물품 종류의 개수
+	private int p_count;
+	
 	
 	
 	
@@ -87,15 +90,20 @@ public class OListDto {
 		this.p_name = p_name;
 	}
 	
+	public int getP_count() {
+		return p_count;
+	}
+	public void setP_count(int p_count) {
+		this.p_count = p_count;
+	}
+
 	
 	@Override
 	public String toString() {
 		return "OListDto [o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address + ", sum_o_num=" + sum_o_num
 				+ ", sum_o_total=" + sum_o_total + ", o_date=" + o_date + ", o_permit=" + o_permit + ", p_no=" + p_no
-				+ ", o_num=" + o_num + ", p_name=" + p_name + ", o_total=" + o_total + "]";
+				+ ", o_num=" + o_num + ", p_name=" + p_name + ", o_total=" + o_total + ", p_count=" + p_count + "]";
 	}
-	
-	
 	
 	
 	

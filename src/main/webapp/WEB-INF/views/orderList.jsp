@@ -191,8 +191,8 @@
 				</div>
 				<div class="modal-footer">
                     <button type="button" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
-                    <button type="button" id = "acceptOrder" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
-                    <button type="button" id = "rejectOrder" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
+                    <button type="button" id = "acceptOrder" style = "display:none" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
+                    <button type="button" id = "rejectOrder" style = "display:none" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
                 </div>
             </div>
         </div>
@@ -211,10 +211,6 @@
 	//데이터 가져오는 fetch함수
 	async function fetchOrderList() {
 	    try {
-	    	let a = document.getElementsByClassName("dropdown-item");
-	    	let b = document.querySelectorAll(".dropdown-item");
-	    	
-	    	console.log(a, b)
 	        const response = await fetch('/api/getOList', {
 	            headers: {
 	                'Accept': 'application/json'
@@ -308,13 +304,20 @@
 	            tableBody.appendChild(row);
 	                
 	            totalSum += parseFloat(orderDetail.o_total.replace(/,/g, '')) || 0;
-	        
-	            if (orderDetail.o_permit != null) {
-	                reject.style.display = 'none';
+	            
+	            
+	            if (orderDetail.o_permit === null) {
+	                reject.style.display = 'block';
+	                accept.style.display = 'block';
+	            }
+	            else{
+	            	reject.style.display = 'none';
 	                accept.style.display = 'none';
 	            }
+	        	
 	        });
-	        
+
+            
 	        
 	        
 	        document.getElementById('totalAmount').innerText = totalSum.toLocaleString();

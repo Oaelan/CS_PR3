@@ -22,7 +22,7 @@ public class productRegister_functionController {
 	ProductReSub_Service prss;
 	
 	//productCode테이블의 정보 가져오기
-	@GetMapping("productsInfo")
+	@GetMapping("/productsInfo")
 	public List<Product_manufacturingDto> productsInfo() {
 		List<Product_manufacturingDto> productsInfos = prss.productsInfo();
 		// System.out.println(prps.productList());
@@ -53,13 +53,14 @@ public class productRegister_functionController {
 	@PostMapping(value = "/updateStock", produces = "application/json;charset=UTF-8")
 		public String updateStock(Product_manufacturingDto pmd, @RequestBody List<Product_manufacturingDto> udateProducts){
 			// 리스트는 length가 아니라 size로 길이 구함
-			for(int i=0;i<udateProducts.size();i++){
+			for(int i=0;i<udateProducts.size();i++){		
+				System.out.println("브라우저에서 들고온 수정 객체" + udateProducts);
 				//쿼리문에 보낼 객체 초기화하기
 				pmd.setP_no(udateProducts.get(i).getP_no());
 				pmd.setM_date(udateProducts.get(i).getM_date());
 				pmd.setP_limitD(udateProducts.get(i).getP_limitD());
-				pmd.setM_num(udateProducts.get(i).getM_num());
-				System.out.println(pmd);
+				pmd.setM_num(udateProducts.get(i).getM_num());			
+				System.out.println("재고 수정 되는 객체" + pmd);
 			// 실행시킬 쿼리 메서드에 초기화시킨 객체 넣기 
 				prps.updateStock(pmd);
 			}
@@ -70,8 +71,7 @@ public class productRegister_functionController {
 	//재고 폐기 기능
 		@PostMapping(value = "/disposeStock", produces = "application/json;charset=UTF-8")
 			public String disposeStock(Product_manufacturingDto pmd, @RequestBody List<Product_manufacturingDto> disposeProducts){
-				System.out.println("재고 폐기용");
-				System.out.println(disposeProducts);
+				System.out.println("브라우저에서 들고온 재고 폐기 객체" + disposeProducts);	
 				// 리스트는 length가 아니라 size로 길이 구함
 				for(int i=0;i<disposeProducts.size();i++){
 					//쿼리문에 보낼 객체 초기화하기

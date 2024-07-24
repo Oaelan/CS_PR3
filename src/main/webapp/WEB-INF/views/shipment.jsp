@@ -139,7 +139,7 @@
     				row.insertCell(4).innerText = order.o_address;
     				row.insertCell(5).innerText = "출하 대기";
     				//버튼 추가
-    				addB(row, 6);
+    				addB(row, 6, order);
     			});
     			
     	    } catch (error) {
@@ -149,7 +149,7 @@
     	
     	
     	//배달 목록 데이터에 정보 추가 하는 함수
-    	async function addShipInfo(data){
+    	async function addputDlvInfo(data){
     		
     		try{
     			let response = await fetch("/api/putDlvInfo", {
@@ -170,7 +170,7 @@
     	
     	
     	//n번째 자리에 버튼 추가 함수
-    	function addB(row, n){
+    	function addB(row, n, data){
             let cell = row.insertCell(n);
             let button = document.createElement('button');
             button.className = 'btn btn-primary start-shipment-btn';
@@ -178,6 +178,13 @@
             button.setAttribute('data-target', '#orderDetailModal');
             button.innerText = '출하 시작';
             cell.appendChild(button);
+            
+         // 버튼에 클릭 이벤트 리스너 추가
+            button.addEventListener('click', function() {
+                // 이벤트 핸들러에서 할 일을 작성
+                addputDlvInfo(data)
+                // 추가적인 로직을 여기에 작성
+            });
     	}
     	
     	

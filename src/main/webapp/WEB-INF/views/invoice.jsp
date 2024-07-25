@@ -95,7 +95,7 @@
 	    margin-bottom: 100px;
     }
     
-    .btn1, .btn2 {
+	.btn {
     	color: white;
    		width: 100px;
    		height: 30px;
@@ -103,21 +103,16 @@
    		text-align: center;
    		border-radius: 5px;
    		font-family: 나눔고딕;
+   		background-color: #6c757d;
     }
     
-    .btn1 {
-    	background-color: #0d6efd;
-    }
-    
-    .btn2 {
-    	background-color: #6c757d;
-    }
+
 </style>
 </head>
 <body>
 
 <div class="invoice">
-    <h2>거&nbsp;&nbsp;&nbsp;래&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;세&nbsp;&nbsp;&nbsp;서&nbsp;&nbsp;&nbsp;( 공급자 )</h2>
+    <h2>거&nbsp;&nbsp;&nbsp;래&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;세&nbsp;&nbsp;&nbsp;서&nbsp;&nbsp;&nbsp;</h2>
     
     <div class="details">
         <div class="date">
@@ -164,7 +159,7 @@
                     <th>단가</th>
                     <th>공급가액</th>
                     <th>생산자</th>
-                    <th>적요</th>
+                    <th>특이사항</th>
                 </tr>
             </thead>
             <tbody>
@@ -296,8 +291,9 @@
                     <td></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td colspan="2" id="total">합계</td>
+                <tr id="total">
+                    <th>합계</th>
+                    <td>1245</td>
                     <td>3,000</td>
                     <td>3,735,000</td>
                     <td></td>
@@ -308,8 +304,45 @@
     </div>
 </div>
 <div class="button">
-    <input type="button" class="btn1" value="저장">
-    <input type="button" class="btn2" value="출력">
+    <input type="button" class="btn" value="출력" onclick = "printPage()">
 </div>
+<script>
+//페이지 인쇄 함수
+function printPage() {
+	// 버튼을 숨김
+    var btns = document.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].style.display = 'none';
+    } 
+
+    // 버튼 빼고 인쇄
+    window.print();
+
+    // 인쇄 후 버튼을 다시 보이게
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].style.display = '';
+    }
+}
+
+
+async function fetchOListDetail(){
+	try {
+		const response = await fetch("/api/getOListDetail", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        });
+		
+		// 응답을 JSON으로 파싱
+        const data = await response.json();
+        return data;
+		
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+</script>
 </body>
 </html>

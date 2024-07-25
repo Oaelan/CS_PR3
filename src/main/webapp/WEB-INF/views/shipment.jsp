@@ -91,7 +91,7 @@
 
     
     <script>
-    	// 데이터 가져오는 함수
+    	// 출하 데이터 가져오는 함수
     	async function fetchShip(){
     		try {
     			const response = await fetch("/api/getshipInfo", {

@@ -87,6 +87,22 @@ public class productRegister_functionController {
 				return "{\"message\": \"재고 폐기 완료\"}";
 		}
 
-
+				//재고 검색 기능
+				@GetMapping("searchProduct")
+				public Product_manufacturingDto searchProduct(@RequestParam("searchWord")String searchWord,
+						Product_manufacturingDto pmd){
+			
+					// 입력값이 숫자인지 확인
+			        if (searchWord.matches("\\d+")) {
+			            // 검색어가 숫자일 경우 상품 번호로 검색
+			            int productNumber = Integer.parseInt(searchWord);
+			            pmd.setP_no(productNumber);
+			            return prps.searchProduct(pmd);
+			        } else {
+			            // 검색어가 문자열일 경우 상품 이름으로 검색
+			        	pmd.setP_name(searchWord);
+			        	return prps.searchProduct(pmd);
+			        }
+				} 
 
 }

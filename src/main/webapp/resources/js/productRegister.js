@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     autoPriceSelect();
     //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
     document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
+    // 검색버튼에 상품명/상품코드로 검색할 수 있는 기능 
+    document.getElementById("serachB").addEventListener("click", searchProduct);
 });
 
 
@@ -45,7 +47,7 @@ function getProductList() {
                 '</button>' +
                 '</td>' +
                 '</tr>';             
-            // 등록되어 있는 상품을 tbody에 담아서 출력
+            // 되어 있는 상품을 tbody에 담아서 출력
             tbody.innerHTML += listCont;
         });  
         // 재고관리 버튼
@@ -59,6 +61,48 @@ function getProductList() {
     });
 }
 
+// 재고 검색 기능 함수
+function searchProduct(){
+    let  searchWord = document.getElementById("search").value;
+    console.log(searchWord)
+    fetch('/product/searchProduct?searchWord='+searchWord,{
+       headers:{
+           'Accept': 'application/json'
+       } 
+    })
+    .then(response =>{
+        if(!response.ok){
+            throw new Error('서버로부터의 응답이 이상함 ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(response=>{
+        // 상품 리스트들이 들어갈 tbody
+        let tbody = document.getElementById("pList");
+        // tbody 초기화
+        tbody.innerHTML = "";  
+        let searchResultHTML;
+        searchResultHTML = '<tr class="products">' +
+                                                        '<td>' + response.p_no + '</td>' +
+                                                        '<td>' + response.p_name + '</td>' +
+                                                        '<td>' + response.p_price + '원</td>' +
+                                                        '<td>' + response.m_num + '개</td>' +
+                                                        '<td>' +
+                                                        '<button class="btn btn-info btn-stock btn-sm" ' +
+                                                        'id="' + response.p_no + '" ' + // id 설정
+                                                        'data-toggle="modal" ' +
+                                                        'data-target="#stockModal">' +
+                                                        '재고관리' +
+                                                        '</button>' +
+                                                        '</td>' +
+                                                        '</tr>';        
+        tbody.innerHTML += searchResultHTML;
+    })
+    .catch(error => {   
+        console.error('네트워크 요청 실패:', error);
+        $('#noProductModal').modal('show'); // 모달 창 띄우기   
+    });
+};
 
 
 //productsInfo 테이블에 등록되어 있는 제품 정보 들고오기

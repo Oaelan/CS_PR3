@@ -30,5 +30,7 @@ public class ProductRePub_ServiceImpl implements ProductRePub_Service {
 		prpm.disposeStock(pmd);
 	}
 	
-
+	public Product_manufacturingDto searchProduct(Product_manufacturingDto pmd){
+		return prpm.searchProduct(pmd);
+	}
 }

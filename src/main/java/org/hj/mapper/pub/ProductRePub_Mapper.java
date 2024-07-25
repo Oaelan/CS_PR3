@@ -19,4 +19,6 @@ public interface ProductRePub_Mapper {
 
 	// 재고 패기하기
 	public void disposeStock(Product_manufacturingDto pmd);
+	// 재고 검색하기
+	public Product_manufacturingDto searchProduct(Product_manufacturingDto pmd);
 }

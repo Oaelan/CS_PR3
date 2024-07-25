@@ -84,6 +84,14 @@
         width: 100%;
         text-align: center;
     }
+    
+    .button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    }
 </style>
 </head>
 <body>
@@ -278,8 +286,10 @@
             </tbody>
         </table>
     </div>
-
 </div>
-
+<div class="button">
+    <button type="button" class="btn btn-primary">저장</button>
+    <button type="button" class="btn btn-secondary">출력</button>
+</div>
 </body>
 </html>

@@ -231,11 +231,12 @@
 	
 	
 	
-	//테이블에 데이터 추가하는 함수
+	//페이지 주문 목록에 데이터 추가하는 함수
 	function populateOrderTable(data) {
 	    let table = document.getElementById("orderTable");
 	    table.innerHTML = ""; // 기존 데이터를 삭제하여 테이블을 초기화
 	    
+	    //받아온 데이터를 메인 주문 목록에 표시
 	    data.forEach(order => {
 	        let row = table.insertRow();
 	        row.insertCell(0).innerText = order.o_no;
@@ -246,21 +247,21 @@
 	        row.insertCell(5).innerText = order.o_date;
 	
 	        
-	        
+	        // 주문만 들어온 상태
 	        if (order.o_permit === null) {
 	        	row.insertCell(6).innerText = "수주 대기";
         	}
+	        // 주문 거절 상태
 	        else if(order.o_permit === false){
 	        	row.insertCell(6).innerText = "수주 거절";
 	        } 
+	        // 주문 수락 상태
 	        else if(order.o_permit === true){
 	        	row.insertCell(6).innerText = "수주 확인";
 	        }
-	        else{
-	        	row.insertCell(6).innerText = "xxxx";
-	        }
+	        
 
-	        // 클릭 모달창
+	        // 열 선택시 해당 열에 대한 모달창 띄움
 	        row.addEventListener('click', function() {
 	            showOrderDetailModal(order.o_no);
 	        });
@@ -285,9 +286,11 @@
 	        
 	        const data = await response.json();
 	        
+	        // 데이터 입력할 모달창
 	        const DetailName = document.getElementById('orderDetailModalLabel');
 	        const tableBody = document.getElementById('orderDetailsTableBody');
 	        
+	        //수락 거절 버튼
 	        const reject = document.getElementById('rejectOrder');
 	        const accept = document.getElementById('acceptOrder');
 	        
@@ -306,10 +309,12 @@
 	            totalSum += parseFloat(orderDetail.o_total.replace(/,/g, '')) || 0;
 	            
 	            
+	            // 수락 또는 거절 안한 상태일 때만 버튼 표시
 	            if (orderDetail.o_permit === null) {
 	                reject.style.display = 'block';
 	                accept.style.display = 'block';
 	            }
+	            // 선택 했을 경우 버튼 숨김
 	            else{
 	            	reject.style.display = 'none';
 	                accept.style.display = 'none';
@@ -323,15 +328,17 @@
 	        document.getElementById('totalAmount').innerText = totalSum.toLocaleString();
 	        
 	        $('#orderDetailModal').modal('show');  // Show the modal
-	        
+	     
+	        // 주문 거절 이벤트 리스너
 	        reject.addEventListener('click', function() {
 	            rejectOrder(o_no);
-	            location.reload(); // 페이지 새로고침
+	            location.reload(); 
 	        });
 	        
+	        // 주문 수락 이벤트 리스너
 	        accept.addEventListener('click', function() {
 	            acceptOrder(o_no);
-	            location.reload(); // 페이지 새로고침
+	            location.reload(); 
 	        });
 	        
 	    } catch (error) {

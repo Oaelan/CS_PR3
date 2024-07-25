@@ -19,7 +19,7 @@ public class OListDto {
 	
 	//출하 물품 종류의 개수
 	private int p_count;
-	
+	private Boolean d_complete;
 	
 	
 	
@@ -97,7 +97,12 @@ public class OListDto {
 		this.p_count = p_count;
 	}
 
-	
+	public Boolean isD_complete() {
+		return d_complete;
+	}
+	public void setD_complete(Boolean d_complete) {
+		this.d_complete = d_complete;
+	}
 	@Override
 	public String toString() {
 		return "OListDto [o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address + ", sum_o_num=" + sum_o_num

@@ -23,5 +23,10 @@ public class MainController {
 		return "shipment";
 	}
 	
+	//명세서 출력 페이지
+	@GetMapping("/invoice")
+	public String invoice() {
+		return "invoice";
+	}
 	
 }

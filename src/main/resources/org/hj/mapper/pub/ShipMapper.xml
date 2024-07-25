@@ -11,11 +11,12 @@
   		SELECT 
 		    po.o_no, po.o_id, po.o_address, po.o_permit, 
 		    FORMAT(SUM(CAST(REPLACE(o_total, ',', '') AS UNSIGNED)), 0) AS sum_o_total, 
-		    sp.p_name, 
+		    sp.p_name, pd.d_complete,
 		    count(*) AS p_count
 		FROM 
 		    public_schema.OrderList AS po
 		    INNER JOIN Supplier.productCode AS sp ON po.p_no = sp.p_no 
+			LEFT JOIN public_schema.Delivery_GPS AS pd ON po.o_no = pd.o_no
 		WHERE 
 		    po.o_permit = 1
 		GROUP BY 

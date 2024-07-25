@@ -41,6 +41,14 @@
 		delete from public_schema.Product_manufacturing
 		WHERE p_no = #{p_no} AND m_date = #{m_date} AND p_limitD = #{p_limitD}
 	</delete>
+	
+	<!-- 제품 등록 페이지에서 검색 할 때  sql-->
+	<select id="searchProduct"
+		resultType="org.hj.model.Product_manufacturingDto"
+		parameterType="org.hj.model.Product_manufacturingDto">
+		select * from public_schema.productNum
+		WHERE p_no = #{p_no} OR p_name = #{p_no};
+	</select>
 
 </mapper>
   

@@ -52,6 +52,8 @@
     border-bottom: none; /* 마지막 항목의 하단 경계선 제거 */
 }
 </style>
+ <!-- Flatpickr CSS -->
+<link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 <!-- 부트스트랩 아이콘 링크 -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <!-- 부트스트랩 CDN 링크 -->
@@ -73,29 +75,36 @@
 								<h6 class="m-0">제품 등록</h6>
 							</div>
 						</header>
-						<form action="/upload" method="post">
+						<form action="/upload" method="post" id="pUploadF">
 							<!-- 첫 번째 줄 -->
 							<div class="form-row">
 								<div class="form-group col-md-4">
-									<label for="productName" style="margin-left: 25px;">제품명</label> <input type="text" name="p_name" class="form-control form-control-sm" id="productName" placeholder="제품명 입력" style="margin-left: 25px;">
+									<label for="productName" style="margin-left: 25px;">제품명</label>
+									<select name="p_name" id="pNameSelect" class="form-control form-control-sm" style="margin-left: 25px;" required="required">
+										 <!-- 옵션들 추가 -->															 
+									</select>
 								</div>
 								<div class="form-group col-md-4">
-									<label for="productionDate" style="margin-left: 25px;">생산날짜</label> <input type="date" name="m_date" class="form-control form-control-sm" id="productionDate" style="margin-left: 25px;">
+									<label for="productionDate" style="margin-left: 25px;">생산날짜</label>
+									<input type="date" name="m_date" class="form-control form-control-sm" id="productionDate" style="margin-left: 25px;" required="required">
 								</div>
 								<div class="form-group col-md-4">
-									<label for="productPrice" style="margin-left: 25px;">제품단가</label> <input type="number" name="p_price" class="form-control form-control-sm" id="productPrice" placeholder="제품단가 입력" style="margin-left: 25px;">
+									<label for="productPrice" style="margin-left: 25px;">제품단가</label>
+									<select name="p_price" id="pPriceSelect" class="form-control form-control-sm" style="margin-left: 25px;" required="required">
+										 <!-- 옵션들 추가 -->															 
+									</select>
 								</div>
 							</div>
 							<!-- 두 번째 줄 -->
 							<div class="form-row">
 								<div class="form-group col-md-4">
-									<label for="productionQuantity" style="margin-left: 25px;">생산수량</label> <input type="number" name="m_num" class="form-control form-control-sm" id="productionQuantity" placeholder="생산수량 입력" style="margin-left: 25px;">
+									<label for="productionQuantity" style="margin-left: 25px;">생산수량</label> <input type="number" name="m_num" class="form-control form-control-sm" id="productionQuantity" placeholder="생산수량 입력" style="margin-left: 25px;" required="required">
 								</div>
 								<div class="form-group col-md-4">
-									<label for="expiryDate" style="margin-left: 25px;">유통기한</label> <input type="date" name="p_limitD" class="form-control form-control-sm" id="expiryDate" style="margin-left: 25px;">
+									<label for="expiryDate" style="margin-left: 25px;">유통기한</label> <input type="date" name="p_limitD" class="form-control form-control-sm" id="expiryDate" style="margin-left: 25px;" required="required">
 								</div>
 								<div class="form-group col-md-4 d-flex align-items-end">
-									<button type="submit" class="btn btn-primary btn-block btn-sm" style="margin-left: 25px;">등록하기</button>
+									<button type="submit" class="btn btn-primary btn-block btn-sm" id ="uploadBtn" style="margin-left: 25px;">등록하기</button>
 								</div>
 							</div>
 						</form>
@@ -181,11 +190,30 @@
 			</div>
 		</div>
 	</div>
+	<!-- 상품 등록시 값이 비워져 있을 때 뜨는 모달 창 -->
+	<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertModalLabel">제품 등록 오류</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    	등록 정보를 모두 입력 또는 상품과 단가를 다시 확인해 주세요.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- productRegister페이지 관련 js -->
-	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=134></script>
+	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=1224></script>
 </body>
 </html>

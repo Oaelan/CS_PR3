@@ -1,4 +1,11 @@
-getProductList();
+document.addEventListener('DOMContentLoaded', function() {
+    getProductList();
+    productsInfo();
+    autoPriceSelect();
+    //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
+    document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
+});
+
 
 //등록 상품 리스트를 불러오는 함수
 function getProductList() {
@@ -55,7 +62,7 @@ function getProductList() {
 
 
 //productsInfo 테이블에 등록되어 있는 제품 정보 들고오기
-/*    function productsInfo() {
+    function productsInfo() {
     fetch('/product/productsInfo', {
         headers: {
             'Accept': 'application/json'
@@ -67,17 +74,70 @@ function getProductList() {
         }
         return response.json();
     })
-    .then(data => {
-        console.log("왜안뜨냐");
-        console.log(data);
+    .then(datas => { 
+        // 상품 등록 시 상품 이름 셀렉트 창의 옵션
+        let productName = "";
+        //상품 등록 시 상품 단가 셀렉트 창의 옵션
+        let productPrice = "";
         // 데이터 처리 로직
+        datas.forEach(data =>{
+            productName+=
+                '<option value="' + data.p_name + '">' + data.p_name + '</option>';
+            
+            productPrice +=
+                '<option value="' + data.p_price + '" id="' +data.p_name  + '">' + data.p_price + '</option>';          
+        });
+        // 이름 셀렉트 태그
+        let selectBoxN = document.getElementById("pNameSelect");
+        selectBoxN.innerHTML = productName;
+        // 가격 셀렉트 태그
+        let selectBoxP = document.getElementById("pPriceSelect");
+        selectBoxP.innerHTML = productPrice; 
     })
     .catch(error => {
         console.error('네트워크 요청 실패:', error);
     });
-}*/
+}
 
-
+ // 상품 이름과 단가가 다를 때 submit 막기
+    function isCorrectPrice(event) {
+   
+        // 상품 이름
+        let name = document.getElementById("pNameSelect");
+        // 상품 가격
+        let price = document.getElementById("pPriceSelect");
+     
+        if(name.selectedIndex !== price.selectedIndex){
+            // 가격이 일치하지 않으면 제출을 막고 모달을 띄우기
+            $('#alertModal').modal('show'); // 모달 창 띄우기   
+            event.preventDefault(); // 제출을 방지
+        }          
+    }
+  
+// 상품 등록 시 제품 선택하면 자동으로 제품 단가 값 선택 되는 함수
+    function autoPriceSelect(){
+        // 이름 셀렉트 태그
+        let selectBoxN = document.getElementById("pNameSelect");    
+        // 가격 셀렉트 태그
+        let selectBoxP = document.getElementById("pPriceSelect");
+        
+        // 상품 선택에 따라 자동으로 단가 선택
+        selectBoxN.addEventListener("change",()=>{  
+            // 선택된 옵션의 값을 가져오기
+            let selectedValue = selectBoxN.value;    
+            console.log( selectedValue)   
+            for(i=0; i<selectBoxP.options.length; i++){
+                if(selectedValue == selectBoxP.options[i].id ){           
+                    console.log( selectBoxP.options[i].id)
+                    // 이 부분에 selectBoxP의 옵션 같이 위의 조건과 만족하는 옵션의 값으로 선택되게 하는           
+                    selectBoxP.selectedIndex = i;
+                    break;
+                }
+            }       
+        });
+        
+    };
+    
 
 //재고관리 버튼에 이벤트 추가 함수
 async function groupByDate(buttons) {
@@ -311,6 +371,7 @@ function disposeStockFetch(disposeProducts){
     })
     .catch(error => {
         console.error('Error:', error); // 오류가 발생한 경우
-        });
-    }
+            });
+        }
 
+   

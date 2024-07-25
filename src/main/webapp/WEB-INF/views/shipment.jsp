@@ -61,14 +61,14 @@
             </div>
         </div>
     </div>
-
-    <!-- 출하 상세 정보 모달 -->
+<!-- 
+    출하 상세 정보 모달
     <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="orderDetailModalLabel">출하 상세 정보</h5>
+                    <h5 class="modal-title" id="orderDetailModalLabel">출하 상세</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -82,24 +82,13 @@
             </div>
         </div>
     </div>
-
+ -->
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <!-- 출하 시작 버튼 클릭 이벤트 처리 -->
-    <script>
-        $(document).ready(function() {
-            $('.start-shipment-btn').click(function() {
-                var orderId = $(this).data('orderid');
-                // 모달 내용 업데이트 등의 추가 동작이 필요할 경우 여기에 구현
 
-                // 모달 열기
-                $('#orderDetailModal').modal('show');
-            });
-        });
-    </script>
     
     <script>
     	// 데이터 가져오는 함수
@@ -128,7 +117,7 @@
     	function addShipInfo(data){
     		try {
     			let InfoTbody = document.getElementById("InfoTbody");
-    			InfoTbody.innerHTML = "";
+    			InfoTbody.innerHTML = "";	//테이블 내용 초기화
     			//각각의 데이터를 출력
     			data.forEach(order => {
     				let row = InfoTbody.insertRow();
@@ -137,6 +126,7 @@
     				row.insertCell(2).innerText = order.p_name+" 외 "+order.p_count+"개";
     				row.insertCell(3).innerText = order.sum_o_total;
     				row.insertCell(4).innerText = order.o_address;
+    				
     				
     				if(order.d_complete == 0){
     					row.insertCell(5).innerText = "배송중";
@@ -148,9 +138,10 @@
     				
     				else{
     					row.insertCell(5).innerText = "배송 대기";
+    					//버튼 추가
+        				addB(row, 6, order);
     				}
-    				//버튼 추가
-    				addB(row, 6, order);
+    				
     			});
     			
     	    } catch (error) {
@@ -180,7 +171,7 @@
     	}
     	
     	
-    	//n번째 자리에 버튼 추가 함수
+    	//n번째 자리에 출하 시작 버튼 추가 함수
     	function addB(row, n, data){
             let cell = row.insertCell(n);
             let button = document.createElement('button');
@@ -192,10 +183,15 @@
             
          // 버튼에 클릭 이벤트 리스너 추가
             button.addEventListener('click', function() {
-                // 이벤트 핸들러에서 할 일을 작성
+            	
+                // 배송 정보 데이터 베이스에 데이터 담기
                 addputDlvInfo(data)
-                location.reload();
-                // 추가적인 로직을 여기에 작성
+              	//페이지 새로고침
+                location.reload()
+                
+                
+                
+                
             });
     	}
     	

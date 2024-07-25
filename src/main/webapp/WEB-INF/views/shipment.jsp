@@ -137,7 +137,18 @@
     				row.insertCell(2).innerText = order.p_name+" 외 "+order.p_count+"개";
     				row.insertCell(3).innerText = order.sum_o_total;
     				row.insertCell(4).innerText = order.o_address;
-    				row.insertCell(5).innerText = "출하 대기";
+    				
+    				if(order.d_complete == 0){
+    					row.insertCell(5).innerText = "배송중";
+    				}
+    				
+    				else if(order.d_complete == 1){
+    					row.insertCell(5).innerText = "배송완료";
+    				}
+    				
+    				else{
+    					row.insertCell(5).innerText = "배송 대기";
+    				}
     				//버튼 추가
     				addB(row, 6, order);
     			});
@@ -183,6 +194,7 @@
             button.addEventListener('click', function() {
                 // 이벤트 핸들러에서 할 일을 작성
                 addputDlvInfo(data)
+                location.reload();
                 // 추가적인 로직을 여기에 작성
             });
     	}

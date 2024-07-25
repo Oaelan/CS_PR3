@@ -9,6 +9,7 @@
 <style>
     .invoice {
         width: 800px;
+        height: 1000px;
         background: white;
         margin: 20px auto;
         border: 1px solid #cccccc;
@@ -86,11 +87,30 @@
     }
     
     .button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
+	    display: flex;
+	    align-items: center;
+	    justify-content: center;
+	    gap: 30px;
+	    margin-top: 20px;
+	    margin-bottom: 100px;
+    }
+    
+    .btn1, .btn2 {
+    	color: white;
+   		width: 100px;
+   		height: 30px;
+   		border: none;
+   		text-align: center;
+   		border-radius: 5px;
+   		font-family: 나눔고딕;
+    }
+    
+    .btn1 {
+    	background-color: #0d6efd;
+    }
+    
+    .btn2 {
+    	background-color: #6c757d;
     }
 </style>
 </head>
@@ -288,8 +308,8 @@
     </div>
 </div>
 <div class="button">
-    <button type="button" class="btn btn-primary">저장</button>
-    <button type="button" class="btn btn-secondary">출력</button>
+    <input type="button" class="btn1" value="저장">
+    <input type="button" class="btn2" value="출력">
 </div>
 </body>
 </html>

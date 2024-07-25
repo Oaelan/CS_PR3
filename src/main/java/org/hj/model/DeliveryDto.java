@@ -7,7 +7,7 @@ public class DeliveryDto {
 	private String o_id;
 	private String o_address;
 	private Boolean d_complete;
-	
+	private String start;
 	
 	public int getD_no() {
 		return d_no;
@@ -40,12 +40,18 @@ public class DeliveryDto {
 		this.d_complete = d_complete;
 	}
 	
+	public String getStart() {
+		return start;
+	}
+	public void setStart(String start) {
+		this.start = start;
+	}
 	@Override
 	public String toString() {
 		return "DeliveryDto [d_no=" + d_no + ", o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address
-				+ ", d_complete=" + d_complete + "]";
+				+ ", d_complete=" + d_complete + ", start=" + start + "]";
 	}
-
+	
 	
 	
 }

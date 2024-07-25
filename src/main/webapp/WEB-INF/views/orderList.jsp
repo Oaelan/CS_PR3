@@ -190,7 +190,7 @@
 					<span id="totalAmount" style="display: inline;"></span>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
+                    <button type="button" id = "goInvoice" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
                     <button type="button" id = "acceptOrder" style = "display:none" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
                     <button type="button" id = "rejectOrder" style = "display:none" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
                 </div>
@@ -290,9 +290,11 @@
 	        const DetailName = document.getElementById('orderDetailModalLabel');
 	        const tableBody = document.getElementById('orderDetailsTableBody');
 	        
-	        //수락 거절 버튼
+	        //수락 거절 명세서 버튼
 	        const reject = document.getElementById('rejectOrder');
 	        const accept = document.getElementById('acceptOrder');
+	        const goInvoice = document.getElementById('goInvoice');
+	        
 	        
 	        DetailName.innerHTML = "수주번호: " + o_no;
 	        tableBody.innerHTML = '';
@@ -339,6 +341,12 @@
 	        accept.addEventListener('click', function() {
 	            acceptOrder(o_no);
 	            location.reload(); 
+	        });
+	        
+	        
+	        //명세서 페이지로 이동
+	        goInvoice.addEventListener('click', function() {
+	        	window.location.href = '/invoice?o_no=' + o_no;
 	        });
 	        
 	    } catch (error) {

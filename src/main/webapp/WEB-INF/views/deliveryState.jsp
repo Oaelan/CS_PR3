@@ -37,19 +37,6 @@
 		<div class="status-box mt-3">
 			<div id="map" style="width: 100%; height: 500px;"></div>
 
-			<script type="text/javascript"
-				src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7eaf2bce6e8bb4b9048e3a6a6288e3c4"></script>
-			<script>
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-				mapOption = {
-					center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-					level : 3
-				// 지도의 확대 레벨
-				};
-
-				// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-				var map = new kakao.maps.Map(mapContainer, mapOption);
-			</script>
 		</div>
 		<div class="row">
             <div class="col-lg-12">
@@ -106,6 +93,42 @@
             </div>
         </div>
     </div>
+    
+    <script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7eaf2bce6e8bb4b9048e3a6a6288e3c4">
+	</script>
+	<script>
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			level : 3
+		// 지도의 확대 레벨
+		};
+
+		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+	</script>
+			
+	<script>
+	//데이터 가져오는 fetch함수
+	async function fetchOrderList() {
+	    try {
+	        const response = await fetch('/api/getDlvState', {
+	            headers: {
+	                'Accept': 'application/json'
+	            }
+	        });
+	
+	        // 응답을 JSON으로 파싱
+	        const data = await response.json();
+	        console.log(data);
+	        return data;
+	    } catch (error) {
+	        console.error('Error fetching data:', error);
+	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
+	    }
+	}
+	</script>	
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.hj.mapper.pub.OListMapper">
+
+	<!-- 배송 내역 가져옴 -->
+    <select id="getDlvState" resultType="org.hj.model.OListDto">
+        SELECT *
+        FROM public_schema.Delivery_GPS
+    </select>
+    
+</mapper>

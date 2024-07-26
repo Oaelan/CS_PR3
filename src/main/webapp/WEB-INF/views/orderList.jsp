@@ -190,7 +190,7 @@
 					<span id="totalAmount" style="display: inline;"></span>
 				</div>
 				<div class="modal-footer">
-                    <button type="button" id = "goInvoice" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
+                    <button type="button" id = "goInvoice" style = "display:none" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
                     <button type="button" id = "acceptOrder" style = "display:none" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>
                     <button type="button" id = "rejectOrder" style = "display:none" class="btn btn-reject" data-bs-dismiss="modal">수주 거절</button>
                 </div>
@@ -315,11 +315,15 @@
 	            if (orderDetail.o_permit === null) {
 	                reject.style.display = 'block';
 	                accept.style.display = 'block';
+	                goInvoice.style.display = 'none'
 	            }
 	            // 선택 했을 경우 버튼 숨김
 	            else{
 	            	reject.style.display = 'none';
 	                accept.style.display = 'none';
+	                if(orderDetail.o_permit == true){
+	                	goInvoice.style.display = 'block'
+	                }
 	            }
 	        	
 	        });

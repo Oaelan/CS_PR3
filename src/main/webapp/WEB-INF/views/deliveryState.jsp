@@ -60,31 +60,8 @@
                                         <th scope="col">배송 상태</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="1">
-                                        <td>2024-07-20</td>
-                                        <td>123456789</td>
-                                        <td>123456</td>
-                                        <td>user123</td>
-                                        <td>서울시 강남구</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="2">
-                                        <td>2024-07-21</td>
-                                        <td>123456789</td>
-                                        <td>456789</td>
-                                        <td>user456</td>
-                                        <td>서울시 종로구</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr data-toggle="modal" data-target="#orderDetailModal" data-orderid="3">
-                                        <td>2024-07-22</td>
-                                        <td>123456789</td>
-                                        <td>789012</td>
-                                        <td>user789</td>
-                                        <td>부산시 해운대구</td>
-                                        <td></td>
-                                    </tr>
+                                <tbody id = "dlvTable">
+                                 	<!-- 스크립트로 내용 추가 -->
                                 </tbody>
                             </table>
                         </div>
@@ -110,8 +87,16 @@
 	</script>
 			
 	<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		fetchDlvList()
+        .then(data => {
+                populateDlvTable(data);
+        });
+	});
+	
+
 	//데이터 가져오는 fetch함수
-	async function fetchOrderList() {
+	async function fetchDlvList() {
 	    try {
 	        const response = await fetch('/api/getDlvState', {
 	            headers: {
@@ -127,6 +112,42 @@
 	        console.error('Error fetching data:', error);
 	        throw error; // 에러 발생 시 이후 코드가 실행되지 않도록 예외를 던집니다.
 	    }
+	}
+	
+	
+	
+	
+	
+	
+	//배송 관리 목록에 데이터 추가하는 함수
+	function populateDlvTable(data) {
+	    let table = document.getElementById("dlvTable");
+	    table.innerHTML = ""; // 기존 데이터를 삭제하여 테이블을 초기화
+	    
+	    //받아온 데이터를 메인 주문 목록에 표시
+	    data.forEach(dlv => {
+	        let row = table.insertRow();
+	        row.insertCell(0).innerText = dlv.start;
+	        row.insertCell(1).innerText = dlv.d_no;
+	        row.insertCell(2).innerText = dlv.o_no;
+	        row.insertCell(3).innerText = dlv.o_id;
+	        row.insertCell(4).innerText = dlv.o_address;
+	        
+	        console.log(dlv.d_complete);
+	        // 출하 요청 상태
+	        if (dlv.d_complete == null) {
+	        	row.insertCell(5).innerText = "배송 전";
+        	}
+	        // 배송 중인 상태
+	        else if(dlv.d_complete == false){
+	        	row.insertCell(5).innerText = "배송 중";
+	        } 
+	        // 배송 완료 상태
+	        else if(dlv.d_complete == true){
+	        	row.insertCell(5).innerText = "배송 완료";
+	        }
+
+	    });
 	}
 	</script>	
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->

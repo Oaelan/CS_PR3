@@ -13,7 +13,7 @@ public class DlvStateServiceImpl implements DlvStateService{
 	@Autowired
 	DlvStateMapper dsm;
 	
-	
+	@Override
 	public List<DeliveryDto> getDlvState(){
 		System.out.println(dsm.getDlvState());
 		return dsm.getDlvState();

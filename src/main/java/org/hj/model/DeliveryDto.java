@@ -33,7 +33,7 @@ public class DeliveryDto {
 	public void setO_address(String o_address) {
 		this.o_address = o_address;
 	}
-	public Boolean getD_complete() {
+	public Boolean isD_complete() {
 		return d_complete;
 	}
 	public void setD_complete(Boolean d_complete) {

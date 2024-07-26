@@ -20,7 +20,7 @@
 				<td><input type="password" id="u_pw" name="u_pw" placeholder="비밀번호"></td>
 			</tr>
 			<tr class="loginInput">
-				<td colspan="2""><input id="loginB" type="submit" value="로그인"></td>
+				<td colspan="2"><input id="loginB" type="submit" value="로그인"></td>
 			</tr>
 		</table>
 	</form>

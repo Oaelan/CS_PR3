@@ -24,6 +24,11 @@
         .table td {
             vertical-align: middle;
         }
+        
+        header {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 
@@ -34,7 +39,7 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body p-0">
-                        <header class="bg-light py-2 mb-0">
+                        <header class="py-2 mb-0">
                             <div class="container text-center">
                                 <h5 class="m-0">출하 관리</h5>
                             </div>

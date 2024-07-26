@@ -55,6 +55,11 @@ body {
 	stockCont: last-child{
     border-bottom: none; /* 마지막 항목의 하단 경계선 제거 */
 }
+
+header {
+    background-color: #007bff;
+    color: white;
+}
 </style>
  <!-- Flatpickr CSS -->
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
@@ -75,7 +80,7 @@ body {
 					<div class="card pb-4">
 						<div class="card-body p-0">
 							<!-- 얇은 헤더 -->
-							<header class="bg-light py-2 mb-4">
+							<header class="py-2 mb-4">
 								<div class="container text-center">
 									<h6 class="m-0">재고 등록</h6>
 								</div>

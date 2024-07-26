@@ -28,6 +28,11 @@
             margin-bottom: 20px;
             text-align: center;
         }
+        
+        header {
+            background-color: #007bff;
+            color: white;
+        }
     </style>
 </head>
 
@@ -43,7 +48,7 @@
                 <div class="card">
                     <div class="card-body p-0">
                         <!-- 테이블과 헤더는 그대로 유지 -->
-                        <header class="bg-light py-2 mb-0">
+                        <header class="py-2 mb-0">
                             <div class="container text-center">
                                 <h5 class="m-0">배송 상태</h5>
                             </div>

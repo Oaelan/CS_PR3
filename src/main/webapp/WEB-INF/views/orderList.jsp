@@ -100,7 +100,7 @@
 </head>
 
 <body>
-
+	<!-- 페이지 주문 내역  -->
 	<div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
@@ -167,6 +167,7 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
+				<!-- 주문 내역 div -->
                 <div class="modal-body p-0">
                 	<table class="table m-0 ">
                     	<thead>
@@ -179,16 +180,18 @@
                      	<thead>
                      	
                         <tbody id = "orderDetailsTableBody">
-                        
+                        <!-- 스크립트로 상세내역 입력 -->
                         </tbody>
                         
                     </table>
                 </div>
+                <!-- 내역 합계 -->
 				<div id="totalSum" class="mt-3 d-flex align-items-center pl-4 pb-3"
 					style="text-align: center; width: 100%;">
 					<p class="mr-2" style="margin: 0; display: inline;">총 합계 :</p>
 					<span id="totalAmount" style="display: inline;"></span>
 				</div>
+				<!-- 상세 내역의 수주 확인 거절 , 명세서 버튼-->
 				<div class="modal-footer">
                     <button type="button" id = "goInvoice" style = "display:none" class="btn btn-primary mr-auto" data-bs-dismiss="modal">거래 명세서</button>
                     <button type="button" id = "acceptOrder" style = "display:none" class="btn btn-confirm" data-bs-dismiss="modal">수주 확인</button>

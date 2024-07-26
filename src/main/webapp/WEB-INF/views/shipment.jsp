@@ -28,6 +28,7 @@
 </head>
 
 <body>
+<!-- 출하 관리 리스트 div -->
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-12">
@@ -52,7 +53,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id = "InfoTbody">
-                                    
+                                    <!-- 스크립트로 상세 내용 입력 -->
                                 </tbody>
                             </table>
                         </div>
@@ -62,7 +63,7 @@
         </div>
     </div>
 <!-- 
-    출하 상세 정보 모달
+    필요시 모달 사용
     <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

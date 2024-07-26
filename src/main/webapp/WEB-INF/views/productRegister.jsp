@@ -10,14 +10,6 @@ body {
 	font-family: 나눔고딕;
 }
 
-.table thead th {
-	border-bottom: none;
-	vertical-align: middle;
-	font-size: 18px;
-	font-weight: bold;
-	
-}
-
 #invenNotice {
 	font-weight: bold;
 }
@@ -135,7 +127,7 @@ header {
 						<div class="card">
 							<div class="card-body p-0">
 								<header class="bg-light py-2 m-0">
-									<div class="container text-left pl-4" style="display: flex; justify-content: space-between;">
+									<div class="container text-left pl-4" style="display: flex; justify-content: space-between; align-items: center">
 										<h6 class="m-0" style="display: inline;">재고 목록</h6>
 										<div>
 											<input type="text" id="search" name="searchWord" placeholder="제품명 검색" style="padding-left: 5px; font-size: 14px; margin-right: 5px;">

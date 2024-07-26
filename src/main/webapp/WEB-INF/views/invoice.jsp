@@ -111,7 +111,7 @@
 </style>
 </head>
 <body>
-
+<!-- 명세서 전체 div -->
 <div class="invoice">
     <h2>거&nbsp;&nbsp;&nbsp;래&nbsp;&nbsp;&nbsp;명&nbsp;&nbsp;&nbsp;세&nbsp;&nbsp;&nbsp;서&nbsp;&nbsp;&nbsp;</h2>
     
@@ -168,6 +168,7 @@
         </table>
     </div>
 </div>
+<!-- 출력 저장 버튼 div -->
 <div class="button">
     <input type="button" class="btn" value="출력" onclick = "printPage()">
 </div>

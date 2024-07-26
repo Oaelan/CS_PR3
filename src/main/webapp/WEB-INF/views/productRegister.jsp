@@ -7,6 +7,15 @@
 <style>
 body {
 	height: 100%;
+	font-family: 나눔고딕;
+}
+
+.table thead th {
+	border-bottom: none;
+	vertical-align: middle;
+	font-size: 18px;
+	font-weight: bold;
+	
 }
 
 #invenNotice {

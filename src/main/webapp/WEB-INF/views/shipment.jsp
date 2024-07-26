@@ -10,26 +10,38 @@
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-        .table td,
-        .table th {
-            padding-left: 0;
-            padding-right: 0;
-            cursor: pointer;
-            text-align: center;
-        }
-        .table {
-            border-left: lightgray;
-            border-right: lightgray;
-        }
-        .table td {
-            vertical-align: middle;
-        }
-        
-        header {
-            background-color: #007bff;
-            color: white;
-        }
-    </style>
+	body {
+		font-family: 나눔고딕;
+	}
+	
+	.table td, .table th {
+		padding-left: 0;
+		padding-right: 0;
+		cursor: pointer;
+		text-align: center;
+	}
+	
+	.table {
+		border-left: lightgray;
+		border-right: lightgray;
+	}
+	
+	.table td {
+		vertical-align: middle;
+	}
+	
+	header {
+		background-color: #007bff;
+		color: white;
+	}
+	
+	.table thead th {
+		border-bottom: none;
+		vertical-align: middle;
+		font-size: 18px;
+		font-weight: bold;
+	}
+</style>
 </head>
 
 <body>

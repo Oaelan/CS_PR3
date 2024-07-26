@@ -9,6 +9,10 @@
     <title>배송 상태</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+    	body {
+    		font-family: 나눔고딕;
+    	}
+    	
         .table td,
         th {
             padding-left: 0;
@@ -28,6 +32,14 @@
             margin-bottom: 20px;
             text-align: center;
         }
+        
+       .table thead th {
+       	border-bottom: none;
+       	vertical-align: middle;
+       	font-size: 18px;
+       	font-weight: bold;
+       	
+       }
         
         header {
             background-color: #007bff;

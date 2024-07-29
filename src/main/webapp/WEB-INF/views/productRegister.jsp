@@ -5,6 +5,15 @@
 <meta charset="UTF-8">
 <title>제품 등록</title>
 <style>
+#tempCon {
+	overflow-y: auto;
+	max-height: 330px;
+}
+
+#stockL {
+	cursor: pointer;
+}
+
 body {
 	height: 100%;
 	font-family: 나눔고딕;
@@ -58,8 +67,8 @@ body {
 }
 
 header {
-    background-color: #007bff;
-    color: white;
+	background-color: #007bff;
+	color: white;
 }
 </style>
  <!-- Flatpickr CSS -->
@@ -122,13 +131,13 @@ header {
 			</div>
 			<div id="listTempCon" style="display: flex;">
 				<!-- 제품 목록 -->
-				<div class="product-list" style="width: 700px;">
-					<div class="col-lg-10 p-0" id="product-list">
+				<div class="product-list mr-0">
+					<div class="col-lg-10 p-0" id="product-list" style="max-width:100%">
 						<div class="card">
 							<div class="card-body p-0">
 								<header class="bg-light py-2 m-0">
 									<div class="container text-left pl-4" style="display: flex; justify-content: space-between; align-items: center">
-										<h6 class="m-0" style="display: inline;">재고 목록</h6>
+										<h6 class="m-0" style="display: inline;" id="stockL">재고 목록</h6>
 										<div>
 											<input type="text" id="search" name="searchWord" placeholder="제품명 검색" style="padding-left: 5px; font-size: 14px; margin-right: 5px;">
 											<button id="serachB">
@@ -157,14 +166,14 @@ header {
 				</div>
 				<!-- 창고 온도 섹션 -->
 				<!-- 얇은 헤더 -->
-				<div class="warehouse-section p-0" style="width: 377px; height: 330px; border-radius: 3px;">
-					<header class="bg-light py-2 mb-4">
+				<div class="warehouse-section p-0" id="tempCon" style="width:40%; height: 330px; border-radius: 3px;">
+					<header class="bg-light py-2 mb-4" style="position: fixed">
 						<div class="container text-center p-0">
 							<h6 class="m-0 font-weight-bold">창고 온도 :</h6>
 						</div>
 					</header>
-					<div class="col mt-4">
-						<div class="warehouse-message" style="text-align: center;">여기에 창고 관련 메시지를 입력하세요.</div>
+					<div class="col mt-4" id="tempList">
+						<div class="warehouse-message" style="text-align: center;"></div>
 					</div>
 				</div>
 			</div>

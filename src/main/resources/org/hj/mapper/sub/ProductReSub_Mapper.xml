@@ -16,5 +16,10 @@
 		resultType="org.hj.model.Product_manufacturingDto">
 		select * from Supplier.productCode;
 	</select>
-
+	
+	<!-- 물류창고 온도 가져오는 sql -->
+	<select id="selectFactoryTemp"
+		resultType="org.hj.model.FactoryTempDto">
+		select * from Supplier.Factory_temp;
+	</select>
 </mapper>

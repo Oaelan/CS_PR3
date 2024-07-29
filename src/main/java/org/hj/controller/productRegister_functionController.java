@@ -2,6 +2,7 @@ package org.hj.controller;
 
 import java.util.List;
 
+import org.hj.model.FactoryTempDto;
 import org.hj.model.Product_manufacturingDto;
 import org.hj.service.Pub.ProductRePub_Service;
 import org.hj.service.Sub.ProductReSub_Service;
@@ -91,7 +92,7 @@ public class productRegister_functionController {
 				@GetMapping("searchProduct")
 				public Product_manufacturingDto searchProduct(@RequestParam("searchWord")String searchWord,
 						Product_manufacturingDto pmd){
-			
+					System.out.println(searchWord);
 					// 입력값이 숫자인지 확인
 			        if (searchWord.matches("\\d+")) {
 			            // 검색어가 숫자일 경우 상품 번호로 검색
@@ -103,6 +104,14 @@ public class productRegister_functionController {
 			        	pmd.setP_name(searchWord);
 			        	return prps.searchProduct(pmd);
 			        }
-				} 
+				}
+				
+				
+				//물류 창고 온도 가져오는 기능
+				@GetMapping("selectFactoryTemp")
+				public List<FactoryTempDto> FactoryTemp(){
+					List<FactoryTempDto> FactoryTemps = prss.selectFactoryTemp();
+					return FactoryTemps;
+				}
 
 }

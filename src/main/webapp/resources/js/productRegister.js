@@ -1,11 +1,22 @@
 document.addEventListener('DOMContentLoaded', function() {
+    //등록된 재고 리스트 들고옴
     getProductList();
+    // 등록되어 있는 상품들의 정보를 들고옴
     productsInfo();
+    // 상품명 선택 시 자동으로 단가 선택 됨
     autoPriceSelect();
+    // 물류 창고 온도 가져오기
+    selectFactoryTemp();
+    
     //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
     document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
     // 검색버튼에 상품명/상품코드로 검색할 수 있는 기능 
     document.getElementById("serachB").addEventListener("click", searchProduct);
+    //(검색 후 ) 재고 목록 타이틀을 눌렀을 때 전체 목록 다시 가져오기 위해 새로 고침 하는 기능
+    document.getElementById("stockL").addEventListener("click", ()=>{
+        console.log("1234")
+        location.reload();
+    });
 });
 
 
@@ -418,4 +429,30 @@ function disposeStockFetch(disposeProducts){
             });
         }
 
-   
+   // 물류 창고 온도 fetch 함수
+function  selectFactoryTemp(){
+    fetch('/product/selectFactoryTemp', {
+        headers: {
+            'Accept': 'application/json', // 전송할 데이터의 타입       
+        }
+    })
+    .then(response => response.json()) // 응답을 JSON으로 변환
+    .then(results => {
+        console.log('Success:', results); // 성공적으로 처리된 결과를 출력
+        // 가져온 온도 정보를 감싸는 container
+        let  tempList = document.getElementById("tempList");
+        let factoryTempListHTML = "";
+        results.forEach(result =>{
+            factoryTempListHTML += 
+               '<div class="warehouse-message" style="text-align: center; display:flex; gap:10px; justify-content: center;  align-items: center;">' +
+              "<p> " + result.now_temp + " °C</p>" +
+              "<p> " + result.time + "</p>" +
+              "<p> " + result.state + "</p>" +
+              "</div>";
+        })
+        tempList.innerHTML = factoryTempListHTML;
+    })
+    .catch(error => {
+        console.error('Error:', error); // 오류가 발생한 경우
+            });
+}

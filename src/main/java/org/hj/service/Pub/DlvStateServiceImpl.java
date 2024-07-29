@@ -15,7 +15,6 @@ public class DlvStateServiceImpl implements DlvStateService{
 	
 	@Override
 	public List<DeliveryDto> getDlvState(){
-		System.out.println(dsm.getDlvState());
 		return dsm.getDlvState();
 	}
 }

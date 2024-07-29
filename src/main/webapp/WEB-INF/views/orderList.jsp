@@ -100,6 +100,7 @@
 </head>
 
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
 	<!-- 페이지 주문 내역  -->
 	<div class="container mt-5">
         <div class="row">

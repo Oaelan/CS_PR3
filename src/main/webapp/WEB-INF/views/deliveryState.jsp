@@ -49,6 +49,7 @@
 </head>
 
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
     <div class="container mt-5">
         <strong style="font-size: 24px;">실시간 배송 위치 안내</strong>
 		<div class="status-box mt-3">
@@ -185,7 +186,7 @@
 	        	row.insertCell(5).innerText = "배송 완료";
 	        }
 	        row.addEventListener("click", function(){
-	        	if (dlv.d_complete == null) {
+	        	if (dlv.d_complete == null || dlv.x == 0 && dlv.y == 0) {
 	        		$('#orderDetailModal').modal('show');
 	        	}
 	        	else{

@@ -18,7 +18,6 @@ public class DlvStateController {
 	
 	@GetMapping("/getDlvState")
 	public List<DeliveryDto> getDlvState() {
-		System.out.println(ds.getDlvState());
 		return ds.getDlvState();
 	}
 }

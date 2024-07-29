@@ -105,7 +105,8 @@ header {
 <link href="../resources/css/productRegister.css?ver=24" rel="stylesheet">
 </head>
 <body>
-<!-- Toast container -->
+	<jsp:include page="header.jsp"></jsp:include>
+	<!-- Toast container -->
 	<div class="toast-container" style="width: 15%;">
 	    <!-- 온도 관련 Toast -->
 	    <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">

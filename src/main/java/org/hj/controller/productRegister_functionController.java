@@ -88,30 +88,38 @@ public class productRegister_functionController {
 				return "{\"message\": \"재고 폐기 완료\"}";
 		}
 
-				//재고 검색 기능
-				@GetMapping("searchProduct")
-				public Product_manufacturingDto searchProduct(@RequestParam("searchWord")String searchWord,
-						Product_manufacturingDto pmd){
-					System.out.println(searchWord);
-					// 입력값이 숫자인지 확인
-			        if (searchWord.matches("\\d+")) {
-			            // 검색어가 숫자일 경우 상품 번호로 검색
-			            int productNumber = Integer.parseInt(searchWord);
-			            pmd.setP_no(productNumber);
-			            return prps.searchProduct(pmd);
-			        } else {
-			            // 검색어가 문자열일 경우 상품 이름으로 검색
-			        	pmd.setP_name(searchWord);
-			        	return prps.searchProduct(pmd);
-			        }
-				}
+		//재고 검색 기능
+		@GetMapping("searchProduct")
+		public Product_manufacturingDto searchProduct(@RequestParam("searchWord")String searchWord,
+		Product_manufacturingDto pmd){
+		System.out.println(searchWord);
+		// 입력값이 숫자인지 확인
+		if (searchWord.matches("\\d+")) {
+		// 검색어가 숫자일 경우 상품 번호로 검색
+		int productNumber = Integer.parseInt(searchWord);
+		pmd.setP_no(productNumber);
+		return prps.searchProduct(pmd);
+		} else {
+		 // 검색어가 문자열일 경우 상품 이름으로 검색
+		pmd.setP_name(searchWord);
+		return prps.searchProduct(pmd);
+		}
+		}
 				
 				
-				//물류 창고 온도 가져오는 기능
-				@GetMapping("selectFactoryTemp")
-				public List<FactoryTempDto> FactoryTemp(){
-					List<FactoryTempDto> FactoryTemps = prss.selectFactoryTemp();
-					return FactoryTemps;
-				}
+		//물류 창고 온도 가져오는 기능
+		@GetMapping("selectFactoryTemp")
+		public List<FactoryTempDto> FactoryTemp(){
+		List<FactoryTempDto> FactoryTemps = prss.selectFactoryTemp();
+		return FactoryTemps;
+		}
 
-}
+		// 재고가 아닌 등록된 모든 상품 정보 가져오기
+		@GetMapping("selectProductInfo")
+		public List<Product_manufacturingDto> ProductInfo(){
+		List <Product_manufacturingDto> ProductInfos = prss.selectProductInfo();
+		return ProductInfos;	
+		}
+				
+}	
+	

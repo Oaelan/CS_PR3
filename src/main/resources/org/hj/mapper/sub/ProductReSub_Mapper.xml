@@ -11,7 +11,7 @@
 		where p_name = #{p_name};
 	</select>
 	
-	<!-- 등록된 상품 정보 들고오는 sql -->
+	<!-- 등록된 재고 정보 들고오는 sql -->
 	<select id="productsInfo"
 		resultType="org.hj.model.Product_manufacturingDto">
 		select * from Supplier.productCode;
@@ -20,6 +20,19 @@
 	<!-- 물류창고 온도 가져오는 sql -->
 	<select id="selectFactoryTemp"
 		resultType="org.hj.model.FactoryTempDto">
-		select * from Supplier.Factory_temp;
+		select * from Supplier.Factory_temp
+		ORDER BY time DESC;
+	</select>
+	
+	<!-- 신제품 등록하는 sql -->
+	<insert id="uploadProductInfo" parameterType="org.hj.model.Product_manufacturingDto">
+	insert into Supplier.productCode (p_name,p_price)
+	values(#{p_name},#{p_price});
+	</insert>
+	
+	<!-- 등록된 상품 정보 들고오는 sql -->
+	<select id="selectProductInfo"
+	resultType="org.hj.model.Product_manufacturingDto">
+	select * from Supplier.productCode;
 	</select>
 </mapper>

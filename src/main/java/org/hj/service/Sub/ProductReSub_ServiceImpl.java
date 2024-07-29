@@ -27,5 +27,11 @@ public class ProductReSub_ServiceImpl implements ProductReSub_Service {
 	public List <FactoryTempDto> selectFactoryTemp(){
 		return prsm.selectFactoryTemp();
 	}
-
+	
+	public void uploadProductInfo(Product_manufacturingDto pmd){
+		prsm.uploadProductInfo(pmd);
+	}
+	public List <Product_manufacturingDto> selectProductInfo(){
+		return prsm.selectProductInfo();
+	}
 }

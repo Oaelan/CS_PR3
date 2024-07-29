@@ -1,26 +1,105 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // 등록 된 상품 리스트 들고 옴
+    selectProductInfo();
     //등록된 재고 리스트 들고옴
     getProductList();
     // 등록되어 있는 상품들의 정보를 들고옴
     productsInfo();
     // 상품명 선택 시 자동으로 단가 선택 됨
     autoPriceSelect();
-    // 물류 창고 온도 가져오기
-    selectFactoryTemp();
-    
+    // 물류 창고 온도 가져오기(1초마다 가져오기)
+    setInterval(selectFactoryTemp, 1000);
+    // 창고 온도에 따라 토스트 창 띄우는 함수
+    setInterval(toastForTem, 1000);
+    // 창고 온도에 따라 모달 창 띄우는 함수
+  // tempForModal();
     //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
     document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
     // 검색버튼에 상품명/상품코드로 검색할 수 있는 기능 
     document.getElementById("serachB").addEventListener("click", searchProduct);
     //(검색 후 ) 재고 목록 타이틀을 눌렀을 때 전체 목록 다시 가져오기 위해 새로 고침 하는 기능
     document.getElementById("stockL").addEventListener("click", ()=>{
-        console.log("1234")
         location.reload();
     });
+    
+   
 });
 
+//온도 이상 감지에 따라 생기는 토스트창 함수
+async function toastForTem() {
+    const nowTempForM = await selectFactoryTemp();
+    console.log(nowTempForM)
+    //토스트 메시지 창
+    let toastHeader = document.getElementById("toast-header");
+    toastHeader.innerHTML =" ";  
+    // 토스트 메시지
+    let tempState = document.getElementById("tempState");
+    // 토스트 창 
+    var toast = document.getElementById('toast');
+    $(toast).toast({
+        // x버튼을 눌러 닫기 전 까지 안 사라짐
+      autohide: false 
+    });
+    
+    if (nowTempForM !== undefined) {
+        if(nowTempForM <=25){
+            // 조건에 따라 토스트 메시지와 디자인 설정
+            tempState.InnerText = "현재 온도가 낮습니다."
+            toastHeader.style.background ="blue";
+            toastHeader.style.color = 'white';    
+            toastHeader.innerHTML =  '<i class="bi bi-thermometer-high rounded mr-2" aria-hidden="true"></i>' +
+            '<strong class="mr-auto">물류 창고 온도 이상</strong>' +
+            '<small class="temps">just now</small>' +
+            '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>';
+            $(toast).toast('show');
+        }else if(nowTempForM >=29){
+            // 조건에 따라 토스트 메시지와 디자인 설정
+            tempState.InnerText = "현재 온도가 높습니다."
+            toastHeader.style.background ="red";
+            toastHeader.style.color = 'white';    
+            toastHeader.innerHTML =  '<i class="bi bi-thermometer-high rounded mr-2" aria-hidden="true"></i>' +
+            '<strong class="mr-auto">물류 창고 온도 이상</strong>' +
+            '<small class="temps" >just now</small>' +
+            '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+            '</button>';
+            $(toast).toast('show');
+        }else{
+            $(toast).toast('hide');
+        }
+    }
+}
+//등록 된 상품 리스트 들고오는 함수
+function selectProductInfo(){
+    // POST 요청 보내기
+    fetch('/product/selectProductInfo', {
+        headers: {
+            'Accept': 'application/json', // 전송할 데이터의 타입
+        }
+    })
+    .then(response => response.json()) // 응답을 JSON으로 변환
+    .then(results => {
+       // console.log('Success:', result); // 성공적으로 처리된 결과를 출력
+        let productInfoHTML ="";
+        let productInfoHTMLCon = document.getElementById("mList");
+        results.forEach(result =>{
+            productInfoHTML+=
+           '<tr>'+'<td>'+result.p_no+'</td>'+
+            '<td>'+result.p_name +'</td>' +
+            '<td>'+result.p_price  +'</td>'  +
+            '</tr>';
+        })
+        
+        productInfoHTMLCon.innerHTML = productInfoHTML;
+    })
+    .catch(error => {
+        console.error('Error:', error); // 오류가 발생한 경우
+            });
+        }
 
-//등록 상품 리스트를 불러오는 함수
+//등록 된 재고 리스트를 불러오는 함수
 function getProductList() {
     fetch('/product/list', {
         headers: {
@@ -34,15 +113,15 @@ function getProductList() {
         return response.json(); // 응답 본문을 JSON으로 변환
     })
     .then(productLists => {
-        // 전체 상품 리스트
+        // 전체 재고 리스트
         //console.log(productLists); // 데이터를 처리       
-        // 상품 리스트들이 들어갈 tbody
+        // 재고 리스트들이 들어갈 tbody
         let tbody = document.getElementById("pList");
         // tbody 초기화
         tbody.innerHTML = "";       
-        // 상품 리스트 forEach 돌려서 출력
+        // 재고 리스트 forEach 돌려서 출력
         productLists.forEach(product => {         
-            // 상품 정보를 담는 변수 
+            // 재고 정보를 담는 변수 
             let listCont = 
                 '<tr class="products">' +
                 '<td>' + product.p_no + '</td>' +
@@ -303,6 +382,21 @@ function isReadonly(updateBtns) {
     });
 }
 
+// 창고 온도에 따라 모달 창 띄우는 함수
+//async/await를 사용하여 결과 처리
+/*async function tempForModal() {
+    const nowTempForM = await selectFactoryTemp();
+    console.log(nowTempForM);
+    if (nowTempForM !== undefined) {
+        if(nowTempForM <=25){
+            $('#modal2').modal('show'); // 모달 창 띄우기   
+        }else if(nowTempForM >=29){
+            $('#modal1').modal('show'); // 모달 창 띄우기   
+        }else{}
+    }
+}*/
+
+
 //버튼 교체 함수
 function replaceButton(button) {
     let newButton = button.cloneNode(true);
@@ -429,30 +523,55 @@ function disposeStockFetch(disposeProducts){
             });
         }
 
-   // 물류 창고 온도 fetch 함수
-function  selectFactoryTemp(){
-    fetch('/product/selectFactoryTemp', {
-        headers: {
-            'Accept': 'application/json', // 전송할 데이터의 타입       
-        }
-    })
-    .then(response => response.json()) // 응답을 JSON으로 변환
-    .then(results => {
-        console.log('Success:', results); // 성공적으로 처리된 결과를 출력
-        // 가져온 온도 정보를 감싸는 container
-        let  tempList = document.getElementById("tempList");
+//물류 창고 온도 fetch 함수
+async function selectFactoryTemp() {
+    try {
+        const response = await fetch('/product/selectFactoryTemp', {
+            headers: {
+                'Accept': 'application/json', // 전송할 데이터의 타입       
+            }
+        });
+
+        const results = await response.json(); // 응답을 JSON으로 변환
+
+        let tempList = document.getElementById("tempList");
         let factoryTempListHTML = "";
-        results.forEach(result =>{
+        results.forEach(result => {
             factoryTempListHTML += 
-               '<div class="warehouse-message" style="text-align: center; display:flex; gap:10px; justify-content: center;  align-items: center;">' +
-              "<p> " + result.now_temp + " °C</p>" +
-              "<p> " + result.time + "</p>" +
-              "<p> " + result.state + "</p>" +
-              "</div>";
-        })
+                '<div class="warehouse-message" style="text-align: center; display:flex; justify-content: space-evenly; align-items: center;">' +
+                '<p class="temp"> ' + result.now_temp + " °C</p>" +
+                '<p class="time"> '+ result.time + "</p>" +
+                '<p class="state"> ' + result.state + "</p>" +
+                "</div>";
+        });
         tempList.innerHTML = factoryTempListHTML;
-    })
-    .catch(error => {
+        
+        let temps = document.querySelectorAll(".temp");
+        temps.forEach(temp => {         
+            let tempN = temp.innerText.slice(0, -2);
+            if (parseFloat(tempN) <= 25.0) {
+                temp.parentNode.style.color = "blue";
+            } else if (parseFloat(tempN) >= 29.0) {
+                temp.parentNode.style.color = "red";
+            }
+            temp.parentNode.style.fontWeight = "bold";   
+        });
+       
+        let nowTemp = document.getElementById("nowTemp");
+        nowTemp.innerText = "현재 창고 온도 : " + temps[0].innerText;
+        let nowTempForM = parseFloat(temps[0].innerText.slice(0, -2));
+   
+        if (nowTempForM <= 25.0) {
+            nowTemp.style.color = "blue";
+        } else if (nowTempForM >= 29.0) {
+            nowTemp.style.color = "red";
+        } else {
+            nowTemp.style.color = "black";
+        }
+
+        // nowTempForM 값을 반환
+        return nowTempForM;
+    } catch (error) {
         console.error('Error:', error); // 오류가 발생한 경우
-            });
+    }
 }

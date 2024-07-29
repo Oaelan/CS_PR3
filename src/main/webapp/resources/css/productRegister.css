@@ -2,6 +2,7 @@
 /* 기본 글꼴을 나눔고딕체로 설정 */
 body {
 	font-family: 'Nanum Gothic', sans-serif;
+	height: 100%;
 }
 
 .form-control {
@@ -23,13 +24,13 @@ body {
 .product-list {
 	margin-top: 50px;
 	float: left;
-	width: calc(70% - 50px);
+	width: 60%;
 	/* 제품목록 박스의 너비 조정 */
 	margin-right: 30px;
 	/* 오른쪽 여백 설정 */
 }
 
-#product-list {
+.product-list {
 	overflow-y: auto;
 	max-height: 330px; /* 최대 높이 설정 */
 }

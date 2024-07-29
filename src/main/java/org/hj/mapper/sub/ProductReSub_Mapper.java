@@ -14,4 +14,11 @@ public interface ProductReSub_Mapper {
 	
 	// 물류 창고 온도 가져오기
 	public List <FactoryTempDto> selectFactoryTemp();
+	
+	// 물류 창고 온도 가져오기
+	public void uploadProductInfo(Product_manufacturingDto pmd);
+	
+	// 등록된 상품 정보 들고오기
+	public List <Product_manufacturingDto> selectProductInfo();
+	
 }

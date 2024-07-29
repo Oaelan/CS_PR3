@@ -49,6 +49,5 @@
 		select * from public_schema.productNum
 		WHERE p_no = #{p_no} OR p_name = #{p_name};
 	</select>
-
 </mapper>
   

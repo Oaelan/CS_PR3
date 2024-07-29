@@ -5,6 +5,29 @@
 <meta charset="UTF-8">
 <title>제품 등록</title>
 <style>
+.temps {
+	color: white!important;
+}
+
+.toast-container {
+	position: fixed;
+	top: 1rem;
+	right: 1rem;
+	z-index: 1080;
+}
+
+.state {
+	width: 15%;
+}
+
+.temp {
+	width: 25%;
+}
+
+.time {
+	width: 50%;
+}
+
 #tempCon {
 	overflow-y: auto;
 	max-height: 330px;
@@ -79,9 +102,27 @@ header {
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 나눔고딕체 CDN 링크 -->
 <link href="https://cdn.jsdelivr.net/npm/font-nanum@1.1.2/css/nanum.min.css" rel="stylesheet">
-<link href="../resources/css/productRegister.css" rel="stylesheet">
+<link href="../resources/css/productRegister.css?ver=24" rel="stylesheet">
 </head>
 <body>
+<!-- Toast container -->
+	<div class="toast-container" style="width: 15%;">
+	    <!-- 온도 관련 Toast -->
+	    <div class="toast" id="toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="false">
+	        <div class="toast-header" id ="toast-header">
+	            <i class="bi bi-thermometer-high" class="rounded mr-2" alt="Icon"></i> 
+	            <strong class="mr-auto">물류 창고 온도 이상</strong>
+	            <small class="text-muted">just now</small>
+	            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+	                <span aria-hidden="true">&times;</span>
+	            </button>
+	        </div>
+	        <div class="toast-body">
+	         		<p id="tempState">현재 온도가 높습니다.</p>
+	        </div>
+	    </div>
+	</div>
+	
 	<div class="container" style="display: flex; flex-direction: column; gap: 30px";>
 		<div class="container mt-5">
 			<!-- 제품 등록 폼 -->
@@ -167,9 +208,9 @@ header {
 				<!-- 창고 온도 섹션 -->
 				<!-- 얇은 헤더 -->
 				<div class="warehouse-section p-0" id="tempCon" style="width:40%; height: 330px; border-radius: 3px;">
-					<header class="bg-light py-2 mb-4" style="position: fixed">
+					<header class="bg-light py-2 mb-4">
 						<div class="container text-center p-0">
-							<h6 class="m-0 font-weight-bold">창고 온도 :</h6>
+							<h6 class="m-0 font-weight-bold" id="nowTemp">창고 온도 :</h6>
 						</div>
 					</header>
 					<div class="col mt-4" id="tempList">
@@ -178,7 +219,7 @@ header {
 				</div>
 			</div>
 		</div>
-		<div class="container" style="display: flex; justify-content:space-between";>
+		<div class="container" style="display: flex; justify-content:space-between;margin-bottom:100px;">
 			<!--  등록되어 있는 상품 리스트(판매를 하기 위해 등록한 상품 리스트) -->
 			<div class="product-list m-0" style="width: 60%;">
 				<div class="card">
@@ -204,20 +245,18 @@ header {
 				</div>
 			</div>
 			<!-- 새 상품 등록 창 -->
-			<div class="form-container" style="width: 35%;">
+			<div class="form-container" style="width: 40%; width: 40%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
 				<div class="form-header">
-					<h5 style="text-align:center">상품 등록</h5>
+					<h5 style="text-align: center">상품 등록</h5>
 				</div>
-				<form id="productForm" style="display:flex; flex-direction:column; justify-content: center; align-items: center;">
-					<div class="form-group" style="display:flex; justify-content:space-evenly; align-items:center;">
-						<label for="pName" class ="m-0" style="text-align:center">품명</label>
-						<input type="text" class="form-control m-0" id="pName" name="pName" required style="width:70%;">
+				<form id="productForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center;" action="/uploadProductInfo">
+					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
+						<label for="pName" class="m-0" style="text-align: center">품명</label> <input type="text" class="form-control m-0" id="pName" name="p_name" required style="width: 70%;">
 					</div>
-					<div class="form-group" style="display:flex; justify-content:space-evenly; align-items:center;">
-						<label for="pPrice" class ="m-0" style="text-align:center">단가</label>
-						<input type="number" class="form-control m-0" id="pPrice" name="pPrice" required style="width:70%;">
+					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
+						<label for="pPrice" class="m-0" style="text-align: center">단가</label> <input type="number" class="form-control m-0" id="pPrice" name="p_price" required style="width: 70%;">
 					</div>
-					<button type="submit" class="btn btn-primary btn-register" style="width:56%";>등록</button>
+					<button type="submit" class="btn btn-primary btn-register" style="width: 56%";>등록</button>
 				</form>
 			</div>
 		</div>
@@ -292,6 +331,46 @@ header {
             </div>
         </div>
     </div>
+    
+<!--     온도가 29도 이상일 때의 모달
+    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal1Label">온도 알림</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    창고 온도가 29도 이상 입니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    온도가 25도 이하일 때의 모달
+    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2Label" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal2Label">온도 알림</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    창고 온도가 25도 이하 입니다.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
 	<!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>

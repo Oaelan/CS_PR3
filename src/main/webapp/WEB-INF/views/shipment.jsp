@@ -7,6 +7,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>출하 관리</title>
+    <!-- header css 링크 -->
+    <link rel="stylesheet" href="../resources/css/header.css?ver=1">
     <!-- 부트스트랩 CDN 링크 -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>

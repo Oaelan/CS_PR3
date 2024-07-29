@@ -94,6 +94,8 @@ header {
 	color: white;
 }
 </style>
+<!-- header css 링크 -->
+<link rel="stylesheet" href="../resources/css/header.css">
  <!-- Flatpickr CSS -->
 <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
 <!-- 부트스트랩 아이콘 링크 -->

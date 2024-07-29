@@ -8,6 +8,9 @@ public class DeliveryDto {
 	private String o_address;
 	private Boolean d_complete;
 	private String start;
+	private double x;
+	private double y;
+	
 	
 	public int getD_no() {
 		return d_no;
@@ -46,10 +49,24 @@ public class DeliveryDto {
 	public void setStart(String start) {
 		this.start = start;
 	}
+	
+	
+	public double getX() {
+		return x;
+	}
+	public void setX(double x) {
+		this.x = x;
+	}
+	public double getY() {
+		return y;
+	}
+	public void setY(double y) {
+		this.y = y;
+	}
 	@Override
 	public String toString() {
 		return "DeliveryDto [d_no=" + d_no + ", o_no=" + o_no + ", o_id=" + o_id + ", o_address=" + o_address
-				+ ", d_complete=" + d_complete + ", start=" + start + "]";
+				+ ", d_complete=" + d_complete + ", start=" + start + ", x=" + x + ", y=" + y + "]";
 	}
 	
 	

@@ -88,27 +88,42 @@
         </div>
     </div>
     
+    
+    <!-- 모달 --> 
+    <div class="modal fade" id="orderDetailModal" tabindex="-1" role="dialog" aria-labelledby="orderDetailModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDetailModalLabel">배송 상태</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>물품이 배송 전 입니다.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7eaf2bce6e8bb4b9048e3a6a6288e3c4">
 	</script>
 	<script>
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-			level : 3
-		// 지도의 확대 레벨
-		};
-
-		// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-		var map = new kakao.maps.Map(mapContainer, mapOption);
-	</script>
-			
-	<script>
+		 
+	
 	document.addEventListener("DOMContentLoaded", function() {
 		fetchDlvList()
         .then(data => {
                 populateDlvTable(data);
         });
+		 setInterval(async function() {
+	            const data = await fetchDlvList();
+	            populateDlvTable(data);
+	        }, 3000);
 	});
 	
 
@@ -123,7 +138,6 @@
 	
 	        // 응답을 JSON으로 파싱
 	        const data = await response.json();
-	        console.log(data);
 	        return data;
 	    } catch (error) {
 	        console.error('Error fetching data:', error);
@@ -150,7 +164,7 @@
 	        row.insertCell(3).innerText = dlv.o_id;
 	        row.insertCell(4).innerText = dlv.o_address;
 	        
-	        console.log(dlv.d_complete);
+
 	        // 출하 요청 상태
 	        if (dlv.d_complete == null) {
 	        	row.insertCell(5).innerText = "배송 전";
@@ -163,9 +177,50 @@
 	        else if(dlv.d_complete == true){
 	        	row.insertCell(5).innerText = "배송 완료";
 	        }
+	        row.addEventListener("click", function(){
+	        	if (dlv.d_complete == null) {
+	        		$('#orderDetailModal').modal('show');
+	        	}
+	        	else{
+	        		updateMap(dlv);	
+	        	}
+	        	
+	        })
+	        
 
 	    });
 	}
+	
+	
+	
+	// 지도 업데이트 함수
+    function updateMap(dlv) {
+        const mapContainer = document.getElementById('map'); // 지도를 표시할 div
+        const mapOption = {
+            center: new kakao.maps.LatLng(dlv.x, dlv.y), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+        // 지도 객체를 생성하거나 업데이트
+        let map = new kakao.maps.Map(mapContainer, mapOption);
+        let marker = new kakao.maps.Marker({
+            position: new kakao.maps.LatLng(dlv.x, dlv.y)
+        });
+        marker.setMap(map);
+
+        // 지도와 마커를 주기적으로 갱신
+        setInterval(async function() {
+            // 주기적으로 데이터 가져오기
+            const data = await fetchDlvList();
+            const updatedDlv = data.find(d => d.d_no === dlv.d_no); // 현재 클릭된 d_no에 해당하는 데이터 가져오기
+
+            if (updatedDlv) {
+            	var moveLatLon = new kakao.maps.LatLng(updatedDlv.x, updatedDlv.y);
+                map.panTo(moveLatLon);     
+                marker.setPosition(new kakao.maps.LatLng(updatedDlv.x, updatedDlv.y));
+            }
+        }, 1000);
+    }
 	</script>	
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

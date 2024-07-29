@@ -147,7 +147,12 @@
     				
     				
     				if(order.d_complete == 0){
-    					row.insertCell(5).innerText = "배송중";
+    					if(order.x == null && order.y == null){
+    		        		row.insertCell(5).innerText = "배송 전";	
+    		        	}
+    		        	else{
+    		        		row.insertCell(5).innerText = "배송 중";	
+    		        	}
     				}
     				
     				else if(order.d_complete == 1){

@@ -164,6 +164,7 @@
 	        row.insertCell(3).innerText = dlv.o_id;
 	        row.insertCell(4).innerText = dlv.o_address;
 	        
+	        
 
 	        // 출하 요청 상태
 	        if (dlv.d_complete == null) {
@@ -171,7 +172,13 @@
         	}
 	        // 배송 중인 상태
 	        else if(dlv.d_complete == false){
-	        	row.insertCell(5).innerText = "배송 중";
+	        	if(dlv.x == 0 && dlv.y == 0){
+	        		row.insertCell(5).innerText = "배송 전";	
+	        	}
+	        	else{
+	        		row.insertCell(5).innerText = "배송 중";	
+	        	}
+	        	
 	        } 
 	        // 배송 완료 상태
 	        else if(dlv.d_complete == true){

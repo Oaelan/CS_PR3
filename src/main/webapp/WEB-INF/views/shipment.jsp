@@ -45,6 +45,8 @@
 </head>
 
 <body>
+	<jsp:include page="header.jsp"></jsp:include>
+
 <!-- 출하 관리 리스트 div -->
     <div class="container mt-5">
         <div class="row">
@@ -147,7 +149,12 @@
     				
     				
     				if(order.d_complete == 0){
-    					row.insertCell(5).innerText = "배송중";
+    					if(order.x == null && order.y == null){
+    		        		row.insertCell(5).innerText = "배송 전";	
+    		        	}
+    		        	else{
+    		        		row.insertCell(5).innerText = "배송 중";	
+    		        	}
     				}
     				
     				else if(order.d_complete == 1){

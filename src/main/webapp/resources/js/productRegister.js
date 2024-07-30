@@ -11,8 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(selectFactoryTemp, 1000);
     // 창고 온도에 따라 토스트 창 띄우는 함수
     setInterval(toastForTem, 1000);
-    // 창고 온도에 따라 모달 창 띄우는 함수
-  // tempForModal();
+  // 상품등록시 새로고침 되는 함수
+    uploadReload()
     //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
     document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
     // 검색버튼에 상품명/상품코드로 검색할 수 있는 기능 
@@ -24,6 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
     
    
 });
+
+// 상품 등록시 새로고침 되는 함수
+function uploadReload(){
+    let uploadB = document.getElementById("productFrom");
+    uploadB.addEventListsner("submit",()=>{
+        location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
+    })
+}
 
 //온도 이상 감지에 따라 생기는 토스트창 함수
 async function toastForTem() {

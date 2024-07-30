@@ -115,11 +115,16 @@ Supplier DB (공급사 전용 DB)
 
   - 물류 창고 온도 테이블
     
-  CREATE TABLE `Factory_temp` (
+<details><summary>SQL Factory_temp 테이블 생성문
+</summary>
+
+CREATE TABLE `Factory_temp` (
 `now_temp` double NOT NULL,
 `time` datetime DEFAULT current_timestamp(),
 `state` varchar(255) DEFAULT NULL
 )
+</details>   
+  
 
 | now_temp | time | state |
 | --- | --- | --- |
@@ -127,12 +132,17 @@ Supplier DB (공급사 전용 DB)
 
 
   - 관리자 테이블
-    
-  CREATE TABLE `Master` (
+<details><summary>SQL Master 테이블 생성문
+</summary>
+
+CREATE TABLE `Master` (
   `m_id` varchar(20) NOT NULL,
   `m_pw` varchar(20) NOT NULL,
   PRIMARY KEY (`m_id`
 )
+</details>  
+    
+  
 
 | m_id | m_pw |
 | --- | --- |
@@ -140,12 +150,17 @@ Supplier DB (공급사 전용 DB)
 
 
   - 상품 테이블
-    
+<details><summary>SQL productCode 테이블 생성문
+</summary>
+	
 CREATE TABLE `productCode` (
 `p_name` varchar(255) DEFAULT NULL,
 `p_no` int(11) NOT NULL AUTO_INCREMENT,
 `p_price` int(11) DEFAULT NULL,PRIMARY KEY (`p_no`
 )
+
+</details>      
+
 
 | p_name | p_no | p_price |
 | --- | --- | --- |
@@ -157,7 +172,9 @@ CREATE TABLE `productCode` (
 public_schema DB (수요자 전용 DB)
 
 - 유저 테이블
-  
+<details><summary>SQL User 테이블 생성문
+</summary>
+
 CREATE TABLE `User` (
    `u_id` varchar(20) NOT NULL,
    `u_name` varchar(20) NOT NULL,
@@ -167,6 +184,9 @@ CREATE TABLE `User` (
    `u_no` varchar(10) NOT NULL,
    PRIMARY KEY (`u_id`)
   )
+
+</details>   
+
   
 | u_id | u_name | u_pw | u_email | u_address | u_no |
 | --- | --- | --- | --- | --- | --- |
@@ -174,8 +194,10 @@ CREATE TABLE `User` (
 
 
  - 상품 재고 테이블
-   
- Product_manufacturing	CREATE TABLE `Product_manufacturing` (
+ <details><summary>SQL Product_manufacturing 테이블 생성문
+</summary>
+
+CREATE TABLE `Product_manufacturing` (
    `m_date` date NOT NULL,
    `p_no` int(11) NOT NULL,
    `p_name` varchar(20) NOT NULL,
@@ -184,14 +206,18 @@ CREATE TABLE `User` (
    `p_limitD` date NOT NULL
 )
 
+</details>   
+ 
+
 | m_date | p_no | p_name | p_price | m_num | p_limitD |
 | --- | --- | --- | --- | --- | --- |
 | date | int(11) | varchar(20) | int(11) | int(11) | date |
 
 
 - 주문 테이블
-  
-OrderList	CREATE TABLE `OrderList` (
+<details><summary>SQL OrderList 테이블 생성문
+</summary>
+CREATE TABLE `OrderList` (
    `o_no` varchar(20) NOT NULL,
    `o_id` varchar(20) NOT NULL,
    `o_address` varchar(255) NOT NULL,
@@ -201,6 +227,9 @@ OrderList	CREATE TABLE `OrderList` (
    `o_date` date NOT NULL,
    `o_permit` tinyint(1) NULL
   )
+
+</details>   
+
   
 | o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -209,8 +238,10 @@ OrderList	CREATE TABLE `OrderList` (
 
 
 - 배송 테이블
-  
-  Medicode_Tracking	CREATE TABLE `Medicode_Tracking` (
+<details><summary>SQL Medicode_Tracking 테이블 생성문
+</summary>
+
+CREATE TABLE `Medicode_Tracking` (
    `d_no` int(11) NOT NULL,
    `dep_time` timestamp NULL DEFAULT current_timestamp(),
    `hub_arr` timestamp NULL DEFAULT NULL,
@@ -219,8 +250,14 @@ OrderList	CREATE TABLE `OrderList` (
    `hub_name...
 )
 
+</details>   
+  
+
 - 배송 위치 테이블
-Delivery_GPS	CREATE TABLE `Delivery_GPS` (
+<details><summary> SQL Delivery_GPS 테이블 생성문
+</summary>
+
+CREATE TABLE `Delivery_GPS` (
    `d_no` int(11) NOT NULL AUTO_INCREMENT,
    `o_no` varchar(20) NOT NULL,
    `o_id` varchar(20) NOT NULL,
@@ -229,6 +266,9 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `y` double DEFAULT NULL,
    `d_complete` tinyint(1) DEF...
   )
+
+</details> 
+
   
 | d_no | o_no | o_id | o_address | x | y | d_complete |
 | --- | --- | --- | --- | --- | --- | --- |

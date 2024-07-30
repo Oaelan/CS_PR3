@@ -196,7 +196,7 @@ OrderList	CREATE TABLE `OrderList` (
    `o_permit` tinyint(1) NULL
   )
   
-  | o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
+| o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | varchar(20) | varchar(20) | varchar(255) | int(11) | int(11) | varchar(20) | date | tinyint(1) |
 
@@ -223,7 +223,7 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `d_complete` tinyint(1) DEF...
   )
   
-  | d_no | o_no | o_id | o_address | x | y | d_complete |
+| d_no | o_no | o_id | o_address | x | y | d_complete |
 | --- | --- | --- | --- | --- | --- | --- |
 | int(11) | varchar(20) | varchar(20) | varchar(255) | double | double | tinyint(1) |
 

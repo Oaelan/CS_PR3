@@ -131,6 +131,7 @@ Supplier DB (공급사 전용 DB)
   `m_pw` varchar(20) NOT NULL,
   PRIMARY KEY (`m_id`
 )
+
 | m_id | m_pw |
 | --- | --- |
 | varchar(20) | varchar(20) |
@@ -142,6 +143,7 @@ CREATE TABLE `productCode` (
 `p_no` int(11) NOT NULL AUTO_INCREMENT,
 `p_price` int(11) DEFAULT NULL,PRIMARY KEY (`p_no`
 )
+
 | p_name | p_no | p_price |
 | --- | --- | --- |
 | varchar(255) | int(11) | int(11) |
@@ -160,6 +162,8 @@ CREATE TABLE `User` (
    `u_address` varchar(50) NOT NULL,
    `u_no` varchar(10) NOT NULL,
    PRIMARY KEY (`u_id`)
+  )
+  
 | u_id | u_name | u_pw | u_email | u_address | u_no |
 | --- | --- | --- | --- | --- | --- |
 | varchar(20) | varchar(20) | varchar(20) | varchar(50) | varchar(50) | varchar(10) |
@@ -174,6 +178,7 @@ CREATE TABLE `User` (
    `m_num` int(11) NOT NULL,
    `p_limitD` date NOT NULL
 )
+
 | m_date | p_no | p_name | p_price | m_num | p_limitD |
 | --- | --- | --- | --- | --- | --- |
 | date | int(11) | varchar(20) | int(11) | int(11) | date |
@@ -190,6 +195,7 @@ OrderList	CREATE TABLE `OrderList` (
    `o_date` date NOT NULL,
    `o_permit` tinyint(1) NULL
   )
+  
   | o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | varchar(20) | varchar(20) | varchar(255) | int(11) | int(11) | varchar(20) | date | tinyint(1) |
@@ -216,6 +222,7 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `y` double DEFAULT NULL,
    `d_complete` tinyint(1) DEF...
   )
+  
   | d_no | o_no | o_id | o_address | x | y | d_complete |
 | --- | --- | --- | --- | --- | --- | --- |
 | int(11) | varchar(20) | varchar(20) | varchar(255) | double | double | tinyint(1) |

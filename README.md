@@ -5,7 +5,7 @@ DB 2개를 연결하는 작업은
 
 ✔ root-context.xml 파일에서 2개의 DB에 대한 설정 및 MyBatis 관련 설정도 해준다.
 ```xml
-<!-- 공급사 DB -->
+	<!-- 공급사 DB -->
 	<bean id="hikariConfig1" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://주소/Supplier?serverTimezone=Asia/Seoul" />
@@ -42,7 +42,7 @@ DB 2개를 연결하는 작업은
 ✔ DataSourceConfig.java 파일을 만들어 각 DB에 맞는 설정을 해준다.
     매퍼 인터페이스가 위치한 패키지를 지정한 경로와 매퍼 인터페이스가 실제로 위치한 경로가 같아야 인식을 함
     그리고 매퍼.xml 경로도 여기서 설정한 것과 같아야함
-
+```java
 DataSourceConfigPub.java  // 공용 테이블
     @Configuration
     @EnableTransactionManagement
@@ -99,14 +99,15 @@ DataSourceConfigSub.java // 공급사 전용 테이블
             return new DataSourceTransactionManager(dataSource);
         }
     }
-
+```
 ✔ 매퍼.xml 파일에서는 이런식으로 사용함
+```xml
 <select id="addPno"
 		parameterType="org.hj.model.Product_manufacturingDto" resultType="int">
 		select p_no from Supplier.productCode <!-- DB명.테이블명 -->
 		where p_name = #{p_name};
 </select>
-
+```
 -----------------------------------------------------------------------------------
 ✔ 프로젝트 관련 DB 
 
@@ -118,6 +119,10 @@ Supplier DB (공급사 전용 DB)
 `time` datetime DEFAULT current_timestamp(),
 `state` varchar(255) DEFAULT NULL
 )
+| now_temp | time | state |
+| --- | --- | --- |
+| double | datetime | varchar(255) |
+
 
   - 관리자 테이블
   CREATE TABLE `Master` (
@@ -125,6 +130,10 @@ Supplier DB (공급사 전용 DB)
   `m_pw` varchar(20) NOT NULL,
   PRIMARY KEY (`m_id`
 )
+| m_id | m_pw |
+| --- | --- |
+| varchar(20) | varchar(20) |
+
 
   - 상품 테이블
 CREATE TABLE `productCode` (
@@ -132,6 +141,9 @@ CREATE TABLE `productCode` (
 `p_no` int(11) NOT NULL AUTO_INCREMENT,
 `p_price` int(11) DEFAULT NULL,PRIMARY KEY (`p_no`
 )
+| p_name | p_no | p_price |
+| --- | --- | --- |
+| varchar(255) | int(11) | int(11) |
 
 ----------------------------------------------------
 
@@ -147,7 +159,11 @@ CREATE TABLE `User` (
    `u_address` varchar(50) NOT NULL,
    `u_no` varchar(10) NOT NULL,
    PRIMARY KEY (`u_id`)
- )
+| u_id | u_name | u_pw | u_email | u_address | u_no |
+| --- | --- | --- | --- | --- | --- |
+| varchar(20) | varchar(20) | varchar(20) | varchar(50) | varchar(50) | varchar(10) |
+
+
  - 상품 재고 테이블
  Product_manufacturing	CREATE TABLE `Product_manufacturing` (
    `m_date` date NOT NULL,
@@ -157,6 +173,11 @@ CREATE TABLE `User` (
    `m_num` int(11) NOT NULL,
    `p_limitD` date NOT NULL
 )
+| m_date | p_no | p_name | p_price | m_num | p_limitD |
+| --- | --- | --- | --- | --- | --- |
+| date | int(11) | varchar(20) | int(11) | int(11) | date |
+
+
 - 주문 테이블
 OrderList	CREATE TABLE `OrderList` (
    `o_no` varchar(20) NOT NULL,
@@ -168,6 +189,11 @@ OrderList	CREATE TABLE `OrderList` (
    `o_date` date NOT NULL,
    `o_permit` tinyint(1) NULL
   )
+  | o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| varchar(20) | varchar(20) | varchar(255) | int(11) | int(11) | varchar(20) | date | tinyint(1) |
+
+
 
 - 배송 테이블
   Medicode_Tracking	CREATE TABLE `Medicode_Tracking` (
@@ -189,6 +215,10 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `y` double DEFAULT NULL,
    `d_complete` tinyint(1) DEF...
   )
+  | d_no | o_no | o_id | o_address | x | y | d_complete |
+| --- | --- | --- | --- | --- | --- | --- |
+| int(11) | varchar(20) | varchar(20) | varchar(255) | double | double | tinyint(1) |
+
 
 --------------------------------------------------------------------
 

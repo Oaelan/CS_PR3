@@ -286,7 +286,7 @@ CREATE TABLE `Delivery_GPS` (
 ✨ 배송 상태 페이지
 - BootStrap을 활용하여 배송 상태 폼을 구현
 - 테이블을 사용하지 않고 BootStrap의 class를 card로 설정하여 각 열과 칸을 구현
-- KakaoMap을 활용해서 배송 중인 위치를 띄울 지도를 생성
+- KakaoMap API를 활용해서 배송 중인 위치를 띄울 지도를 생성
   
 ✨ 거래 명세서
 - html의 table을 활용해서 거래명세서 양식을 구현

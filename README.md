@@ -191,5 +191,23 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
 
 --------------------------------------------------------------------
 
-구현한 기능들
+구현한 페이지들
+✨ 제품 등록 페이지
 ![image](https://github.com/user-attachments/assets/04ee983d-920c-439f-9782-5c4b796f59ec)
+
+- 재고 관리 기능 추가 (재고 추가 / 수정 / 폐기)
+- 재고 검색 기능 추가 (제품코드 또는 제품명으로 검색 가능 / 재고 목록을 누르면 전체 재고 리스트 다시 나옴)
+- 상품 등록 기능 추가 (품명, 단가 만 입력하면 제품 코드는 자동으로 생김(autoincrement))
+- 온도 관련 기능 추가 (물류 창고 데이터 가져오기/현재 창고 온도에 따라 생기는 토스트창 구현)
+  
+✨ 주묵 내역 페이지
+![image](https://github.com/user-attachments/assets/74bc79a0-77d9-4d1a-93cc-ec4f2c582958)
+
+✨ 출하 관리 페이지
+![image](https://github.com/user-attachments/assets/367ba30b-aee0-4961-9280-04c4bc37ec84)
+
+✨ 배송 상태 페이지
+![image](https://github.com/user-attachments/assets/c2b04bf0-f4ca-423a-b141-816ce89d62d9)
+
+
+

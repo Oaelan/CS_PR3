@@ -308,6 +308,11 @@ CREATE TABLE `Delivery_GPS` (
 ![image](https://github.com/user-attachments/assets/c2b04bf0-f4ca-423a-b141-816ce89d62d9)
 - 전체 배송 내역 조회(클릭으로 확인)
 - 배송 내역마다 위치 확인 기능
+
   
-
-
+✨ 라즈베리 파이 세팅
+![KakaoTalk_20240730_112023137](https://github.com/user-attachments/assets/367998f8-bc46-4d81-9b65-de6161e2c47b)
+- 온도 측정(BMP180 센서)
+- 소리 출력(VK4PK - MH-FMD-Active-Piezo-Buzzer Module)
+- 온도에 따른 LED ON/OFF 및 소리 발생(저온 파란 led / 저음 발생, 고온 빨간 led / 고음 발생)
+- factory_temp.py로 작동

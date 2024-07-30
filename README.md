@@ -279,7 +279,9 @@ CREATE TABLE `Delivery_GPS` (
 
 구현한 페이지들
 
+
 ✨ 제품 등록 페이지
+
 ![image](https://github.com/user-attachments/assets/04ee983d-920c-439f-9782-5c4b796f59ec)
 
 - 재고 관리 기능 추가 (재고 추가 / 수정 / 폐기)

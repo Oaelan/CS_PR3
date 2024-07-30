@@ -47,3 +47,10 @@
 	font-weight: bold;
 	box-sizing: border-box;
 }
+
+.menu a:hover {
+	color: #333;
+	text-decoration: none;
+	font-weight: bold;
+	box-sizing: border-box;
+}

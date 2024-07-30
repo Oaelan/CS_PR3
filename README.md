@@ -237,21 +237,6 @@ CREATE TABLE `OrderList` (
 
 
 
-- 배송 테이블
-<details><summary>SQL Medicode_Tracking 테이블 생성문
-</summary>
-
-CREATE TABLE `Medicode_Tracking` (
-   `d_no` int(11) NOT NULL,
-   `dep_time` timestamp NULL DEFAULT current_timestamp(),
-   `hub_arr` timestamp NULL DEFAULT NULL,
-   `hub_dep` timestamp NULL DEFAULT NULL,
-   `del_comp` timestamp NULL DEFAULT NULL,
-   `hub_name...
-)
-
-</details>   
-  
 
 - 배송 위치 테이블
 <details><summary> SQL Delivery_GPS 테이블 생성문

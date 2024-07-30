@@ -4,6 +4,7 @@
 DB 2개를 연결하는 작업은
 
 ✔ root-context.xml 파일에서 2개의 DB에 대한 설정 및 MyBatis 관련 설정도 해준다.
+```xml
 <!-- 공급사 DB -->
 	<bean id="hikariConfig1" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
@@ -37,7 +38,7 @@ DB 2개를 연결하는 작업은
 	<bean id="pubSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
     <property name="dataSource" ref="pubDataSource" />
 	</bean>
- 
+ ```
 ✔ DataSourceConfig.java 파일을 만들어 각 DB에 맞는 설정을 해준다.
     매퍼 인터페이스가 위치한 패키지를 지정한 경로와 매퍼 인터페이스가 실제로 위치한 경로가 같아야 인식을 함
     그리고 매퍼.xml 경로도 여기서 설정한 것과 같아야함

@@ -119,6 +119,7 @@ Supplier DB (공급사 전용 DB)
 `time` datetime DEFAULT current_timestamp(),
 `state` varchar(255) DEFAULT NULL
 )
+
 | now_temp | time | state |
 | --- | --- | --- |
 | double | datetime | varchar(255) |

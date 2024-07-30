@@ -188,3 +188,8 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `y` double DEFAULT NULL,
    `d_complete` tinyint(1) DEF...
   )
+
+--------------------------------------------------------------------
+
+구현한 기능들
+![image](https://github.com/user-attachments/assets/04ee983d-920c-439f-9782-5c4b796f59ec)

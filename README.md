@@ -4,7 +4,8 @@
 DB 2개를 연결하는 작업은
 
 ✔ root-context.xml 파일에서 2개의 DB에 대한 설정 및 MyBatis 관련 설정도 해준다.
-<!-- 공급사 DB -->
+```xml
+	<!-- 공급사 DB -->
 	<bean id="hikariConfig1" class="com.zaxxer.hikari.HikariConfig">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="jdbcUrl" value="jdbc:mysql://주소/Supplier?serverTimezone=Asia/Seoul" />
@@ -37,11 +38,11 @@ DB 2개를 연결하는 작업은
 	<bean id="pubSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean" >
     <property name="dataSource" ref="pubDataSource" />
 	</bean>
- 
+ ```
 ✔ DataSourceConfig.java 파일을 만들어 각 DB에 맞는 설정을 해준다.
     매퍼 인터페이스가 위치한 패키지를 지정한 경로와 매퍼 인터페이스가 실제로 위치한 경로가 같아야 인식을 함
     그리고 매퍼.xml 경로도 여기서 설정한 것과 같아야함
-
+```java
 DataSourceConfigPub.java  // 공용 테이블
     @Configuration
     @EnableTransactionManagement
@@ -98,14 +99,15 @@ DataSourceConfigSub.java // 공급사 전용 테이블
             return new DataSourceTransactionManager(dataSource);
         }
     }
-
+```
 ✔ 매퍼.xml 파일에서는 이런식으로 사용함
+```xml
 <select id="addPno"
 		parameterType="org.hj.model.Product_manufacturingDto" resultType="int">
 		select p_no from Supplier.productCode <!-- DB명.테이블명 -->
 		where p_name = #{p_name};
 </select>
-
+```
 -----------------------------------------------------------------------------------
 ✔ 프로젝트 관련 DB 
 
@@ -118,6 +120,11 @@ Supplier DB (공급사 전용 DB)
 `state` varchar(255) DEFAULT NULL
 )
 
+| now_temp | time | state |
+| --- | --- | --- |
+| double | datetime | varchar(255) |
+
+
   - 관리자 테이블
   CREATE TABLE `Master` (
   `m_id` varchar(20) NOT NULL,
@@ -125,12 +132,21 @@ Supplier DB (공급사 전용 DB)
   PRIMARY KEY (`m_id`
 )
 
+| m_id | m_pw |
+| --- | --- |
+| varchar(20) | varchar(20) |
+
+
   - 상품 테이블
 CREATE TABLE `productCode` (
 `p_name` varchar(255) DEFAULT NULL,
 `p_no` int(11) NOT NULL AUTO_INCREMENT,
 `p_price` int(11) DEFAULT NULL,PRIMARY KEY (`p_no`
 )
+
+| p_name | p_no | p_price |
+| --- | --- | --- |
+| varchar(255) | int(11) | int(11) |
 
 ----------------------------------------------------
 
@@ -146,7 +162,13 @@ CREATE TABLE `User` (
    `u_address` varchar(50) NOT NULL,
    `u_no` varchar(10) NOT NULL,
    PRIMARY KEY (`u_id`)
- )
+  )
+  
+| u_id | u_name | u_pw | u_email | u_address | u_no |
+| --- | --- | --- | --- | --- | --- |
+| varchar(20) | varchar(20) | varchar(20) | varchar(50) | varchar(50) | varchar(10) |
+
+
  - 상품 재고 테이블
  Product_manufacturing	CREATE TABLE `Product_manufacturing` (
    `m_date` date NOT NULL,
@@ -156,6 +178,12 @@ CREATE TABLE `User` (
    `m_num` int(11) NOT NULL,
    `p_limitD` date NOT NULL
 )
+
+| m_date | p_no | p_name | p_price | m_num | p_limitD |
+| --- | --- | --- | --- | --- | --- |
+| date | int(11) | varchar(20) | int(11) | int(11) | date |
+
+
 - 주문 테이블
 OrderList	CREATE TABLE `OrderList` (
    `o_no` varchar(20) NOT NULL,
@@ -167,6 +195,12 @@ OrderList	CREATE TABLE `OrderList` (
    `o_date` date NOT NULL,
    `o_permit` tinyint(1) NULL
   )
+  
+| o_no | o_id | o_address | p_no | o_num | o_Total | o_date | o_permit |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| varchar(20) | varchar(20) | varchar(255) | int(11) | int(11) | varchar(20) | date | tinyint(1) |
+
+
 
 - 배송 테이블
   Medicode_Tracking	CREATE TABLE `Medicode_Tracking` (
@@ -188,3 +222,39 @@ Delivery_GPS	CREATE TABLE `Delivery_GPS` (
    `y` double DEFAULT NULL,
    `d_complete` tinyint(1) DEF...
   )
+  
+| d_no | o_no | o_id | o_address | x | y | d_complete |
+| --- | --- | --- | --- | --- | --- | --- |
+| int(11) | varchar(20) | varchar(20) | varchar(255) | double | double | tinyint(1) |
+
+
+--------------------------------------------------------------------
+
+구현한 페이지들
+✨ 제품 등록 페이지
+![image](https://github.com/user-attachments/assets/04ee983d-920c-439f-9782-5c4b796f59ec)
+
+- 재고 관리 기능 추가 (재고 추가 / 수정 / 폐기)
+- 재고 검색 기능 추가 (제품코드 또는 제품명으로 검색 가능 / 재고 목록을 누르면 전체 재고 리스트 다시 나옴)
+- 상품 등록 기능 추가 (품명, 단가 만 입력하면 제품 코드는 자동으로 생김(autoincrement))
+- 온도 관련 기능 추가 (물류 창고 데이터 가져오기/현재 창고 온도에 따라 생기는 토스트창 구현)
+  
+✨ 수주 내역 페이지
+![image](https://github.com/user-attachments/assets/74bc79a0-77d9-4d1a-93cc-ec4f2c582958)
+
+- 수주 내역 조회 기능(수주 들어온 날짜 정렬기능, 수주 상태 필터 기능 추가)
+- 상세 주문 내역 확인 modal(클릭으로 띄움)
+- 수주 수락, 거절 기능(수락, 거절에 따른 데이터 변경)
+  
+✨ 출하 관리 페이지
+![image](https://github.com/user-attachments/assets/367ba30b-aee0-4961-9280-04c4bc37ec84)
+- 출하 상태에 따른 내역 확인
+- 출하 시작 상태로 변경(배송 데이터로 값이 넘어감)
+  
+✨ 배송 상태 페이지
+![image](https://github.com/user-attachments/assets/c2b04bf0-f4ca-423a-b141-816ce89d62d9)
+- 전체 배송 내역 조회(클릭으로 확인)
+- 배송 내역마다 위치 확인 기능
+  
+
+

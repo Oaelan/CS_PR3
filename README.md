@@ -111,9 +111,10 @@ DataSourceConfigSub.java // 공급사 전용 테이블
 -----------------------------------------------------------------------------------
 ✔ 프로젝트 관련 DB 
 
-Supplier DB (공급사 전용 DB)
+###Supplier DB (공급사 전용 DB)
 
   - 물류 창고 온도 테이블
+    
   CREATE TABLE `Factory_temp` (
 `now_temp` double NOT NULL,
 `time` datetime DEFAULT current_timestamp(),
@@ -126,6 +127,7 @@ Supplier DB (공급사 전용 DB)
 
 
   - 관리자 테이블
+    
   CREATE TABLE `Master` (
   `m_id` varchar(20) NOT NULL,
   `m_pw` varchar(20) NOT NULL,
@@ -138,6 +140,7 @@ Supplier DB (공급사 전용 DB)
 
 
   - 상품 테이블
+    
 CREATE TABLE `productCode` (
 `p_name` varchar(255) DEFAULT NULL,
 `p_no` int(11) NOT NULL AUTO_INCREMENT,
@@ -151,9 +154,10 @@ CREATE TABLE `productCode` (
 ----------------------------------------------------
 
 
-public_schema DB (수요자 전용 DB)
+###public_schema DB (수요자 전용 DB)
 
 - 유저 테이블
+  
 CREATE TABLE `User` (
    `u_id` varchar(20) NOT NULL,
    `u_name` varchar(20) NOT NULL,
@@ -170,6 +174,7 @@ CREATE TABLE `User` (
 
 
  - 상품 재고 테이블
+   
  Product_manufacturing	CREATE TABLE `Product_manufacturing` (
    `m_date` date NOT NULL,
    `p_no` int(11) NOT NULL,
@@ -185,6 +190,7 @@ CREATE TABLE `User` (
 
 
 - 주문 테이블
+  
 OrderList	CREATE TABLE `OrderList` (
    `o_no` varchar(20) NOT NULL,
    `o_id` varchar(20) NOT NULL,
@@ -203,6 +209,7 @@ OrderList	CREATE TABLE `OrderList` (
 
 
 - 배송 테이블
+  
   Medicode_Tracking	CREATE TABLE `Medicode_Tracking` (
    `d_no` int(11) NOT NULL,
    `dep_time` timestamp NULL DEFAULT current_timestamp(),

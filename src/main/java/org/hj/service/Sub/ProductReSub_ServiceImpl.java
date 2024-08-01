@@ -34,4 +34,11 @@ public class ProductReSub_ServiceImpl implements ProductReSub_Service {
 	public List <Product_manufacturingDto> selectProductInfo(){
 		return prsm.selectProductInfo();
 	}
+	public List <FactoryTempDto> selectTempDate(){
+		return prsm.selectTempDate();
+	}
+	
+	public List<FactoryTempDto> selectTempByDate(FactoryTempDto ptd){
+		return prsm.selectTempByDate(ptd);
+	}
 }

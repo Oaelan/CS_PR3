@@ -35,4 +35,33 @@
 	resultType="org.hj.model.Product_manufacturingDto">
 	select * from Supplier.productCode;
 	</select>
+	
+	<!-- 온도 데이터의 년/월/일 만들고 오기 (겹치면 1개만 들고옴)  -->
+	<select id="selectTempDate"
+	resultType="org.hj.model.FactoryTempDto">
+	SELECT DISTINCT DATE(time) AS time
+	FROM Supplier.Factory_temp
+	GROUP BY DATE(time);
+	</select>
+	
+	<!-- 온도 데이터의 년/월/일 만들고 오기 (겹치면 1개만 들고옴)  -->
+	<select id="selectTempByDate"
+	resultType="org.hj.model.FactoryTempDto" parameterType="org.hj.model.FactoryTempDto">
+	 SELECT * FROM Supplier.Factory_temp
+    <where>
+        <!-- time이 제공되면 그에 맞는 조건을 추가합니다 -->
+        <if test="time != null and time != ''">
+            AND (
+                DATE_FORMAT(time, '%Y') = #{time}
+                OR DATE_FORMAT(time, '%Y-%m') = #{time}
+                OR DATE(time) = #{time}
+            )
+        </if>
+        <!-- state가 제공되면 그에 맞는 조건을 추가합니다 -->
+        <if test="state != null and state != ''">
+            AND state = #{state}
+        </if>
+    </where> 
+	</select>
+	
 </mapper>

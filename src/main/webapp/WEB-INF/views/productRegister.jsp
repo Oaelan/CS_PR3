@@ -28,7 +28,7 @@
 	width: 50%;
 }
 
-#tempCon {
+#tempCon,#tempCon2 {
 	overflow-y: auto;
 	max-height: 330px;
 }
@@ -213,13 +213,46 @@ header {
 				<div class="warehouse-section p-0" id="tempCon" style="width:40%; height: 330px; border-radius: 3px;">
 					<header class="bg-light py-2 mb-4">
 						<div class="container text-center p-0">
-							<h6 class="m-0 font-weight-bold" id="nowTemp">창고 온도 :</h6>
+							<h6 class="m-0 font-weight-bold" id="nowTemp">현재 창고 온도 :</h6>
+								<div id="selectBoxCon" style="display:flex;justify-content: center;">						
+								</div>						
 						</div>
 					</header>
 					<div class="col mt-4" id="tempList">
 						<div class="warehouse-message" style="text-align: center;"></div>
 					</div>
 				</div>
+				<!--  온도 데이터 검색 창 -->
+				<div class="warehouse-section p-0" id="tempCon2" style="width:40%; height: 330px; border-radius: 3px;">
+					<header class="bg-light py-2 mb-4">
+						<div class="container text-center p-0">						
+								<div id="selectBoxCon" style="display:flex;justify-content: center;">			
+									<select id="year" style="padding: 3px;">
+										<option disabled selected>년도</option>
+									</select>
+									
+									<select id="month" style="padding: 3px;">
+										<option disabled selected>월</option>
+									</select>
+									
+									<select id="day" style="padding: 3px;">
+										<option disabled selected>일</option>
+									</select>
+									
+									<select id="state" style="padding: 3px;">
+										<option disabled selected>상태</option>
+										<option value="normal">normal</option>	
+										<option value="high">high</option>
+										<option value="low">low</option>																		
+									</select>								
+								</div>						
+						</div>
+					</header>
+					<div class="col mt-4" id="tempList2">
+						<div class="warehouse-message" style="text-align: center;"></div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		<div class="container" style="display: flex; justify-content:space-between;margin-bottom:100px;">
@@ -339,6 +372,6 @@ header {
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 	<!-- productRegister페이지 관련 js -->
-	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=1234></script>
+	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=1></script>
 </body>
 </html>

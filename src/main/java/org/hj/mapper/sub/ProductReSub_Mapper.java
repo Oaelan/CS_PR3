@@ -21,4 +21,9 @@ public interface ProductReSub_Mapper {
 	// 등록된 상품 정보 들고오기
 	public List <Product_manufacturingDto> selectProductInfo();
 	
+	//온도 데이터의 년/월/일 만들고 오기 (겹치면 1개만 들고옴)
+	public List<FactoryTempDto> selectTempDate();
+	
+	// 선택한 날짜 온도 데이터 출력
+	public List<FactoryTempDto> selectTempByDate(FactoryTempDto ptd);
 }

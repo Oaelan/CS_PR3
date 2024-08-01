@@ -120,6 +120,24 @@ public class productRegister_functionController {
 		List <Product_manufacturingDto> ProductInfos = prss.selectProductInfo();
 		return ProductInfos;	
 		}
-				
+		
+		//온도 데이터의 년/월/일 만들고 오기 (겹치면 1개만 들고옴)
+		@GetMapping("selectTempDate")
+		public List<FactoryTempDto> selectTempDate(){
+		List<FactoryTempDto> FactoryTemps = prss.selectTempDate();
+		//System.out.println(FactoryTemps);
+		return FactoryTemps;
+		}		
+		
+		//선택한 날짜 온도 데이터 가져오기
+		@GetMapping("selectTempByDate")
+		public List<FactoryTempDto> selectTempByDate(@RequestParam("searchDate") String searchDate,@RequestParam("state") String state, FactoryTempDto ptd){
+		ptd.setTime(searchDate);
+		ptd.setState(state);
+		System.out.println(ptd);
+		List<FactoryTempDto> FactoryTemps = prss.selectTempByDate(ptd);
+		//System.out.println(FactoryTemps);
+		return FactoryTemps;
+		}	
 }	
 	

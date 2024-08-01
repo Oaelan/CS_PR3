@@ -1,4 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // 온도 검색 데이터 들고오는 함수
+    TempSearchYMDO();
+    // 온도 검색 options 만드는 함수
+    createTempSearchYMDOptions();
     // 등록 된 상품 리스트 들고 옴
     selectProductInfo();
     //등록된 재고 리스트 들고옴
@@ -12,7 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // 창고 온도에 따라 토스트 창 띄우는 함수
     setInterval(toastForTem, 1000);
   // 상품등록시 새로고침 되는 함수
-    uploadReload()
+    uploadReload();
+
     //등록 폼에 submit 이벤트 리스너 추가 상품 등록시 상품과 단가가 맞이 않으면 등록 불가 기능
     document.getElementById("pUploadF").addEventListener("submit", isCorrectPrice);
     // 검색버튼에 상품명/상품코드로 검색할 수 있는 기능 
@@ -33,10 +38,12 @@ function uploadReload(){
     })
 }
 
+
+
 //온도 이상 감지에 따라 생기는 토스트창 함수
 async function toastForTem() {
-    const nowTempForM = await selectFactoryTemp();
-    console.log(nowTempForM)
+    const nowTempForM  = await selectFactoryTemp();
+    //console.log(nowTempForM)
     //토스트 메시지 창
     let toastHeader = document.getElementById("toast-header");
     toastHeader.innerHTML =" ";  
@@ -51,7 +58,6 @@ async function toastForTem() {
     
     if (nowTempForM !== undefined) {
         if(nowTempForM <=25){
-            console.log("차갑다")
             // 조건에 따라 토스트 메시지와 디자인 설정
             tempState.innerText  = "현재 온도가 낮습니다."
             toastHeader.style.background ="blue";
@@ -141,9 +147,10 @@ function getProductList() {
                 '<button class="btn btn-info btn-stock btn-sm" ' +
                 'id="' + product.p_no + '" ' + // id 설정
                 'data-toggle="modal" ' +
-                'data-target="#stockModal">' +
+                'data-target="#stockModal" ' +
+                'style="padding-left: 5px; padding-right: 5px;">' +
                 '재고관리' +
-                '</button>' +
+                '</button>'
                 '</td>' +
                 '</tr>';             
             // 되어 있는 상품을 tbody에 담아서 출력
@@ -391,22 +398,7 @@ function isReadonly(updateBtns) {
     });
 }
 
-// 창고 온도에 따라 모달 창 띄우는 함수
-//async/await를 사용하여 결과 처리
-/*async function tempForModal() {
-    const nowTempForM = await selectFactoryTemp();
-    console.log(nowTempForM);
-    if (nowTempForM !== undefined) {
-        if(nowTempForM <=25){
-            $('#modal2').modal('show'); // 모달 창 띄우기   
-        }else if(nowTempForM >=29){
-            $('#modal1').modal('show'); // 모달 창 띄우기   
-        }else{}
-    }
-}*/
-
-
-//버튼 교체 함수
+//버튼  교체 함수
 function replaceButton(button) {
     let newButton = button.cloneNode(true);
     button.parentNode.replaceChild(newButton, button);
@@ -542,8 +534,9 @@ async function selectFactoryTemp() {
         });
 
         const results = await response.json(); // 응답을 JSON으로 변환
-
+        // 온도 데이터 들이보여질 div
         let tempList = document.getElementById("tempList");
+        //가져온 온도 데이터들을 담을 변수
         let factoryTempListHTML = "";
         results.forEach(result => {
             factoryTempListHTML += 
@@ -553,6 +546,7 @@ async function selectFactoryTemp() {
                 '<p class="state"> ' + result.state + "</p>" +
                 "</div>";
         });
+        // 온도 데이터 div에 가져온 온도 데이터 넣어 출력
         tempList.innerHTML = factoryTempListHTML;
         
         let temps = document.querySelectorAll(".temp");
@@ -584,3 +578,200 @@ async function selectFactoryTemp() {
         console.error('Error:', error); // 오류가 발생한 경우
     }
 }
+
+//온도 검색 옵션 요소 만드는 함수 (년/월/일)
+async function TempSearchYMDO() {
+    try {
+        // fetch 요청을 보내고 응답을 JSON으로 변환
+        const response = await fetch('/product/selectTempDate', {
+            headers: {
+                'Accept': 'application/json'
+            },
+        });
+
+        const results = await response.json();
+
+        // 연도, 월, 일 각각의 배열을 초기화
+        const years = [];
+        const months = [];
+        const days = [];
+        
+        // 중복을 방지하기 위한 Set 생성
+        const uniqueYears = new Set();
+        const uniqueMonths = new Set();
+        const uniqueDays = new Set();
+        
+        results.forEach(result => {
+            // 가져온 데이터의 년/월/일을 조건식으로 추출하여 위의 배열 초기화
+            const date = new Date(result.time);
+            let tYear = date.getFullYear();
+            let tMonth = date.getMonth() + 1;
+            let tDay = date.getDate();
+            
+            // 연도 중복 체크
+            if (!uniqueYears.has(tYear)) {
+                uniqueYears.add(tYear);
+                years.push(tYear);
+            }
+
+            // 월 중복 체크
+            if (!uniqueMonths.has(tMonth)) {
+                uniqueMonths.add(tMonth);
+                months.push(tMonth);
+            }
+
+            // 일 중복 체크
+            if (!uniqueDays.has(tDay)) {
+                uniqueDays.add(tDay);
+                days.push(tDay);
+            }
+        });
+        
+        // 연도, 월, 일 배열만 포함된 객체를 반환
+        return { years, months, days };
+    } catch (error) {
+        console.error('Error:', error); // 오류가 발생한 경우
+        // 오류 발생 시 빈 배열을 포함한 객체 반환
+        return { years: [], months: [], days: [] };
+    }
+}
+
+async function createTempSearchYMDOptions() {
+    try {
+        // createTempSearchYMDOptions 함수를 호출하여 결과를 가져옴
+        const { years, months, days } = await TempSearchYMDO();
+        
+        // 옵션을 추가할 년/월/일 select 박스
+        let yearS = document.getElementById("year");
+        let monthS = document.getElementById("month");
+        let dayS = document.getElementById("day");
+        let stateS = document.getElementById("state");
+        // 셀렉트 박스에 옵션을 추가합니다
+        years.forEach(year => {
+            let yearOption = document.createElement('option');
+            yearOption.innerText = year + "년";
+            yearOption.value = year;
+            yearS.appendChild(yearOption);
+        });
+        
+        months.forEach(month => {
+            let monthOption = document.createElement('option');
+            monthOption.innerText = month + "월";
+            monthOption.value = month;
+            monthS.appendChild(monthOption);
+        });
+        
+        days.forEach(day => {
+            let dayOption = document.createElement('option');
+            dayOption.innerText = day + "일";
+            dayOption.value = day;
+            dayS.appendChild(dayOption);
+        });
+
+        
+        // change 후 년/월/일 value값을 담을 변수
+        let y = null, m = null, d = null;  s=null;
+
+        // 셀렉트 박스 change 이벤트 추가
+        yearS.addEventListener("change", () => {
+            y = yearS.value;
+            searchTemByDate(y, m, d,s);
+        });
+        monthS.addEventListener("change", () => {
+            m = monthS.value;
+            searchTemByDate(y, m, d,s);
+        });
+        dayS.addEventListener("change", () => {
+            d = dayS.value;
+            //달이 선택되어 있을 경우만 호출
+            if( m ){
+                searchTemByDate(y,m,d,s)
+                }
+            });
+        stateS.addEventListener("change", () => {
+            s = stateS.value;
+            searchTemByDate(y, m, d,s);
+        });
+
+        // 년/월/일 선택 시 온도 데이터 검색되는 fetch
+        function searchTemByDate(y, m, d,s) {  
+            // 입력값이 없으면 빈 문자열로 설정
+            y = y ? String(y) : "";
+            m = m ? String(m).padStart(2, '0') : "";
+            d = d ? String(d).padStart(2, '0') : "";
+            let searchDate = "";
+            let state ="";
+            // 연도가 선택되면 YYYY
+            if (y) {
+                searchDate += y;
+            }
+
+            // 월이 선택되면 YYYY-MM
+            if (m) {
+                searchDate += (searchDate ? '-' : '') + m;
+            }
+
+            // 일이 선택되면 YYYY-MM-DD
+            if (d) {
+                searchDate += (searchDate ? '-' : '') + d;
+            }
+            if(s){
+                state = s;
+            }
+            // searchDate 값으로 데이터 조회하기    
+             searchTemByDateFetch(searchDate,state);
+        }
+    } catch (error) {
+        console.error('Error:', error); // 오류가 발생한 경우
+    }
+}
+
+
+function searchTemByDateFetch(searchDate,state) {
+    // URL 인코딩을 적용하여 특수 문자 처리
+    const encodedSearchDate = encodeURIComponent(searchDate);
+    const tempState = state;
+    // GET 요청을 보낼 URL 구성
+    const url = `/product/selectTempByDate?searchDate=${encodedSearchDate}&state=${tempState}`;
+
+    // Fetch 요청 보내기
+    fetch(url, {
+        headers: {
+            'Accept': 'application/json' 
+        }
+    })
+    .then(response => {
+        // 응답 상태 코드 확인
+        if (!response.ok) {
+            throw new Error(`${response.status}`);
+        }
+        return response.json(); // 응답을 JSON으로 변환
+    })
+    .then(results => {
+        console.log(results);   
+        // 온도 정보 리스트 출력하기
+        // 온도 데이터 들이보여질 div
+        let tempList = document.getElementById("tempList2");
+        //가져온 온도 데이터들을 담을 변수
+        let factoryTempListHTML = "";
+        results.forEach(result => {
+            factoryTempListHTML += 
+                '<div class="warehouse-message" style="text-align: center; display:flex; justify-content: space-evenly; align-items: center;">' +
+                '<p class="temp"> ' + result.now_temp + " °C</p>" +
+                '<p class="time"> '+ result.time + "</p>" +
+                '<p class="state"> ' + result.state + "</p>" +
+                "</div>";
+        });
+        // 온도 데이터 div에 가져온 온도 데이터 넣어 출력
+        tempList.innerHTML = factoryTempListHTML;
+    })
+    .catch(error => {
+        console.error('Error:', error); // 오류가 발생한 경우
+    });
+}
+
+
+
+
+
+

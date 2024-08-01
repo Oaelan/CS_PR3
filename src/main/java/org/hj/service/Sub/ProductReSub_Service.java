@@ -11,5 +11,7 @@ public interface ProductReSub_Service {
 	public List <FactoryTempDto> selectFactoryTemp();
 	public void uploadProductInfo(Product_manufacturingDto pmd);
 	public List <Product_manufacturingDto> selectProductInfo();
+	public List <FactoryTempDto> selectTempDate();
+	public List<FactoryTempDto> selectTempByDate(FactoryTempDto ptd);
 
 }

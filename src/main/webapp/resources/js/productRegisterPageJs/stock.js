@@ -134,7 +134,54 @@ async function groupByDateFetch(p_no) {
         return { stockConts: [] };
     }
 }
-
+//재고 검색 기능 함수
+function searchProduct(){
+    let  searchWord = document.getElementById("search").value;
+    console.log(searchWord)
+    fetch('/product/searchProduct?searchWord='+searchWord,{
+       headers:{
+           'Accept': 'application/json'
+       } 
+    })
+    .then(response =>{
+        if(!response.ok){
+            throw new Error('서버로부터의 응답이 이상함 ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(response=>{
+        // 상품 리스트들이 들어갈 tbody
+        let tbody = document.getElementById("pList");
+        // tbody 초기화
+        tbody.innerHTML = "";  
+        let searchResultHTML;
+        searchResultHTML = '<tr class="products">' +
+                                                        '<td>' + response.p_no + '</td>' +
+                                                        '<td>' + response.p_name + '</td>' +
+                                                        '<td>' + response.p_price + '원</td>' +
+                                                        '<td>' + response.m_num + '개</td>' +
+                                                        '<td>' +
+                                                        '<button class="btn btn-info btn-stock btn-sm" ' +
+                                                        'id="' + response.p_no + '" ' + // id 설정
+                                                        'data-toggle="modal" ' +
+                                                        'data-target="#stockModal">' +
+                                                        '재고관리' +
+                                                        '</button>' +
+                                                        '</td>' +
+                                                        '</tr>';        
+        tbody.innerHTML += searchResultHTML;
+        
+        // 재고관리 버튼
+        let buttons = document.querySelectorAll(".btn-stock");
+        //console.log(buttons)
+        // 재고관리 버튼 눌렀을 때 해당 상품의 코드 번호를 넘겨주고 유통기한별 상품 정보 가져오는 함수 호출
+        groupByDate(buttons);            
+    })
+    .catch(error => {   
+        console.error('네트워크 요청 실패:', error);
+        $('#noProductModal').modal('show'); // 모달 창 띄우기   
+    });
+};
 //재고관리 모달에 있는 input에 이벤트 추가
 function isReadonly(updateBtns) {
     updateBtns.forEach(updateBtn => {        
@@ -274,64 +321,6 @@ function disposeStockFetch(disposeProducts){
       console.error('Error:', error); // 오류가 발생한 경우
           });
       }
-
-//재고 검색 기능 함수
-function searchProduct(){
-    let  searchWord = document.getElementById("search").value;
-    console.log(searchWord)
-    fetch('/product/searchProduct?searchWord='+searchWord,{
-       headers:{
-           'Accept': 'application/json'
-       } 
-    })
-    .then(response =>{
-        if(!response.ok){
-            throw new Error('서버로부터의 응답이 이상함 ' + response.statusText);
-        }
-        return response.json();
-    })
-    .then(response=>{
-        // 상품 리스트들이 들어갈 tbody
-        let tbody = document.getElementById("pList");
-        // tbody 초기화
-        tbody.innerHTML = "";  
-        let searchResultHTML;
-        searchResultHTML = '<tr class="products">' +
-                                                        '<td>' + response.p_no + '</td>' +
-                                                        '<td>' + response.p_name + '</td>' +
-                                                        '<td>' + response.p_price + '원</td>' +
-                                                        '<td>' + response.m_num + '개</td>' +
-                                                        '<td>' +
-                                                        '<button class="btn btn-info btn-stock btn-sm" ' +
-                                                        'id="' + response.p_no + '" ' + // id 설정
-                                                        'data-toggle="modal" ' +
-                                                        'data-target="#stockModal">' +
-                                                        '재고관리' +
-                                                        '</button>' +
-                                                        '</td>' +
-                                                        '</tr>';        
-        tbody.innerHTML += searchResultHTML;
-    })
-    .catch(error => {   
-        console.error('네트워크 요청 실패:', error);
-        $('#noProductModal').modal('show'); // 모달 창 띄우기   
-    });
-};
-
-// 상품 이름과 단가가 다를 때 submit 막기
-function isCorrectPrice(event) {
-
-    // 상품 이름
-    let name = document.getElementById("pNameSelect");
-    // 상품 가격
-    let price = document.getElementById("pPriceSelect");
- 
-    if(name.selectedIndex !== price.selectedIndex){
-        // 가격이 일치하지 않으면 제출을 막고 모달을 띄우기
-        $('#alertModal').modal('show'); // 모달 창 띄우기   
-        event.preventDefault(); // 제출을 방지
-    }          
-}
 
 //상품 등록 시 제품 선택하면 자동으로 제품 단가 값 선택 되는 함수
 function autoPriceSelect(){

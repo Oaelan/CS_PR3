@@ -115,7 +115,7 @@ async function TempSearchYMDO() {
       // fetch 요청을 보내고 응답을 JSON으로 변환
       const response = await fetch('/product/selectTempDate', {
           headers: {
-              'Accept': 'application/json'
+              'Accept': 'application/json'  
           },
       });
 

@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // 상품 등록시 새로고침 되는 함수
 function uploadReload(){
-    let uploadB = document.getElementById("productFrom");
+    let uploadB = document.getElementById("productForm");
     uploadB.addEventListener("submit",()=>{
         location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
     })

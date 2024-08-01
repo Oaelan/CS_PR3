@@ -285,14 +285,18 @@ header {
 				<div class="form-header">
 					<h5 style="text-align: center">상품 등록</h5>
 				</div>
-				<form id="productForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center;" action="/uploadProductInfo">
-					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
-						<label for="pName" class="m-0" style="text-align: center">품명</label> <input type="text" class="form-control m-0" id="pName" name="p_name" required style="width: 70%;">
+				<form id="productForm" style="display: flex; flex-direction: row; justify-content: center; align-items: center;" action="/uploadProductInfo">
+					<div id="formCon1">
+						<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
+							<label for="pName" class="m-0" style="text-align: center">품명</label> <input type="text" class="form-control m-0" id="pName" name="p_name" required style="width: 70%;">
+						</div>
+						<div class="form-group m-0" style="display: flex; justify-content: space-evenly; align-items: center;">
+							<label for="pPrice" class="m-0" style="text-align: center">단가</label> <input type="number" class="form-control m-0" id="pPrice" name="p_price" required style="width: 70%;">
+						</div>
 					</div>
-					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
-						<label for="pPrice" class="m-0" style="text-align: center">단가</label> <input type="number" class="form-control m-0" id="pPrice" name="p_price" required style="width: 70%;">
+					<div id="pUoadBCon" style="height:100%;">
+						<button type="submit" class="btn btn-primary btn-register" style="width: 100%; height:100%;">등록</button>
 					</div>
-					<button type="submit" class="btn btn-primary btn-register" style="width: 56%";>등록</button>
 				</form>
 			</div>
 		</div>

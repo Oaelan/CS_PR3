@@ -1,6 +1,6 @@
 // 상품 등록시 새로고침 되는 함수
 function uploadReload(){
-    let uploadB = document.getElementById("productFrom");
+    let uploadB = document.getElementById("productForm");
     uploadB.addEventListener("submit",()=>{
         location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
     })
@@ -8,10 +8,9 @@ function uploadReload(){
 
 //등록 된 상품 리스트 들고오는 함수
 function selectProductInfo(){
-    // POST 요청 보내기
     fetch('/product/selectProductInfo', {
         headers: {
-            'Accept': 'application/json', // 전송할 데이터의 타입
+            'Accept': 'application/json'
         }
     })
     .then(response => response.json()) // 응답을 JSON으로 변환
@@ -33,3 +32,19 @@ function selectProductInfo(){
         console.error('Error:', error); // 오류가 발생한 경우
             });
         }
+
+
+//재고 등록시 상품 이름과 단가가 다를 때 submit 막기
+function isCorrectPrice(event) {
+
+    // 상품 이름
+    let name = document.getElementById("pNameSelect");
+    // 상품 가격
+    let price = document.getElementById("pPriceSelect");
+ 
+    if(name.selectedIndex !== price.selectedIndex){
+        // 가격이 일치하지 않으면 제출을 막고 모달을 띄우기
+        $('#alertModal').modal('show'); // 모달 창 띄우기   
+        event.preventDefault(); // 제출을 방지
+    }          
+}

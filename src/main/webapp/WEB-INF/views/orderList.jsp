@@ -140,6 +140,7 @@
 													type="button" data-bs-toggle="dropdown"
 													aria-expanded="false" id="btn2">상태</button>
 												<ul class="dropdown-menu">
+													<li><a class="dropdown-item" id = "All" href="#">모두</a></li>
 													<li><a class="dropdown-item" id = "filterAccept" href="#">수주 확인</a></li>
 													<li><a class="dropdown-item" id = "filterReject" href="#">수주 거절</a></li>
 													<li><a class="dropdown-item" id = "filterPend" href="#">수주 대기</a></li>
@@ -325,9 +326,11 @@
 	            }
 	            // 선택 했을 경우 버튼 숨김
 	            else{
+	            	goInvoice.style.display = 'none'
 	            	reject.style.display = 'none';
 	                accept.style.display = 'none';
 	                if(orderDetail.o_permit == true){
+	                	console.log(orderDetail)
 	                	goInvoice.style.display = 'block'
 	                }
 	            }
@@ -417,6 +420,13 @@
                         const sortedData = [...data].sort((a, b) => new Date(b.o_date) - new Date(a.o_date));
                         populateOrderTable(sortedData);
                     });
+                 	
+
+                 	// 모두 보기
+                    document.getElementById('All').addEventListener('click', function() {
+                        populateOrderTable(data);
+                    });
+
                  	
                  	// 수락 우선 정렬 필터링
                     document.getElementById('filterAccept').addEventListener('click', function() {

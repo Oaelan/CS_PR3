@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // 상품 등록시 새로고침 되는 함수
 function uploadReload(){
     let uploadB = document.getElementById("productFrom");
-    uploadB.addEventListsner("submit",()=>{
+    uploadB.addEventListener("submit",()=>{
         location.reload(); // 페이지 즉시 새로 고침(변경된 재고 수 웹 브라우저에 실시간 반영을 위함)
     })
 }
@@ -51,8 +51,9 @@ async function toastForTem() {
     
     if (nowTempForM !== undefined) {
         if(nowTempForM <=25){
+            console.log("차갑다")
             // 조건에 따라 토스트 메시지와 디자인 설정
-            tempState.InnerText = "현재 온도가 낮습니다."
+            tempState.innerText  = "현재 온도가 낮습니다."
             toastHeader.style.background ="blue";
             toastHeader.style.color = 'white';    
             toastHeader.innerHTML =  '<i class="bi bi-thermometer-high rounded mr-2" aria-hidden="true"></i>' +
@@ -64,7 +65,7 @@ async function toastForTem() {
             $(toast).toast('show');
         }else if(nowTempForM >=29){
             // 조건에 따라 토스트 메시지와 디자인 설정
-            tempState.InnerText = "현재 온도가 높습니다."
+            tempState.innerText  = "현재 온도가 높습니다."
             toastHeader.style.background ="red";
             toastHeader.style.color = 'white';    
             toastHeader.innerHTML =  '<i class="bi bi-thermometer-high rounded mr-2" aria-hidden="true"></i>' +

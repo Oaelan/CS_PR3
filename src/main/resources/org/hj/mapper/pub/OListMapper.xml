@@ -39,4 +39,16 @@
     	set o_permit = true
     	where o_no = #{o_no};
     </update>
+    
+    <!-- 수주 수락 후 제고 업데이트 -->
+    <update id="deleteProduct" parameterType="org.hj.model.OListDto">
+    	UPDATE public_schema.Product_manufacturing 
+		SET m_num = m_num - #{o_num}
+		WHERE p_no = #{p_no} 
+		AND p_limitD = (
+		    SELECT MIN(p_limitD) 
+		    FROM public_schema.Product_manufacturing
+		    WHERE p_no = #{p_no}
+		);
+    </update>
 </mapper>

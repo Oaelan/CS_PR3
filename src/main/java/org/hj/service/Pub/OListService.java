@@ -16,4 +16,6 @@ public interface OListService {
 	
 	public void acceptOrder(String o_no);
 	
+	public void deleteProduct(OListDto delete);
+	
 }

@@ -41,5 +41,12 @@ public class OListController {
 	@GetMapping("/acceptOrder")
 	public void acceptOrder(@RequestParam("o_no") String o_no) {
 		ols.acceptOrder(o_no);
+		
+		
+		List<OListDto> orderDetail = (List<OListDto>)ols.getOListDetail(o_no);
+		System.out.println(orderDetail);
+		for (OListDto delete : orderDetail) {
+            ols.deleteProduct(delete);
+		}
 	}
 }

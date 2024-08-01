@@ -14,4 +14,6 @@ public interface OListMapper {
 	
 	public void acceptOrder(String o_no);
 	
+	public void deleteProduct(OListDto delete);
+	
 }

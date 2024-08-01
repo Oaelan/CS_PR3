@@ -2,6 +2,7 @@ package org.hj.service.Pub;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.hj.mapper.pub.OListMapper;
 import org.hj.model.OListDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,4 +31,7 @@ public class OListServiceImpl implements OListService{
 	}
 	
 
+	public void deleteProduct(OListDto delete) {
+		olm.deleteProduct(delete);
+	}
 }

@@ -317,7 +317,7 @@
 	                
 	            totalSum += parseFloat(orderDetail.o_total.replace(/,/g, '')) || 0;
 	            
-	            
+            	console.log(data)
 	            // 수락 또는 거절 안한 상태일 때만 버튼 표시
 	            if (orderDetail.o_permit === null) {
 	                reject.style.display = 'block';
@@ -330,7 +330,6 @@
 	            	reject.style.display = 'none';
 	                accept.style.display = 'none';
 	                if(orderDetail.o_permit == true){
-	                	console.log(orderDetail)
 	                	goInvoice.style.display = 'block'
 	                }
 	            }

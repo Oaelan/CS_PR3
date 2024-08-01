@@ -371,7 +371,15 @@ header {
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	<!-- 기능별 JS 파일들 -->
+	<script src="../resources/js/productRegisterPageJs/product.js"></script>
+  	<script src="../resources/js/productRegisterPageJs/stock.js"></script>
+    <script src="../resources/js/productRegisterPageJs/temperature.js"></script> 
+    <!-- 메인 JS 파일 -->
+    <script src="../resources/js/productRegisterPageJs/main.js"></script>
+    
 	<!-- productRegister페이지 관련 js -->
-	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=1></script>
-</body>
-</html>
+	<!-- 	<script type="text/javascript" src="../resources/js/productRegister.js"?ver=1></script> -->
+	</body>
+</html>s

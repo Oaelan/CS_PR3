@@ -26,10 +26,10 @@
     </select>
     
     <!-- 수주 거절 -->
-    <update id="rejectOrder" parameterType="string">
+    <update id="rejectOrder" parameterType="map">
     	update public_schema.OrderList 
     	set o_permit = false
-    	where o_no = #{o_no};
+    	where o_no = #{o_no} and p_no = #{p_no};
     </update>
     
     

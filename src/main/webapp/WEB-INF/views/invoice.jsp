@@ -172,7 +172,8 @@
 <div class="button">
     <input type="button" class="btn" value="출력" onclick = "printPage()">
 </div>
-<script>
+<script src = "../resources/js/InvoiceJs/main.js"></script>
+<!-- <script>
 
 document.addEventListener("DOMContentLoaded", function() {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -311,6 +312,6 @@ function updateTable(data) {
 
     tbody.appendChild(totalRow);
 }
-</script>
+</script> -->
 </body>
 </html>

@@ -303,18 +303,15 @@ header {
 								<!-- 첫 번째 줄 -->
 								<div class="form-row">
 									<div class="form-group col-md-4">
-										<label for="productName" style="margin-left: 25px;">제품명</label>
-										<select name="p_name" id="pNameSelect" class="form-control form-control-sm" style="margin-left: 25px; width: 85%;" required="required">
+										<label for="productName" style="margin-left: 25px;">제품명</label> <select name="p_name" id="pNameSelect" class="form-control form-control-sm" style="margin-left: 25px;" required="required">
 											<!-- 옵션들 추가 -->
 										</select>
 									</div>
 									<div class="form-group col-md-4">
-										<label for="productionDate" style="margin-left: 25px;">생산날짜</label>
-										<input type="date" name="m_date" class="form-control form-control-sm" id="productionDate" style="margin-left: 25px; width: 85%;" required="required">
+										<label for="productionDate" style="margin-left: 25px;">생산날짜</label> <input type="date" name="m_date" class="form-control form-control-sm" id="productionDate" style="margin-left: 25px;" required="required">
 									</div>
 									<div class="form-group col-md-4">
-										<label for="productPrice" style="margin-left: 25px;">제품단가</label>
-										<select name="p_price" id="pPriceSelect" class="form-control form-control-sm" style="margin-left: 25px; width: 85%;" required="required">
+										<label for="productPrice" style="margin-left: 25px;">제품단가</label> <select name="p_price" id="pPriceSelect" class="form-control form-control-sm" style="margin-left: 25px;" required="required">
 											<!-- 옵션들 추가 -->
 										</select>
 									</div>
@@ -322,15 +319,13 @@ header {
 								<!-- 두 번째 줄 -->
 								<div class="form-row">
 									<div class="form-group col-md-4">
-										<label for="productionQuantity" style="margin-left: 25px;">생산수량</label>
-										<input type="number" name="m_num" class="form-control form-control-sm" id="productionQuantity" placeholder="생산수량 입력" style="margin-left: 25px; width: 85%;" required="required">
+										<label for="productionQuantity" style="margin-left: 25px;">생산수량</label> <input type="number" name="m_num" class="form-control form-control-sm" id="productionQuantity" placeholder="생산수량 입력" style="margin-left: 25px;" required="required">
 									</div>
 									<div class="form-group col-md-4">
-										<label for="expiryDate" style="margin-left: 25px;">유통기한</label>
-										<input type="date" name="p_limitD" class="form-control form-control-sm" id="expiryDate" style="margin-left: 25px; width: 85%;" required="required">
+										<label for="expiryDate" style="margin-left: 25px;">유통기한</label> <input type="date" name="p_limitD" class="form-control form-control-sm" id="expiryDate" style="margin-left: 25px;" required="required">
 									</div>
 									<div class="form-group col-md-4 d-flex align-items-end">
-										<button type="submit" class="btn btn-primary btn-block btn-sm" id="uploadBtn" style="margin-left: 25px; width: 85%;">등록하기</button>
+										<button type="submit" class="btn btn-primary btn-block btn-sm" id="uploadBtn" style="margin-left: 25px;">등록하기</button>
 									</div>
 								</div>
 							</form>
@@ -378,13 +373,46 @@ header {
 				<div class="warehouse-section p-0" id="tempCon" style="width:40%; height: 330px; border-radius: 3px;">
 					<header class="bg-light py-2 mb-4">
 						<div class="container text-center p-0">
-							<h6 class="m-0 font-weight-bold" id="nowTemp">창고 온도 :</h6>
+							<h6 class="m-0 font-weight-bold" id="nowTemp">현재 창고 온도 :</h6>
+								<div id="selectBoxCon" style="display:flex;justify-content: center;">						
+								</div>						
 						</div>
 					</header>
 					<div class="col mt-4" id="tempList">
 						<div class="warehouse-message" style="text-align: center;"></div>
 					</div>
 				</div>
+				<!--  온도 데이터 검색 창 -->
+				<div class="warehouse-section p-0" id="tempCon2" style="width:40%; height: 330px; border-radius: 3px;">
+					<header class="bg-light py-2 mb-4">
+						<div class="container text-center p-0">						
+								<div id="selectBoxCon" style="display:flex;justify-content: center;">			
+									<select id="year" style="padding: 3px;">
+										<option disabled selected>년도</option>
+									</select>
+									
+									<select id="month" style="padding: 3px;">
+										<option disabled selected>월</option>
+									</select>
+									
+									<select id="day" style="padding: 3px;">
+										<option disabled selected>일</option>
+									</select>
+									
+									<select id="state" style="padding: 3px;">
+										<option disabled selected>상태</option>
+										<option value="normal">normal</option>	
+										<option value="high">high</option>
+										<option value="low">low</option>																		
+									</select>								
+								</div>						
+						</div>
+					</header>
+					<div class="col mt-4" id="tempList2">
+						<div class="warehouse-message" style="text-align: center;"></div>
+					</div>
+				</div>
+				
 			</div>
 		</div>
 		<div class="container" style="display: flex; justify-content:space-between;margin-bottom:100px;">
@@ -417,14 +445,18 @@ header {
 				<div class="form-header">
 					<h5 style="text-align: center">상품 등록</h5>
 				</div>
-				<form id="productForm" style="display: flex; flex-direction: column; justify-content: center; align-items: center;" action="/uploadProductInfo">
-					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
-						<label for="pName" class="m-0" style="text-align: center">품명</label> <input type="text" class="form-control m-0" id="pName" name="p_name" required style="width: 70%;">
+				<form id="productForm" style="display: flex; flex-direction: row; justify-content: center; align-items: center;" action="/uploadProductInfo">
+					<div id="formCon1">
+						<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
+							<label for="pName" class="m-0" style="text-align: center">품명</label> <input type="text" class="form-control m-0" id="pName" name="p_name" required style="width: 70%;">
+						</div>
+						<div class="form-group m-0" style="display: flex; justify-content: space-evenly; align-items: center;">
+							<label for="pPrice" class="m-0" style="text-align: center">단가</label> <input type="number" class="form-control m-0" id="pPrice" name="p_price" required style="width: 70%;">
+						</div>
 					</div>
-					<div class="form-group" style="display: flex; justify-content: space-evenly; align-items: center;">
-						<label for="pPrice" class="m-0" style="text-align: center">단가</label> <input type="number" class="form-control m-0" id="pPrice" name="p_price" required style="width: 70%;">
+					<div id="pUoadBCon" style="height:100%;">
+						<button type="submit" class="btn btn-primary btn-register" style="width: 100%; height:100%;">등록</button>
 					</div>
-					<button type="submit" class="btn btn-primary btn-register" style="width: 56%";>등록</button>
 				</form>
 			</div>
 		</div>
@@ -499,46 +531,6 @@ header {
             </div>
         </div>
     </div>
-    
-<!--     온도가 29도 이상일 때의 모달
-    <div class="modal fade" id="modal1" tabindex="-1" role="dialog" aria-labelledby="modal1Label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal1Label">온도 알림</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    창고 온도가 29도 이상 입니다.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    온도가 25도 이하일 때의 모달
-    <div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal2Label" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modal2Label">온도 알림</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    창고 온도가 25도 이하 입니다.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">닫기</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
 	<!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>

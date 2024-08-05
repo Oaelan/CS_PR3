@@ -1,6 +1,7 @@
 package org.hj.service.Pub;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.hj.mapper.pub.OListMapper;
@@ -22,8 +23,8 @@ public class OListServiceImpl implements OListService{
 		return olm.getOListDetail(o_no);
 	}
 	
-	public void rejectOrder(String o_no) {
-		olm.rejectOrder(o_no);
+	public void rejectOrder(Map<String, String> params) {
+		olm.rejectOrder(params);
 	}
 	
 	public void acceptOrder(String o_no) {

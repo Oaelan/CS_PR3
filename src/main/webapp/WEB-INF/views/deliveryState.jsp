@@ -115,7 +115,8 @@
     <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=7eaf2bce6e8bb4b9048e3a6a6288e3c4">
 	</script>
-	<script>
+	<script src = "../resources/js/deliveryStateJs/main.js"></script>
+	<!-- <script>
 		 
 	
 	document.addEventListener("DOMContentLoaded", function() {
@@ -231,7 +232,7 @@
             }
         }, 1000);
     }
-	</script>	
+	</script>	 -->
     <!-- 부트스트랩 자바스크립트 및 jQuery CDN 링크 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>

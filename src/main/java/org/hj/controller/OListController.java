@@ -1,6 +1,8 @@
 package org.hj.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hj.model.OListDto;
 import org.hj.service.Pub.OListService;
@@ -33,8 +35,11 @@ public class OListController {
 	
 	//수주 거절
 	@GetMapping("/rejectOrder")
-	public void rejectOrder(@RequestParam("o_no") String o_no) {
-		ols.rejectOrder(o_no);
+	public void rejectOrder(@RequestParam("o_no") String o_no, @RequestParam("p_no") String p_no) {
+		Map<String, String> params = new HashMap<>();
+	    params.put("o_no", o_no);
+	    params.put("p_no", p_no);
+	    ols.rejectOrder(params);
 	   }
 	
 	//수주 수락

@@ -359,3 +359,43 @@ https://github.com/user-attachments/assets/39db428f-6ade-425b-b1ba-647ac84f385f
 - 소리 출력(VK4PK - MH-FMD-Active-Piezo-Buzzer Module)
 - 온도에 따른 LED ON/OFF 및 소리 발생(저온 파란 led / 저음 발생, 고온 빨간 led / 고음 발생)
 - factory_temp.py로 작동
+
+
+
+👍 프로젝트 구현 영상
+
+- 상품 단가 자동 선택
+https://github.com/user-attachments/assets/cd6351ec-5053-48bd-9e26-66e55fc0438e
+
+- 재고 등록 기능
+https://github.com/user-attachments/assets/3ae51652-a433-4c50-87f7-6c1b4e373fc7
+
+- 재고 관리 기능
+https://github.com/user-attachments/assets/773c319f-ed3a-4854-a7b1-70b3fe428f7c
+
+- 취급 상품 등록 기능
+https://github.com/user-attachments/assets/145805ca-d269-418c-8faf-2f9b1ce8c2c1
+
+- 온도 관련 기능
+https://github.com/user-attachments/assets/cefda97a-06b0-416e-870c-9c1596b2f703
+
+
+- 주문 내역 상태별 기능
+https://github.com/user-attachments/assets/73e9e771-40d2-4ad0-b63f-79924ffe71ee
+
+- 출하 관리 페이지 기능
+https://github.com/user-attachments/assets/8fd94c56-a6ac-4979-8fe4-95a7bdc2d8a5
+
+- 배송 상태 페이지 기능
+https://github.com/user-attachments/assets/4a418c63-2ef2-4ca5-a9b2-b13a41cf2509
+
+
+
+
+
+
+
+
+
+
+

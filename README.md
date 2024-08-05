@@ -359,9 +359,3 @@ https://github.com/user-attachments/assets/39db428f-6ade-425b-b1ba-647ac84f385f
 - 소리 출력(VK4PK - MH-FMD-Active-Piezo-Buzzer Module)
 - 온도에 따른 LED ON/OFF 및 소리 발생(저온 파란 led / 저음 발생, 고온 빨간 led / 고음 발생)
 - factory_temp.py로 작동
-
-
-
-👏 프로젝트 구현 영상
-![image](https://github.com/user-attachments/assets/8ac944bf-c1a3-4677-b609-b3a34caddc2b)
-

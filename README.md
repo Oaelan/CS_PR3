@@ -314,8 +314,8 @@ CREATE TABLE `Delivery_GPS` (
 - 재고 검색 기능 추가 (제품코드 또는 제품명으로 검색 가능 / 재고 목록을 누르면 전체 재고 리스트 다시 나옴)
 - 상품 등록 기능 추가 (품명, 단가 만 입력하면 제품 코드는 자동으로 생김(autoincrement))
 - 온도 관련 기능 추가 (물류 창고 데이터 가져오기/현재 창고 온도에 따라 생기는 토스트창 구현)
-
-
+💖- 온도 로그 년/도/월로 조회 및 온도 상태에 따라 조회 가능한 기능 추가
+https://github.com/user-attachments/assets/39db428f-6ade-425b-b1ba-647ac84f385f
 
 
   
@@ -354,3 +354,7 @@ CREATE TABLE `Delivery_GPS` (
 - 소리 출력(VK4PK - MH-FMD-Active-Piezo-Buzzer Module)
 - 온도에 따른 LED ON/OFF 및 소리 발생(저온 파란 led / 저음 발생, 고온 빨간 led / 고음 발생)
 - factory_temp.py로 작동
+
+
+
+

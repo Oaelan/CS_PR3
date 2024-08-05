@@ -362,4 +362,6 @@ https://github.com/user-attachments/assets/39db428f-6ade-425b-b1ba-647ac84f385f
 
 
 
+👏 프로젝트 구현 영상
+![image](https://github.com/user-attachments/assets/8ac944bf-c1a3-4677-b609-b3a34caddc2b)
 
